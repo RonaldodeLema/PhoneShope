@@ -1,0 +1,57 @@
+﻿@model PhoneDetails
+@{
+    ViewData["Title"] = "Management Phone Details";
+}
+
+@section _Header {
+    <link href="~/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+}
+
+<h1>Management Phone Details</h1>
+<div class="alert alert-info" id="inform"> @Html.ValidationSummary()</div>
+<div id="mainTable" class="table-responsive">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <div class="row d-flex justify-content-lg-between">
+                <h6 class="m-0 col-6 font-weight-bold text-primary">Table Phone Details</h6>
+                <a class="btn btn-primary col-2 text-white p-2" id="create" asp-action="Create">Create new phone details</a>
+
+            </div>
+            <div class="row d-flex justify-content-lg-center">
+                @Html.DropDownListFor(model => model.Id, (SelectList)ViewBag.Phones,
+                    " ---------------All Phone Details--------------- ",
+                    new { @class = "form-control col-3", id = "Phone" })
+            </div>
+
+        </div>
+        <div class="card-body" id="getPhoneDetail">
+
+        </div>
+    </div>
+</div>
+
+@section _Footer {
+    <!-- Page level plugins -->
+    <script>
+            $(document).ready(function () {
+                function getPhoneDetail() {
+                    var PhoneId = $('#Phone').val();
+                    $.ajax({
+                        url: '@Url.Action("GetPhoneDetail", "PhoneDetail")',
+                        type: "GET",
+                        data: { id: PhoneId },
+                        success: function (data) {
+                            $("#getPhoneDetail").html(data);
+                        },
+                        error: function (data) {
+                            alert("something went wrong.");
+                        }
+                    });
+                }
+                getPhoneDetail();
+                $("#Phone").change(function () {
+                    getPhoneDetail();
+                })
+            });
+        </script>
+}

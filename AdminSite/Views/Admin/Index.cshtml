@@ -1,0 +1,157 @@
+@using NuGet.Protocol
+@using Internals.Models.Enum
+@model IEnumerable<Admin>
+@{
+    ViewData["Title"] = "Management admin";
+}
+
+@section _Header {
+    <link href="~/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+}
+
+<h1>Management admin</h1>
+<div class="alert alert-info"> @Html.ValidationSummary()</div>
+<div id="mainTable" class="table-responsive">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <div class="row d-flex justify-content-lg-between">
+                <h6 class="m-0 col-6 font-weight-bold text-primary">Table Admin</h6>
+                <a class="btn btn-primary col-2 text-white p-2" id="create">Create new admin</a>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable">
+                    <thead>
+                    <tr>
+                        <th>
+                            STT
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Username)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Role)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CreatedAt)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.UpdatedAt)
+                        </th>
+
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>
+                            STT
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Username)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Role)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CreatedAt)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.UpdatedAt)
+                        </th>
+                        <th></th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    @{
+                        var count = 1;
+                    }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @count
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.Username)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.Role)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.CreatedAt)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.UpdatedAt)
+                            </td>
+                            <td class="d-flex justify-content-center">
+                                <a class="delete btn btn-dark text-white" data-item="@item.ToJson()">Delete</a>
+                            </td>
+                        </tr>
+                        count++;
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <form method="post" asp-action="Create">
+        <div class="modal fade" id="createAdmin" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createTitle">Create new Admin</h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="createUsername">Username:</label>
+                        <input type="text" class="form-control" name="Username" id="createUsername" required="required" placeholder="Username">
+                        <label for="createRole">Role:</label> <br/>
+                        <select id="createRole" class="custom-select" name="Role" asp-items="@Html.GetEnumSelectList<Role>()">Select role</select> <br/>
+                        <label for="createPassword">Password:</label>
+                        <input type="password" class="form-control" name="Password" id="createPassword" required="required" placeholder="Password">
+                        <label for="createRePassword">RePassword:</label>
+                        <input type="password" class="form-control" name="RePassword" id="createRePassword" required="required" placeholder="Password Again">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary save">Create</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <form method="post" asp-action="Delete">
+        <div class="modal fade" id="deleteAdmin" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="delTitle">Are you sure delete this admin ?</h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" hidden="hidden" class="form-control" name="id" id="deleteId" placeholder="Id">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary save">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section _Footer {
+    <script src="~/js/jquery_admin.js"></script>
+    <!-- Page level plugins -->
+    <script src="~/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="~/js/demo/datatables-demo.js"></script>
+}

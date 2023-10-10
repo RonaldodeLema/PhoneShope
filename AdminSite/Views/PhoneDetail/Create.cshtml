@@ -1,0 +1,53 @@
+@using Internals.Models.Enum
+@model Internals.ViewModels.PhoneDetailsCreate
+
+@{
+    ViewData["Title"] = "Create New Phone";
+    Layout = "~/Views/Shared/_MyLayout.cshtml";
+}
+<h1>Create New Phone Details</h1>
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PhoneId" class="control-label">Phone</label>
+                <select id="phone" placeholder="Select phone" class="custom-select" asp-for="PhoneId" asp-items="ViewBag.Phones">Select phone</select> <br/>
+            </div>
+            <div class="form-group">
+                <label asp-for="Size" class="control-label"></label>
+                <select class="custom-select" asp-for="Size" asp-items="@Html.GetEnumSelectList<Size>()">Select size</select> <br/>
+            </div>
+            <div class="form-group">
+                <label asp-for="Storage" class="control-label"></label>
+                <select class="custom-select" asp-for="Storage" asp-items="@Html.GetEnumSelectList<Storage>()">Select storage</select> <br/>
+            </div>
+            <div class="form-group">
+                <label asp-for="RAM" class="control-label"></label>
+                <select class="custom-select" asp-for="RAM" asp-items="@Html.GetEnumSelectList<RAM>()">Select RAM</select> <br/>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Color" class="control-label"></label>
+                <select id="createRole" class="custom-select" asp-for="Color" asp-items="@Html.GetEnumSelectList<Color>()">Select color</select> <br/>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input required="required" type="number" min="1000000" asp-for="Price" class="form-control"/>
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Quantity" class="control-label"></label>
+                <input required="required" min="1" asp-for="Quantity" class="form-control"/>
+                <span asp-validation-for="Quantity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

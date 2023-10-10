@@ -1,0 +1,58 @@
+﻿@using NuGet.Protocol
+@model Category
+@{
+    ViewData["Title"] = "Management Phone";
+}
+
+@section _Header {
+    <link href="~/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+}
+
+<h1>Management Phone</h1>
+<div class="alert alert-info" id="inform"> @Html.ValidationSummary()</div>
+<div id="mainTable" class="table-responsive">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <div class="row d-flex justify-content-lg-between">
+                <h6 class="m-0 col-6 font-weight-bold text-primary">Table Phone</h6>
+                <a class="btn btn-primary col-2 text-white p-2" id="create" asp-action="Create">Create new phone</a>
+
+            </div>
+            <div class="row d-flex justify-content-lg-center">
+                @Html.DropDownListFor(model => model.Id, (SelectList)ViewBag.Categories,
+                    " ---------------All Phone--------------- ",
+                    new { @class = "form-control col-3", id = "Category" })
+            </div>
+
+        </div>
+        <div class="card-body" id="getPhone">
+
+        </div>
+    </div>
+</div>
+
+@section _Footer {
+    <!-- Page level plugins -->
+    <script>
+            $(document).ready(function () {
+                function getPhone() {
+                    var CategoryId = $('#Category').val();
+                    $.ajax({
+                        url: '@Url.Action("GetPhone", "Phone")',
+                        type: "GET",
+                        data: { id: CategoryId },
+                        success: function (data) {
+                            $("#getPhone").html(data);
+                        },
+                        error: function (data) {
+                            alert("something went wrong.");
+                        }
+                    });
+                }
+                getPhone();
+                $("#Category").change(function () {
+                    getPhone();
+                })
+            });
+        </script>
+}
