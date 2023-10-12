@@ -6,7 +6,7 @@ namespace Internals.ViewModels;
 public class RoleCreate
 {
     public string Name { get; set; }
-    public Manage_Model[] Permissions { get; set; }
+    public ManageModel[] Permissions { get; set; }
 
     public List<RoleClaim> ConvertToListRoleClaim(Role role)
     {

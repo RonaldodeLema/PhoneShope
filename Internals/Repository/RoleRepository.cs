@@ -48,7 +48,7 @@ public class RoleRepository : IRepository<Role, int>, IRoleRepository
         }
     }
 
-    public async Task<List<Manage_Model>> GetRoleClaimsByUname(string username)
+    public async Task<List<ManageModel>> GetRoleClaimsByUname(string username)
     {
         var user =  _context.Admins.FirstOrDefaultAsync(u => u.Username == username);
         if (user == null)

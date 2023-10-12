@@ -5,6 +5,6 @@ namespace Internals.Repository;
 
 public interface IRoleRepository
 {
-    Task<List<Manage_Model>> GetRoleClaimsByUname(string username);
+    Task<List<ManageModel>> GetRoleClaimsByUname(string username);
     Task<RoleClaim> AddRoleClaimAsync(RoleClaim roleClaim);
 }

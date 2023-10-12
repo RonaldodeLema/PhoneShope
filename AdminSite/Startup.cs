@@ -55,13 +55,15 @@ public class Startup
         
         services.AddAuthorization(options =>
         {
-            options.AddPolicy(Manage_Model.Manage_Admin.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(Manage_Model.Manage_Admin)));
-            options.AddPolicy(Manage_Model.Manage_Category.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(Manage_Model.Manage_Category)));
-            options.AddPolicy(Manage_Model.Manage_Notify.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(Manage_Model.Manage_Notify)));
-            options.AddPolicy(Manage_Model.Manage_Order.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(Manage_Model.Manage_Order)));
-            options.AddPolicy(Manage_Model.Manage_Phone.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(Manage_Model.Manage_Phone)));
-            options.AddPolicy(Manage_Model.Manage_Promotion.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(Manage_Model.Manage_Promotion)));
-            options.AddPolicy(Manage_Model.Manage_User.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(Manage_Model.Manage_User)));
+            options.AddPolicy(ManageModel.Manage_Admin.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(ManageModel.Manage_Admin)));
+            options.AddPolicy(ManageModel.Manage_Category.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(ManageModel.Manage_Category)));
+            options.AddPolicy(ManageModel.Manage_Notify.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(ManageModel.Manage_Notify)));
+            options.AddPolicy(ManageModel.Manage_Order.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(ManageModel.Manage_Order)));
+            options.AddPolicy(ManageModel.Manage_Phone.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(ManageModel.Manage_Phone)));
+            options.AddPolicy(ManageModel.Manage_Promotion.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(ManageModel.Manage_Promotion)));
+            options.AddPolicy(ManageModel.Manage_User.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(ManageModel.Manage_User)));
+            options.AddPolicy(ManageModel.Manage_Phone_Detail.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(ManageModel.Manage_Phone_Detail)));
+            options.AddPolicy(ManageModel.Manage_Role.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(ManageModel.Manage_Role)));
         });
         
         services.AddScoped<IAuthorizationHandler, ManageModelHandler>();

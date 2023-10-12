@@ -1,10 +1,12 @@
 using Internals.Models;
 using Internals.Repository;
 using Internals.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminSite.Controllers;
 
+[Authorize("Manage_Role")]
 public class RoleController : Controller
 {
     private readonly IRoleRepository _roleRepository;

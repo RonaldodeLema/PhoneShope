@@ -11,6 +11,7 @@ using NuGet.Protocol;
 
 namespace AdminSite.Controllers;
 
+[Authorize("Manage_Phone")]
 public class PhoneController : Controller
 {
     private readonly IRepository<Phone, int> _repository;

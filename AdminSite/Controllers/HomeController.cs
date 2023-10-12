@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using Internals.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminSite.Controllers;

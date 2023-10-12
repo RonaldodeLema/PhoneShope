@@ -5,9 +5,9 @@ namespace AdminSite.Policies;
 
 public class ManageModelRequirement: IAuthorizationRequirement
 {
-    public Manage_Model NamePolicy;
+    public ManageModel NamePolicy;
 
-    public ManageModelRequirement(Manage_Model namePolicy)
+    public ManageModelRequirement(ManageModel namePolicy)
     {
         NamePolicy = namePolicy;
     }

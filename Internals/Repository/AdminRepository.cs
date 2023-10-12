@@ -28,7 +28,7 @@ public class AdminRepository: IAdminRepository,IRepository<Admin,int>
 
     public async Task<List<Admin>> GetAllAsync()
     {
-        return await _context.Admins.ToListAsync();
+        return await _context.Admins.Include(a=>a.Role).ToListAsync();
     }
 
     public async Task<Admin> GetByIdAsync(int id)

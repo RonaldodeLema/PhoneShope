@@ -98,7 +98,7 @@
                         <label for="createName">Name:</label>
                         <input type="text" class="form-control" name="Name" id="createName" required="required" placeholder="Name">
                         <label>Permission:</label> <br/>
-                        @foreach (var per in Enum.GetValues(typeof(Manage_Model)))
+                        @foreach (var per in Enum.GetValues(typeof(ManageModel)))
                             {
                                 <li>
                                     <input type="checkbox" Name="Permissions" value="@per" />

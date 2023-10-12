@@ -7,6 +7,7 @@ public class AdminRegister
 {
     public string? Username { get; set; }
     public string RePassword { get; set; }
+    public int RoleId { get; set; }
     public string Password { get; set; }
     public bool ComparePassword()
     {
@@ -19,6 +20,7 @@ public class AdminRegister
         {
             Username = Username,
             Password = Password,
+            RoleId = RoleId,
             CreatedAt = DateTime.Now,
             UpdatedAt = DateTime.Now
         };

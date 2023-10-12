@@ -49,7 +49,7 @@ public class AccountController : Controller
         }
         var identity = new ClaimsIdentity(new[] {  
             new Claim(ClaimTypes.Name, taskUser.Result.Username),  
-            new Claim(ClaimTypes.Role, taskUser.Result.Role.ToString())  
+            new Claim(ClaimTypes.Role, taskUser.Result.Role.Name)  
         }, CookieAuthenticationDefaults.AuthenticationScheme);  
   
         var isAuthenticated = true;

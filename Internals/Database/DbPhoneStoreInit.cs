@@ -131,38 +131,48 @@ namespace Internals.Database
             var roleClaim1 = new RoleClaim()
             {
                 RoleId = 1,
-                ManageModel = Manage_Model.Manage_Admin
+                ManageModel = ManageModel.Manage_Admin
             };
             var roleClaim2 = new RoleClaim()
             {
                 RoleId = 1,
-                ManageModel = Manage_Model.Manage_Category
+                ManageModel = ManageModel.Manage_Category
             };
             var roleClaim3 = new RoleClaim()
             {
                 RoleId = 1,
-                ManageModel = Manage_Model.Manage_Notify
+                ManageModel = ManageModel.Manage_Notify
             };
             var roleClaim4 = new RoleClaim()
             {
                 RoleId = 1,
-                ManageModel = Manage_Model.Manage_Order
+                ManageModel = ManageModel.Manage_Order
             };
             var roleClaim5 = new RoleClaim()
             {
                 RoleId = 1,
-                ManageModel = Manage_Model.Manage_Phone
+                ManageModel = ManageModel.Manage_Phone
             };
             var roleClaim6 = new RoleClaim()
             {
                 RoleId = 1,
-                ManageModel = Manage_Model.Manage_Promotion
+                ManageModel = ManageModel.Manage_Promotion
             };
             
             var roleClaim7 = new RoleClaim()
             {
                 RoleId = 1,
-                ManageModel = Manage_Model.Manage_User
+                ManageModel = ManageModel.Manage_User
+            };
+            var roleClaim8 = new RoleClaim()
+            {
+                RoleId = 1,
+                ManageModel = ManageModel.Manage_Phone_Detail
+            };
+            var roleClaim9 = new RoleClaim()
+            {
+                RoleId = 1,
+                ManageModel = ManageModel.Manage_Role
             };
             context.RoleClaims.Add(roleClaim1);
             context.RoleClaims.Add(roleClaim2);
@@ -171,6 +181,8 @@ namespace Internals.Database
             context.RoleClaims.Add(roleClaim5);
             context.RoleClaims.Add(roleClaim6);
             context.RoleClaims.Add(roleClaim7);
+            context.RoleClaims.Add(roleClaim8);
+            context.RoleClaims.Add(roleClaim9);
             context.SaveChanges();
             var admin = new Admin()
             {

@@ -3,8 +3,7 @@ $('#create').click(function () {
 });
 $(".delete").click(function () {
     const itemData = $(this).attr("data-item");
-    const Admin = JSON.parse(itemData);
-    $("#deleteId").val(Admin?.Id)
+    $("#deleteId").val(itemData)
     $("#deleteAdmin").modal("show");
 });
 

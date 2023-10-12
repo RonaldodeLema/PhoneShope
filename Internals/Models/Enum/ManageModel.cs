@@ -1,6 +1,6 @@
 namespace Internals.Models.Enum;
 
-public enum Manage_Model
+public enum ManageModel
 {
     Manage_Admin,
     Manage_User,
@@ -8,5 +8,7 @@ public enum Manage_Model
     Manage_Phone,
     Manage_Notify,
     Manage_Promotion,
-    Manage_Order
+    Manage_Order,
+    Manage_Phone_Detail,
+    Manage_Role
 }

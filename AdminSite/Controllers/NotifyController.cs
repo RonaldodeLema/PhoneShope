@@ -1,9 +1,10 @@
 using FirebaseAdmin.Messaging;
 using Internals.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminSite.Controllers;
-
+[Authorize("Manage_Notify")]
 public class NotifyController : Controller
 {
 

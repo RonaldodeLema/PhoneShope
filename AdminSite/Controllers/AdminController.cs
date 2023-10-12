@@ -3,6 +3,7 @@ using Internals.Repository;
 using Internals.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AdminSite.Controllers;
 [Authorize("Manage_Admin")]
@@ -10,28 +11,37 @@ public class AdminController : Controller
 {
     private readonly IAdminRepository _adminRepository;
     private readonly IRepository<Admin,int> _repository;
+    private readonly IRepository<Role,int> _roleRepository;
 
-    public AdminController(IAdminRepository adminRepository,IRepository<Admin,int> repository)
+    public AdminController(IAdminRepository adminRepository,IRepository<Admin,int> repository,
+        IRepository<Role,int> roleRepository)
     {
         _adminRepository = adminRepository;
         _repository = repository;
+        _roleRepository = roleRepository;
     }
     // GET
     public async Task<IActionResult> Index()
     {
+        var roles = await _roleRepository.GetAllAsync();
+        var selectList = new SelectList(roles, "Id", "Name");
+        ViewData["Roles"] = selectList;
         var admins = await _repository.GetAllAsync();
         return View(admins);
     }
     
     public async Task<IActionResult> Create()
     {
+        var roles = await _roleRepository.GetAllAsync();
+        var selectList = new SelectList(roles, "Id", "Name");
+        ViewData["Roles"] = selectList;
         var admins = await _repository.GetAllAsync();
         return View("Index",admins);
     }
     
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Username,Password,RePassword,Role")] AdminRegister adminRegister)
+    public async Task<IActionResult> Create([Bind("Id,Username,Password,RePassword,RoleId")] AdminRegister adminRegister)
     {
         if (!ModelState.IsValid)
         {
@@ -55,6 +65,9 @@ public class AdminController : Controller
         
         await _repository.AddAsync(admin);
         ModelState.AddModelError("Error","Create new admin success");
+        var roles = await _roleRepository.GetAllAsync();
+        var selectList = new SelectList(roles, "Id", "Name");
+        ViewData["Roles"] = selectList;
         return View("Index", await _repository.GetAllAsync());
 
     }
