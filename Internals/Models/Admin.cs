@@ -30,7 +30,7 @@ namespace Internals.Models
     
         public void SanitizePassword()
         {
-            this.Password = "123";
+            this.Password = "";
         }
     }
 }
