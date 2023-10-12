@@ -66,17 +66,10 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                @if (User.FindFirst(claim => claim.Type == System.Security.Claims.ClaimTypes.Role)?.Value == Role.RootAdmin.ToString())
-                {
                     <h6 class="collapse-header">Users & Admins:</h6>
-                    <a class="collapse-item" href="/Admin">Admins</a>
+                <a class="collapse-item" href="/Admin">Admins</a>
+                    <a class="collapse-item" href="/Role">Roles</a>
                     <a class="collapse-item" href="/User">Users</a>
-                }
-                @if (User.FindFirst(claim => claim.Type == System.Security.Claims.ClaimTypes.Role)?.Value == Role.Admin.ToString())
-                {
-                    <h6 class="collapse-header">Users</h6>
-                    <a class="collapse-item" href="/User">Users</a>
-                }
             </div>
         </div>
     </li>

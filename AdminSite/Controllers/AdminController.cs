@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminSite.Controllers;
-[Authorize(Roles = "RootAdmin")]
+[Authorize("Manage_Admin")]
 public class AdminController : Controller
 {
     private readonly IAdminRepository _adminRepository;

@@ -14,7 +14,8 @@ public class AdminRepository: IAdminRepository,IRepository<Admin,int>
     }
     public async Task<Admin?>? Login(UserLogin userLogin)
     {
-        var admin = await _context.Admins.FirstOrDefaultAsync(u => u.Username == userLogin.Username);
+        var admin = await _context.Admins.Include(a=>a.Role)
+            .FirstOrDefaultAsync(u => u.Username == userLogin.Username);
         if (admin == null) return null;
         return admin.ComparePasswords(userLogin.Password) ? admin : null;
     }

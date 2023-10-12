@@ -22,8 +22,8 @@ namespace Internals.Database
                     "A mobile device that can be used to make calls, send text messages, and access the internet.",
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
-                CreatedBy = "rootadmin",
-                UpdatedBy = "rootadmin"
+                CreatedBy = "vanthao",
+                UpdatedBy = "vanthao"
             };
             var category1 = new Category
             {
@@ -32,8 +32,8 @@ namespace Internals.Database
                     "A mobile device that can be used to make calls, send text messages, and access the internet.",
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
-                CreatedBy = "rootadmin",
-                UpdatedBy = "rootadmin"
+                CreatedBy = "vanthao",
+                UpdatedBy = "vanthao"
             };
 
             context.Categories.Add(category);
@@ -49,8 +49,8 @@ namespace Internals.Database
                     Description = "The latest and greatest iPhone from Apple.", Image = "iphone-15-pro-max.png",
                     Brand = BrandPhone.Apple, CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
-                    CreatedBy = "rootadmin",
-                    UpdatedBy = "rootadmin"
+                    CreatedBy = "vanthao",
+                    UpdatedBy = "vanthao"
                 },
                 new Phone
                 {
@@ -58,8 +58,8 @@ namespace Internals.Database
                     Description = "The latest and greatest Android phone from Samsung.",
                     Image = "iphone-15-pro-max.png", Brand = BrandPhone.Apple, CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
-                    CreatedBy = "rootadmin",
-                    UpdatedBy = "rootadmin"
+                    CreatedBy = "vanthao",
+                    UpdatedBy = "vanthao"
                 },
                 new Phone
                 {
@@ -67,8 +67,8 @@ namespace Internals.Database
                     Description = "The latest and greatest Pixel phone from Google.", Image = "iphone-15-pro-max.png",
                     Brand = BrandPhone.Samsung, CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
-                    CreatedBy = "rootadmin",
-                    UpdatedBy = "rootadmin"
+                    CreatedBy = "vanthao",
+                    UpdatedBy = "vanthao"
                 },
             };
             phones.ForEach(phone => context.Phones.Add(phone));
@@ -85,8 +85,8 @@ namespace Internals.Database
                 PhoneId = 1,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
-                CreatedBy = "rootadmin",
-                UpdatedBy = "rootadmin"
+                CreatedBy = "vanthao",
+                UpdatedBy = "vanthao"
             };
             var phoneDetails2 = new PhoneDetails()
             {
@@ -99,8 +99,8 @@ namespace Internals.Database
                 PhoneId = 3,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
-                CreatedBy = "rootadmin",
-                UpdatedBy = "rootadmin"
+                CreatedBy = "vanthao",
+                UpdatedBy = "vanthao"
             };
             var phoneDetails1 = new PhoneDetails()
             {
@@ -113,32 +113,82 @@ namespace Internals.Database
                 PhoneId = 2,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
-                CreatedBy = "rootadmin",
-                UpdatedBy = "rootadmin"
+                CreatedBy = "vanthao",
+                UpdatedBy = "vanthao"
             };
 
             context.PhoneDetails.Add(phoneDetails);
             context.PhoneDetails.Add(phoneDetails1);
             context.PhoneDetails.Add(phoneDetails2);
             context.SaveChanges();
+            
+            var role = new Role()
+            {
+                Name = "Root Admin"
+            };
+            context.Roles.Add(role);
+            context.SaveChanges();
+            var roleClaim1 = new RoleClaim()
+            {
+                RoleId = 1,
+                ManageModel = Manage_Model.Manage_Admin
+            };
+            var roleClaim2 = new RoleClaim()
+            {
+                RoleId = 1,
+                ManageModel = Manage_Model.Manage_Category
+            };
+            var roleClaim3 = new RoleClaim()
+            {
+                RoleId = 1,
+                ManageModel = Manage_Model.Manage_Notify
+            };
+            var roleClaim4 = new RoleClaim()
+            {
+                RoleId = 1,
+                ManageModel = Manage_Model.Manage_Order
+            };
+            var roleClaim5 = new RoleClaim()
+            {
+                RoleId = 1,
+                ManageModel = Manage_Model.Manage_Phone
+            };
+            var roleClaim6 = new RoleClaim()
+            {
+                RoleId = 1,
+                ManageModel = Manage_Model.Manage_Promotion
+            };
+            
+            var roleClaim7 = new RoleClaim()
+            {
+                RoleId = 1,
+                ManageModel = Manage_Model.Manage_User
+            };
+            context.RoleClaims.Add(roleClaim1);
+            context.RoleClaims.Add(roleClaim2);
+            context.RoleClaims.Add(roleClaim3);
+            context.RoleClaims.Add(roleClaim4);
+            context.RoleClaims.Add(roleClaim5);
+            context.RoleClaims.Add(roleClaim6);
+            context.RoleClaims.Add(roleClaim7);
+            context.SaveChanges();
             var admin = new Admin()
             {
-                Username = "rootadmin",
+                Username = "vanthao",
                 Password = "123456",
-                Role = Role.RootAdmin
+                RoleId = 1
             };
             admin.HashPassword();
             context.Admins.Add(admin);
             context.SaveChanges();
-
+            
             var user = new User()
             {
                 Name = "tran van thao",
-                Email = "user@gmail.com",                
+                Email = "user@gmail.com",
                 Avatar = "avatar.png",
                 Username = "user",
                 Password = "123456",
-                Role = Role.User,
                 IsBlocked = false,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now
@@ -153,7 +203,6 @@ namespace Internals.Database
                 Avatar = "avatar.png",
                 Username = "user1",
                 Password = "123456",
-                Role = Role.User,
                 IsBlocked = false,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now

@@ -8,7 +8,6 @@ using NuGet.Protocol;
 
 namespace AdminSite.Controllers;
 
-[Authorize(Roles = "RootAdmin, Admin")]
 public class PhoneDetailController : Controller
 {
     private readonly IRepository<PhoneDetails, int> _repository;

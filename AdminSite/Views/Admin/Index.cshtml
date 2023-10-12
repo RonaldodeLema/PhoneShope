@@ -32,9 +32,7 @@
                         <th>
                             @Html.DisplayNameFor(model => model.Username)
                         </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Role)
-                        </th>
+                       
                         <th>
                             @Html.DisplayNameFor(model => model.CreatedAt)
                         </th>
@@ -54,9 +52,7 @@
                         <th>
                             @Html.DisplayNameFor(model => model.Username)
                         </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.Role)
-                        </th>
+                       
                         <th>
                             @Html.DisplayNameFor(model => model.CreatedAt)
                         </th>
@@ -79,9 +75,7 @@
                             <td>
                                 @Html.DisplayFor(model => item.Username)
                             </td>
-                            <td>
-                                @Html.DisplayFor(model => item.Role)
-                            </td>
+                 
                             <td>
                                 @Html.DisplayFor(model => item.CreatedAt)
                             </td>
@@ -111,7 +105,6 @@
                         <label for="createUsername">Username:</label>
                         <input type="text" class="form-control" name="Username" id="createUsername" required="required" placeholder="Username">
                         <label for="createRole">Role:</label> <br/>
-                        <select id="createRole" class="custom-select" name="Role" asp-items="@Html.GetEnumSelectList<Role>()">Select role</select> <br/>
                         <label for="createPassword">Password:</label>
                         <input type="password" class="form-control" name="Password" id="createPassword" required="required" placeholder="Password">
                         <label for="createRePassword">RePassword:</label>

@@ -1,8 +1,11 @@
 ﻿using AdminSite.Manager;
+using AdminSite.Policies;
 using Internals.Database;
 using Internals.Models;
+using Internals.Models.Enum;
 using Internals.Repository;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 namespace AdminSite;
 
@@ -27,6 +30,8 @@ public class Startup
             options.MinimumSameSitePolicy = SameSiteMode.None;  
         });
         services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+        
+
         // Add DI
         services.AddScoped<IRepository<Admin, int>, AdminRepository>();
         services.AddScoped<IAdminRepository, AdminRepository>();
@@ -43,9 +48,23 @@ public class Startup
         services.AddScoped<IPhoneDetailRepository, PhoneDetailRepository>();
         
         services.AddScoped<ImageService>();
-        
         services.AddScoped<IImageRepository,ImageRepository>();
 
+        services.AddScoped<IRepository<Role, int>, RoleRepository>();
+        services.AddScoped<IRoleRepository, RoleRepository>();
+        
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy(Manage_Model.Manage_Admin.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(Manage_Model.Manage_Admin)));
+            options.AddPolicy(Manage_Model.Manage_Category.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(Manage_Model.Manage_Category)));
+            options.AddPolicy(Manage_Model.Manage_Notify.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(Manage_Model.Manage_Notify)));
+            options.AddPolicy(Manage_Model.Manage_Order.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(Manage_Model.Manage_Order)));
+            options.AddPolicy(Manage_Model.Manage_Phone.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(Manage_Model.Manage_Phone)));
+            options.AddPolicy(Manage_Model.Manage_Promotion.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(Manage_Model.Manage_Promotion)));
+            options.AddPolicy(Manage_Model.Manage_User.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(Manage_Model.Manage_User)));
+        });
+        
+        services.AddScoped<IAuthorizationHandler, ManageModelHandler>();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

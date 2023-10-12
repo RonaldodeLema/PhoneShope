@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminSite.Controllers;
-[Authorize(Roles = "RootAdmin, Admin")]
 public class UserController : Controller
 {
     private readonly IRepository<User,int> _repository;

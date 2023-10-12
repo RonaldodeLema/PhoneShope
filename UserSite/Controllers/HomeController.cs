@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using AdminSite.Models;
+using Internals.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace UserSite.Controllers;

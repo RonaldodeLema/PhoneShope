@@ -9,7 +9,7 @@ public class DbPhoneStoreContext: DbContext
     public DbPhoneStoreContext(DbContextOptions<DbPhoneStoreContext> options) : base(options)
     {
     }
-    public DbSet<Admin?> Admins { get; set; }
+    public DbSet<Admin> Admins { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Phone> Phones { get; set; }
@@ -19,6 +19,8 @@ public class DbPhoneStoreContext: DbContext
     public DbSet<Promotion> Promotions { get; set; }
     public DbSet<Notification> Notifications { get; set; }
     public DbSet<Image> Images { get; set; }
+    public DbSet<Role> Roles { get; set; }
+    public DbSet<RoleClaim> RoleClaims { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -33,5 +35,7 @@ public class DbPhoneStoreContext: DbContext
         modelBuilder.Entity<Promotion>().ToTable("Promotion");
         modelBuilder.Entity<Notification>().ToTable("Notification");
         modelBuilder.Entity<Image>().ToTable("Image");
+        modelBuilder.Entity<Role>().ToTable("Role");
+        modelBuilder.Entity<RoleClaim>().ToTable("RoleClaim");
     }
 }

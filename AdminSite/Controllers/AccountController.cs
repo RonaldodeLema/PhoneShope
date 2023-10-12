@@ -61,7 +61,6 @@ public class AccountController : Controller
   
         return RedirectToAction("Index", "Home");
     }
-    [Authorize(Roles = "RootAdmin, Admin")]
     public IActionResult Logout()
     {
         HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
