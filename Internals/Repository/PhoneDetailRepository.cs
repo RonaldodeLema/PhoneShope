@@ -20,7 +20,9 @@ public class PhoneDetailRepository:IRepository<PhoneDetails,int>,IPhoneDetailRep
 
     public async Task<PhoneDetails> GetByIdAsync(int id)
     {
-        return await _context.PhoneDetails.FindAsync(id);
+        return (await _context.PhoneDetails
+            .Include(pd=>pd.Phone)
+            .FirstOrDefaultAsync(pd=>pd.Id==id))!;
     }
 
     public async Task<PhoneDetails> AddAsync(PhoneDetails category)

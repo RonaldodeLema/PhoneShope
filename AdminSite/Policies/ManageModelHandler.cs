@@ -17,8 +17,8 @@ public class ManageModelHandler : AuthorizationHandler<ManageModelRequirement>
         ManageModelRequirement requirement)
     {
         var user = context.User.Identity.Name;
-        var roleClaims = _roleRepository.GetRoleClaimsByUname(user);
-        if (!roleClaims.Result.Contains(requirement.NamePolicy))
+        var roleClaims =  await _roleRepository.GetRoleClaimsByUname(user);
+        if (!roleClaims.Contains(requirement.NamePolicy))
         {
             context.Fail();
         }

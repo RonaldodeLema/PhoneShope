@@ -60,17 +60,31 @@ public class PhoneDetailController : Controller
 
     public async Task<IActionResult> Edit(int id)
     {
-        var phone = await _repository.GetByIdAsync(id);
-        var categories = await _categoryRepository.GetAllAsync();
-        var selectList = new SelectList(categories, "Id", "Name");
-        ViewData["Categories"] = selectList;
-        return View(new Phone());
+        var phones = await _phoneRepository.GetAllAsync();
+        var selectList = new SelectList(phones, "Id", "Name");
+        ViewData["Phones"] = selectList;
+        var phoneDetails = _repository.GetByIdAsync(id).Result;
+        return View(phoneDetails);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,CategoryId,Brand")] Phone phone)
+    public async Task<IActionResult> Edit(int id, [Bind("Id,PhoneId,Size,Color,RAM,Storage,Quantity,Price")] PhoneDetails phoneDetails)
     {
+        var oldPhoneDetails = _repository.GetByIdAsync(phoneDetails.Id).Result;
+        oldPhoneDetails.PhoneId = phoneDetails.PhoneId;
+        oldPhoneDetails.Size = phoneDetails.Size;
+        oldPhoneDetails.Color = phoneDetails.Color;
+        oldPhoneDetails.RAM = phoneDetails.RAM;
+        oldPhoneDetails.Storage = phoneDetails.Storage;
+        oldPhoneDetails.Quantity = phoneDetails.Quantity;
+        oldPhoneDetails.Price = phoneDetails.Price;
+        oldPhoneDetails.SetUpdateBy(User.Identity.Name);
+        oldPhoneDetails.SetUpdateDate();
+        await _repository.UpdateAsync(oldPhoneDetails);
+        var phones = await _phoneRepository.GetAllAsync();
+        var selectList = new SelectList(phones, "Id", "Name");
+        ViewData["Phones"] = selectList;
         return RedirectToAction(nameof(Index));
     }
 

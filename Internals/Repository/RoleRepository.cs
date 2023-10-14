@@ -21,7 +21,7 @@ public class RoleRepository : IRepository<Role, int>, IRoleRepository
 
     public async Task<Role> GetByIdAsync(int id)
     {
-        return await _context.Roles.FindAsync(id);
+        return (await _context.Roles.FirstOrDefaultAsync(c=>c.Id==id))!;
     }
 
     public async Task<Role> AddAsync(Role role)
@@ -57,7 +57,16 @@ public class RoleRepository : IRepository<Role, int>, IRoleRepository
         }
 
         var claims = await _context.RoleClaims
-            .Where(rc => rc.RoleId == user.Result.RoleId)
+            .Where(rc => user.Result != null && rc.RoleId == user.Result.RoleId)
+            .Select(rc=>rc.ManageModel)
+            .ToListAsync();
+        return claims;
+    }
+
+    public async Task<List<ManageModel>> GetRoleClaimsByRoleId(int id)
+    {
+        var claims = await _context.RoleClaims
+            .Where(rc => rc.RoleId == id)
             .Select(rc=>rc.ManageModel)
             .ToListAsync();
         return claims;
@@ -68,5 +77,18 @@ public class RoleRepository : IRepository<Role, int>, IRoleRepository
         var add = _context.RoleClaims.Add(roleClaim);
         await _context.SaveChangesAsync();
         return add.Entity;
+    }
+
+    public async Task RemoveAllByRoleId(int id)
+    {
+        var claims = await _context.RoleClaims
+            .Where(rc => rc.RoleId == id)
+            .ToListAsync();
+
+        // Delete all claims.
+        foreach (var claim in claims)
+        { 
+            _context.RoleClaims.Remove(claim);
+        }
     }
 }

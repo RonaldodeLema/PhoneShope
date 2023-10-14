@@ -6,4 +6,3 @@ $(".delete").click(function () {
     $("#deleteId").val(itemData)
     $("#deleteAdmin").modal("show");
 });
-

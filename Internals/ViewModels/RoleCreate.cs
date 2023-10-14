@@ -5,6 +5,7 @@ namespace Internals.ViewModels;
 
 public class RoleCreate
 {
+    public int Id { get; set; }
     public string Name { get; set; }
     public ManageModel[] Permissions { get; set; }
 

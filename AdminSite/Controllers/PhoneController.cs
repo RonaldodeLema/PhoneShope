@@ -1,6 +1,4 @@
-using AdminSite.Manager;
-using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
+using AdminSite.Services;
 using Internals.Models;
 using Internals.Repository;
 using Internals.ViewModels;
@@ -58,7 +56,7 @@ public class PhoneController : Controller
         if (!ModelState.IsValid) return View(createPhone);
         var imagePhone = _imageService.UploadImage(image);
         var phone = createPhone.ConvertToPhone();
-        phone.Image = imagePhone.Url;
+        if (imagePhone != null) phone.Image = imagePhone.Url;
         phone.SetDateTime();
         phone.SetActionBy(User.Identity.Name);
         await _repository.AddAsync(phone);

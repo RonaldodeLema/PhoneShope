@@ -95,7 +95,7 @@
                 </td>
                 <td>
                     @{
-                        var size = item.Size.ToString().Replace("_", " ").Replace("p",".").Trim();
+                        var size = item.Size.ToString().Replace("_", " ").Replace("p", ".").Trim();
                     }
                     @size
                 </td>
@@ -117,7 +117,10 @@
                 </td>
 
                 <td>
-                    @Html.DisplayFor(modelItem => item.Color)
+                    @{
+                        var color = item.Color.ToString().Replace("_", " ");
+                    }
+                    @color
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Quantity)

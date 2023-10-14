@@ -75,8 +75,8 @@
                             </td>
 
                             <td class="d-flex justify-content-center">
+                                <a class="m-1 edit btn btn-danger text-white" data-item="@item.Id">Edit</a>
                                 <a class="m-1 delete btn btn-dark text-white" data-item="@item.Id">Delete</a>
-                                <a class="m-1 delete btn btn-danger text-white" data-item="@item.Id">Edit</a>
                             </td>
                         </tr>
                         count++;
@@ -99,12 +99,12 @@
                         <input type="text" class="form-control" name="Name" id="createName" required="required" placeholder="Name">
                         <label>Permission:</label> <br/>
                         @foreach (var per in Enum.GetValues(typeof(ManageModel)))
-                            {
-                                <li>
-                                    <input type="checkbox" Name="Permissions" value="@per" />
-                                    @per
-                                </li>
-                            }
+                        {
+                            <li>
+                                <input type="checkbox" Name="Permissions" value="@per"/>
+                                @per.ToString()?.Replace("_", " ")
+                            </li>
+                        }
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -114,25 +114,45 @@
             </div>
         </div>
     </form>
-    @* <form method="post" asp-action="Delete"> *@
-    @*     <div class="modal fade" id="deleteRole" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true"> *@
-    @*         <div class="modal-dialog"> *@
-    @*             <div class="modal-content"> *@
-    @*                 <div class="modal-header"> *@
-    @*                     <h5 class="modal-title" id="delTitle">Are you sure delete this role ?</h5> *@
-    @*                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button> *@
-    @*                 </div> *@
-    @*                 <div class="modal-body"> *@
-    @*                     <input type="text" hidden="hidden" class="form-control" name="id" id="deleteId" placeholder="Id"> *@
-    @*                 </div> *@
-    @*                 <div class="modal-footer"> *@
-    @*                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> *@
-    @*                     <button type="submit" class="btn btn-primary save">Delete</button> *@
-    @*                 </div> *@
-    @*             </div> *@
-    @*         </div> *@
-    @*     </div> *@
-    @* </form> *@
+
+    <form method="post" asp-action="Edit">
+        <div class="modal fade" id="editRole" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editTitle">Edit new Role</h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" id="editBody">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary save">Edit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <form method="post" asp-action="Delete">
+        <div class="modal fade" id="deleteRole" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="delTitle">Are you sure delete this role ?</h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" hidden="hidden" class="form-control" name="id" id="deleteId" placeholder="Id">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary save">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 
 @section _Footer {

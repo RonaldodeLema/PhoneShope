@@ -1,4 +1,4 @@
-﻿using AdminSite.Manager;
+﻿using AdminSite.Services;
 using AdminSite.Policies;
 using Internals.Database;
 using Internals.Models;
@@ -30,7 +30,6 @@ public class Startup
             options.MinimumSameSitePolicy = SameSiteMode.None;  
         });
         services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
-        
 
         // Add DI
         services.AddScoped<IRepository<Admin, int>, AdminRepository>();
@@ -52,6 +51,7 @@ public class Startup
 
         services.AddScoped<IRepository<Role, int>, RoleRepository>();
         services.AddScoped<IRoleRepository, RoleRepository>();
+        services.AddSingleton<FcmService>();
         
         services.AddAuthorization(options =>
         {
@@ -64,8 +64,8 @@ public class Startup
             options.AddPolicy(ManageModel.Manage_User.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(ManageModel.Manage_User)));
             options.AddPolicy(ManageModel.Manage_Phone_Detail.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(ManageModel.Manage_Phone_Detail)));
             options.AddPolicy(ManageModel.Manage_Role.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(ManageModel.Manage_Role)));
+            
         });
-        
         services.AddScoped<IAuthorizationHandler, ManageModelHandler>();
     }
 
@@ -80,7 +80,20 @@ public class Startup
             app.UseExceptionHandler("/Error");
             app.UseHsts();
         }
-        app.UseStatusCodePagesWithRedirects("/Home/Error");
+        app.Use(async (context, next) =>
+        {
+            await next();
+            if (context.Response.StatusCode == 404)
+            {
+                context.Request.Path = "/Home/Error";
+                await next();
+            }
+            if (context.Response.StatusCode == 401)
+            {
+                context.Request.Path = "/Account/Denied";
+                await next();
+            }
+        });
         app.UseHttpsRedirection();
         app.UseStaticFiles();
         app.UseAuthentication();
@@ -92,21 +105,6 @@ public class Startup
             endpoints.MapControllerRoute(
                 "default",
                 "{controller=Account}/{action=Index}/{id?}");
-            endpoints.MapControllerRoute(
-                "Home",
-                "{controller=Home}/{action=Index}/{id?}");
-            endpoints.MapControllerRoute(
-                "Admin",
-                "{controller=Admin}/{action=Index}/{id?}");
-            endpoints.MapControllerRoute(
-                "User",
-                "{controller=User}/{action=Index}/{id?}");
-            endpoints.MapControllerRoute(
-                "Phone",
-                "{controller=Phone}/{action=Index}/{id?}");
-            endpoints.MapControllerRoute(
-                "PhoneDetail",
-                "{controller=PhoneDetail}/{action=Index}/{id?}");
         });
     }
 }

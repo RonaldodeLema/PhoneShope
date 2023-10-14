@@ -3,7 +3,7 @@ using CloudinaryDotNet.Actions;
 using Internals.Models;
 using Internals.Repository;
 
-namespace AdminSite.Manager;
+namespace AdminSite.Services;
 
 public class ImageService
 {

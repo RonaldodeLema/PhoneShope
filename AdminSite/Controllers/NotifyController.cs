@@ -1,5 +1,5 @@
+using AdminSite.Services;
 using FirebaseAdmin.Messaging;
-using Internals.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,37 +7,30 @@ namespace AdminSite.Controllers;
 [Authorize("Manage_Notify")]
 public class NotifyController : Controller
 {
+    private FcmService _fcmService;
+    public NotifyController(FcmService fcmService)
+    {
+        _fcmService = fcmService;
+    }
 
-    [HttpPost]
-    public async Task<IActionResult> SendMessageAsync([FromBody] Notify notify) 
+    public async Task<IActionResult> Index() 
     {
         var message = new Message()
         {
-            Notification = new FirebaseAdmin.Messaging.Notification()
+            Notification = new Notification()
             {
-                Title = notify.Title,
-                Body = notify.Body,
+                Title = "clmm",
+                Body = "buff ban",
             },
             Data = new Dictionary<string, string>()
             {
                 ["FirstName"] = "John",
                 ["LastName"] = "Doe"
             },
-            Token = notify.DeviceToken
+            Token = "eh5de4GSo67fIneQoHF62Y:APA91bGIFAvHrfZa6oANuZzZR6Vfty2B7z0ATxn4YFndcFi4auEdR-WlPb6IEjWq5zj_3Dd7iFQuxzHdfp1MtuQvfgKGkDai-NvorIOevJup-oNcfOx2zXG3xdMKbe0tND3P0ZI3iPTN"
         };
-
-        var messaging = FirebaseMessaging.DefaultInstance;
-        var result = await messaging.SendAsync(message);
-
-        if (!string.IsNullOrEmpty(result))
-        {
-            // Message was sent successfully
-            return Ok("Message sent successfully!");
-        }
-        else
-        {
-            // There was an error sending the message
-            throw new Exception("Error sending the message.");
-        }
+        var result = await _fcmService.FirebaseMessaging.SendAsync(message);
+        Console.Write(result);
+        return View();
     }
 }

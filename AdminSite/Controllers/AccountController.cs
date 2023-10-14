@@ -61,6 +61,10 @@ public class AccountController : Controller
   
         return RedirectToAction("Index", "Home");
     }
+    public IActionResult AccessDenied()
+    {
+        return View();
+    }
     public IActionResult Logout()
     {
         HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
