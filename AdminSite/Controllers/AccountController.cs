@@ -65,6 +65,7 @@ public class AccountController : Controller
     {
         return View();
     }
+    [Authorize]
     public IActionResult Logout()
     {
         HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

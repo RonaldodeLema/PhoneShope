@@ -202,6 +202,7 @@ namespace Internals.Database
                 Avatar = "avatar.png",
                 Username = "user",
                 Password = "123456",
+                DeviceToken = "eh5de4GSo67fIneQoHF62Y:APA91bGIFAvHrfZa6oANuZzZR6Vfty2B7z0ATxn4YFndcFi4auEdR-WlPb6IEjWq5zj_3Dd7iFQuxzHdfp1MtuQvfgKGkDai-NvorIOevJup-oNcfOx2zXG3xdMKbe0tND3P0ZI3iPTN",
                 IsBlocked = false,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now
@@ -217,6 +218,7 @@ namespace Internals.Database
                 Username = "user1",
                 Password = "123456",
                 IsBlocked = false,
+                DeviceToken = "fzyRM6Y6OClBQYCA3MzwjM:APA91bFwNg89lbklDByO_t7DgLCsr18UzPIEisfTTIcKqtdm0gSDyy45RsKlTngfi0tMGPTpGeBZS5mtqsHxHwmtXqK3TW7k8aikmjAjGtOC1wnPj5ueEYc5gEYPPZA7NhJm3AXP_2r9",
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now
             };
