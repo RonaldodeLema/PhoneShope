@@ -21,6 +21,7 @@ public class DbPhoneStoreContext: DbContext
     public DbSet<Image> Images { get; set; }
     public DbSet<Role> Roles { get; set; }
     public DbSet<RoleClaim> RoleClaims { get; set; }
+    public DbSet<Payment> Payments { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -37,5 +38,6 @@ public class DbPhoneStoreContext: DbContext
         modelBuilder.Entity<Image>().ToTable("Image");
         modelBuilder.Entity<Role>().ToTable("Role");
         modelBuilder.Entity<RoleClaim>().ToTable("RoleClaim");
+        modelBuilder.Entity<Payment>().ToTable("Payment");
     }
 }

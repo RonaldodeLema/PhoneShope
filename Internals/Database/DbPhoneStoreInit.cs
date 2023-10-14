@@ -250,6 +250,51 @@ namespace Internals.Database
             context.OrderItems.Add(orderItem3);
             context.OrderItems.Add(orderItem4);
             context.SaveChanges();
+            
+            var payment = new Payment()
+            {
+                Owner = "TRAN VAN THAO",
+                NumberCard = "0911452692",
+                Method = Method.Momo,
+                QRCode = "http://res.cloudinary.com/drabm29xb/image/upload/v1697284330/wslxavkrhbiigshaxjk1.png"
+            };
+            context.Payments.Add(payment);
+            context.SaveChanges();
+
+            var promotion = new Promotion
+            {
+                CategoryId = 1,
+                UserId = 1,
+                Name = "Sale off 20/10/2023",
+                Code = "AJSHASDAK",
+                IsUsed = false,
+                Description = "sale of 20/10 have many promotion and deep sale",
+                StartDate = new DateTime(2023, 10, 20),
+                EndDate = new DateTime(2023, 10, 25),
+                MinTotal = 30000000,
+                MaxReduce = 2000000,
+                Percentage = 0.1,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                CreatedBy = "vanthao",
+                UpdatedBy = "vanthao"
+            };
+            context.Promotions.Add(promotion);
+            context.SaveChanges();
+            var dict = new Dictionary<string, string>();
+            dict.Add("Say","Hello bruh");
+            var notify = new Notify
+            {
+                Title = "Say hello all member in store",
+                Body = "Hello bro",
+                Data = dict,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                CreatedBy = "vanthao",
+                UpdatedBy = "vanthao"
+            };
+            context.Notifications.Add(notify);
+            context.SaveChanges();
         }
     }
 }
