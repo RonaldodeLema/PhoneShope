@@ -89,7 +89,10 @@ public class PhoneController : Controller
         {
             // remove old image
             var oldImage = _imageService.FindImageByUrl(currentPhone.Image);
-            _imageService.DeleteImage(oldImage.PublicId);
+            if (oldImage != null)
+            {
+                _imageService.DeleteImage(oldImage.PublicId);
+            }
             // Add new image
             var newImage = _imageService.UploadImage(image);
             currentPhone.Image = newImage.Url;

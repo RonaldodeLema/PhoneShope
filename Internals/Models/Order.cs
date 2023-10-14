@@ -14,4 +14,15 @@ public class Order
 
     public User User { get; set; }
     public virtual List<OrderItem>? OrderItems { get; set; }
+    
+    public void SetDateTime()
+    {
+        CreatedAt = DateTime.Now;
+        UpdatedAt = DateTime.Now;
+    }
+    public void SetUpdateDate()
+    {
+        UpdatedAt = DateTime.Now;
+    }
+    
 }

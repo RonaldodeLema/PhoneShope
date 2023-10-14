@@ -11,4 +11,19 @@ public class OrderItem
 
     public Order Order { get; set; }
     public PhoneDetails PhoneDetails { get; set; }
+
+    public double TotalItems()
+    {
+        return PhoneDetails.CalPrice(Quantity);
+    }
+    public void SetDateTime()
+    {
+        CreatedAt = DateTime.Now;
+        UpdatedAt = DateTime.Now;
+    }
+    public void SetUpdateDate()
+    {
+        UpdatedAt = DateTime.Now;
+    }
+ 
 }

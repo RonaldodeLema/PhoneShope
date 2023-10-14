@@ -46,11 +46,16 @@ public class Startup
         services.AddScoped<IRepository<PhoneDetails, int>, PhoneDetailRepository>();
         services.AddScoped<IPhoneDetailRepository, PhoneDetailRepository>();
         
+        services.AddScoped<IRepository<Order, int>, OrderRepository>();
+        services.AddScoped<IOrderRepository, OrderRepository>();
+        
+        
         services.AddScoped<ImageService>();
         services.AddScoped<IImageRepository,ImageRepository>();
 
         services.AddScoped<IRepository<Role, int>, RoleRepository>();
         services.AddScoped<IRoleRepository, RoleRepository>();
+        
         services.AddSingleton<FcmService>();
         
         services.AddAuthorization(options =>

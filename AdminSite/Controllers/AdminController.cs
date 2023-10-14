@@ -7,7 +7,6 @@ using Internals.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Notification = Internals.Models.Notification;
 
 namespace AdminSite.Controllers;
 [Authorize("Manage_Admin")]
