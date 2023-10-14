@@ -7,7 +7,7 @@ namespace AdminSite.Controllers;
 [Authorize("Manage_Notify")]
 public class NotifyController : Controller
 {
-    private FcmService _fcmService;
+    private readonly FcmService _fcmService;
     public NotifyController(FcmService fcmService)
     {
         _fcmService = fcmService;

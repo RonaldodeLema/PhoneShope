@@ -17,7 +17,7 @@ public class DbPhoneStoreContext: DbContext
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }
     public DbSet<Promotion> Promotions { get; set; }
-    public DbSet<Notification> Notifications { get; set; }
+    public DbSet<Notify> Notifications { get; set; }
     public DbSet<Image> Images { get; set; }
     public DbSet<Role> Roles { get; set; }
     public DbSet<RoleClaim> RoleClaims { get; set; }
@@ -33,7 +33,7 @@ public class DbPhoneStoreContext: DbContext
         modelBuilder.Entity<Order>().ToTable("Order");
         modelBuilder.Entity<OrderItem>().ToTable("OrderItem");
         modelBuilder.Entity<Promotion>().ToTable("Promotion");
-        modelBuilder.Entity<Notification>().ToTable("Notification");
+        modelBuilder.Entity<Notify>().ToTable("Notification");
         modelBuilder.Entity<Image>().ToTable("Image");
         modelBuilder.Entity<Role>().ToTable("Role");
         modelBuilder.Entity<RoleClaim>().ToTable("RoleClaim");

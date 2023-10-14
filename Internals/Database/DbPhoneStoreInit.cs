@@ -5,6 +5,7 @@ namespace Internals.Database
 {
     public static class DbPhoneStoreInit
     {
+        [Obsolete("Obsolete")]
         public static void InitializeDatabase(DbPhoneStoreContext context)
         {
             context.Database.EnsureCreated();
@@ -46,7 +47,7 @@ namespace Internals.Database
                 new Phone
                 {
                     CategoryId = 1, Name = "iPhone 14 Pro Max",
-                    Description = "The latest and greatest iPhone from Apple.", Image = "iphone-15-pro-max.png",
+                    Description = "The latest and greatest iPhone from Apple.", Image = "http://res.cloudinary.com/drabm29xb/image/upload/v1697284330/wslxavkrhbiigshaxjk1.png",
                     Brand = BrandPhone.Apple, CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
                     CreatedBy = "vanthao",
@@ -56,7 +57,7 @@ namespace Internals.Database
                 {
                     CategoryId = 1, Name = "iPhone 13 Pro Max",
                     Description = "The latest and greatest Android phone from Samsung.",
-                    Image = "iphone-15-pro-max.png", Brand = BrandPhone.Apple, CreatedAt = DateTime.Now,
+                    Image = "http://res.cloudinary.com/drabm29xb/image/upload/v1697284330/wslxavkrhbiigshaxjk1.png", Brand = BrandPhone.Apple, CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
                     CreatedBy = "vanthao",
                     UpdatedBy = "vanthao"
@@ -64,7 +65,7 @@ namespace Internals.Database
                 new Phone
                 {
                     CategoryId = 2, Name = "SamSung Z Fold 4",
-                    Description = "The latest and greatest Pixel phone from Google.", Image = "iphone-15-pro-max.png",
+                    Description = "The latest and greatest Pixel phone from Google.", Image = "http://res.cloudinary.com/drabm29xb/image/upload/v1697284330/wslxavkrhbiigshaxjk1.png",
                     Brand = BrandPhone.Samsung, CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
                     CreatedBy = "vanthao",
