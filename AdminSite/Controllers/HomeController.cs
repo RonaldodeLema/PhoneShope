@@ -1,4 +1,7 @@
 ﻿using System.Diagnostics;
+using System.Globalization;
+using System.Text;
+using CsvHelper;
 using Internals.Models;
 using Internals.Repository;
 using Internals.ViewModels;
@@ -28,7 +31,22 @@ public class HomeController : Controller
         };
         return View(statistic);
     }
+    [Authorize("Export_DataCsv")]
+    public async Task<IActionResult> ExportDataToCsv()
+    {
+        var listDataExport = _orderRepository.ExportCsvAnnually(DateTime.Now.Year);
+        var builder = new StringBuilder();
+        var stringWriter = new StringWriter(builder);
 
+        // Writing the CSV file
+        await using (var csv = new CsvWriter(stringWriter, CultureInfo.InvariantCulture))
+        {
+            await csv.WriteRecordsAsync(listDataExport.Result);
+        }
+
+        var buffer = Encoding.ASCII.GetBytes(stringWriter.ToString());
+        return File(buffer, "text/csv", "ReportEarningManually.csv");
+    }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

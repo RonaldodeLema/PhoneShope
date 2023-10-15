@@ -1,7 +1,9 @@
 using Internals.Database;
 using Internals.Models;
 using Internals.Models.Enum;
+using Internals.ViewModels;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 
 namespace Internals.Repository;
 
@@ -83,5 +85,36 @@ public class OrderRepository: IRepository<Order,int>, IOrderRepository
     public async Task<int> GetAllOrderPending()
     {
         return await _context.Orders.CountAsync(a => a.Status == Status.Depending);
+    }
+
+    public async Task<List<DataExportCsv>> ExportCsvAnnually(int year)
+    {
+        var orderItems = await _context.OrderItems
+            .Include(item => item.Order)
+            .ThenInclude(item => item.User)
+            .Include(item => item.PhoneDetails)
+            .ThenInclude(item => item.Phone)
+            .Where(item => item.Order.CreatedAt.Year == year && item.Order.Status == Status.Success)
+            .Select(item => new
+            {
+                Name = item.Order.User.Name,
+                Quantity = item.Quantity,
+                NamePhone = item.PhoneDetails.Phone.Name,
+                Information =item.PhoneDetails.GetInformation(),
+                TotalPrice = item.TotalItems(),
+                DateCreated = item.Order.CreatedAt
+            }).ToListAsync();;
+        var listDataExport = orderItems.Select(orderItem => new DataExportCsv()
+            {
+                Id = orderItems.IndexOf(orderItem)+1,
+                Name = orderItem.Name,
+                Quantity = orderItem.Quantity,
+                NamePhone = orderItem.NamePhone,
+                Information = orderItem.Information,
+                TotalPrice = orderItem.TotalPrice,
+                DateCreated = orderItem.DateCreated
+            })
+            .ToList();
+        return listDataExport;
     }
 }
