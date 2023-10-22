@@ -12,6 +12,7 @@
 
     <ItemGroup>
       <PackageReference Include="CloudinaryDotNet" Version="1.22.0" />
+      <PackageReference Include="CsvHelper" Version="30.0.1" />
       <PackageReference Include="FirebaseAdmin" Version="2.4.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.12" />
       <PackageReference Include="MySql.EntityFrameworkCore" Version="7.0.5" />
@@ -19,7 +20,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Include="wwwroot\fcm\config.js" />
       <None Include="wwwroot\firebase-messaging-sw.js" />
     </ItemGroup>
 

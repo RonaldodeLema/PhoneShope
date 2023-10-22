@@ -1,5 +1,5 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js';
-import { getMessaging , getToken} from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-messaging.js';
+import { getMessaging} from 'https://www.gstatic.com/firebasejs/10.4.0/firebase-messaging-sw.js';
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
@@ -14,14 +14,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
-const vapidKey = "BO5o60r4w63Q7wDRSNUKnV5QLoQeG6QdWtoJh1B_RMTkiMt5yhzxhbkaqod1vccIdMHIFII_0mIBdWeia6BNQDg";
-
-console.log("have app");
 const messaging = getMessaging(app);
 
-console.log("have messaging", messaging);
 
-getToken(messaging, { vapidKey })
-    .then((res) => console.log("token", res))
-    .catch((err) => console.error(err));
+

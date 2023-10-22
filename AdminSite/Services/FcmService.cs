@@ -13,7 +13,7 @@ public class FcmService
         var app = FirebaseApp.Create(new AppOptions()
         {
             Credential = GoogleCredential.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
-                "push-notify-87a05-firebase-adminsdk.json")),
+                "push-notify-87a05-firebase-adminsdk.json"))
         });
         FirebaseMessaging = FirebaseMessaging.GetMessaging(app);
     }

@@ -10,5 +10,6 @@ public enum ManageModel
     Manage_Promotion,
     Manage_Order,
     Manage_Phone_Detail,
-    Manage_Role
+    Manage_Role,
+    Export_DataCsv
 }

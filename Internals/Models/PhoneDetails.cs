@@ -20,12 +20,12 @@ public class PhoneDetails
     public DateTime UpdatedAt { get; set; }
     public bool OutOfStock()
     {
-        return this.Quantity == 0;
+        return Quantity == 0;
     }
 
     public double CalPrice(int quantity)
     {
-        return quantity * this.Price;
+        return quantity * Price;
     }
     public void SetDateTime()
     {
@@ -45,6 +45,11 @@ public class PhoneDetails
     public void SetUpdateBy(string username)
     {
         UpdatedBy = username;
+    }
+    public string GetInformation()
+    {
+        var info = "Color: "+Color + ", Storage: " + Storage + ", RAM: " + RAM + ", Size:" + Size.ToString().Replace("p",".");
+        return info.Replace("_", " ").Trim();
     }
     
 }

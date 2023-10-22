@@ -1,0 +1,169 @@
+@using NuGet.Protocol
+@model IEnumerable<Promotion>
+@{
+    ViewData["Title"] = "Management Promotion";
+}
+
+@section _Header {
+    <link href="~/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+}
+
+<h1>Management Promotion</h1>
+<div class="alert alert-info" id="inform"> @Html.ValidationSummary()</div>
+<div id="mainTable" class="table-responsive">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <div class="row d-flex justify-content-lg-between">
+                <h6 class="m-0 col-6 font-weight-bold text-primary">Table Promotion</h6>
+                <a class="btn btn-primary col-2 text-white p-2" id="create">Create new promotion</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable">
+                    <thead>
+                    <tr>
+                        <th>
+                            STT
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Code)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Percentage)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Description)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.StartDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EndDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.MaxReduce)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.MinTotal)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IsUsed)
+                        </th>
+
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>
+                            STT
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Code)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Percentage)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Description)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.StartDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.EndDate)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.MaxReduce)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.MinTotal)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IsUsed)
+                        </th>
+
+                        <th></th>
+                    </tr>
+
+                    </tfoot>
+                    <tbody>
+                    @{
+                        var count = 1;
+                    }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @count
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Code)
+                            </td>
+                            <td>
+                                @{
+                                    var percent = item.Percentage * 100;
+                                }
+                                    @percent%
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.StartDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.EndDate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.MaxReduce)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.MinTotal)
+                            </td>
+                            <td>
+                                @if (item.IsUsed)
+                                {
+                                    <span>Used</span>
+                                }
+                                @if (!item.IsUsed)
+                                {
+                                    <span>Not use</span>
+                                }
+                            </td>
+
+                            <td class="d-flex justify-content-center">
+                                <a class="m-1 edit btn btn-danger text-white" data-item="@item.Id">Edit</a>
+                                <a class="m-1 delete btn btn-dark text-white" data-item="@item.Id">Delete</a>
+                            </td>
+                        </tr>
+                        count++;
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section _Footer {
+    <!-- Page level plugins -->
+    <script src="~/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="~/js/demo/datatables-demo.js"></script>
+}

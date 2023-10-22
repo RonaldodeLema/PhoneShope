@@ -82,7 +82,7 @@ namespace Internals.Database
                 RAM = RAM._6_GB,
                 Storage = Storage._1_TB,
                 Quantity = 100,
-                Price = 1000,
+                Price = 30000000,
                 PhoneId = 1,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
@@ -96,7 +96,7 @@ namespace Internals.Database
                 RAM = RAM._8_GB,
                 Storage = Storage._256_GB,
                 Quantity = 100,
-                Price = 1000,
+                Price = 35000000,
                 PhoneId = 3,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
@@ -110,7 +110,7 @@ namespace Internals.Database
                 RAM = RAM._6_GB,
                 Storage = Storage._512_GB,
                 Quantity = 100,
-                Price = 1000,
+                Price = 40000000,
                 PhoneId = 2,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
@@ -175,6 +175,11 @@ namespace Internals.Database
                 RoleId = 1,
                 ManageModel = ManageModel.Manage_Role
             };
+            var roleClaim10 = new RoleClaim()
+            {
+                RoleId = 1,
+                ManageModel = ManageModel.Export_DataCsv
+            };
             context.RoleClaims.Add(roleClaim1);
             context.RoleClaims.Add(roleClaim2);
             context.RoleClaims.Add(roleClaim3);
@@ -184,6 +189,7 @@ namespace Internals.Database
             context.RoleClaims.Add(roleClaim7);
             context.RoleClaims.Add(roleClaim8);
             context.RoleClaims.Add(roleClaim9);
+            context.RoleClaims.Add(roleClaim10);
             context.SaveChanges();
             var admin = new Admin()
             {

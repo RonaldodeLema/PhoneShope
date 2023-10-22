@@ -48,14 +48,16 @@ public class Startup
         
         services.AddScoped<IRepository<Order, int>, OrderRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();
-        
-        
-        services.AddScoped<ImageService>();
-        services.AddScoped<IImageRepository,ImageRepository>();
 
         services.AddScoped<IRepository<Role, int>, RoleRepository>();
         services.AddScoped<IRoleRepository, RoleRepository>();
         
+        services.AddScoped<IRepository<Payment, int>, PaymentRepository>();
+        
+        services.AddScoped<IRepository<Promotion, int>, PromotionRepository>();
+        
+        services.AddScoped<ImageService>();
+        services.AddScoped<IImageRepository,ImageRepository>();
         services.AddSingleton<FcmService>();
         
         services.AddAuthorization(options =>
@@ -69,6 +71,7 @@ public class Startup
             options.AddPolicy(ManageModel.Manage_User.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(ManageModel.Manage_User)));
             options.AddPolicy(ManageModel.Manage_Phone_Detail.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(ManageModel.Manage_Phone_Detail)));
             options.AddPolicy(ManageModel.Manage_Role.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(ManageModel.Manage_Role)));
+            options.AddPolicy(ManageModel.Export_DataCsv.ToString(), policy => policy.Requirements.Add(new ManageModelRequirement(ManageModel.Export_DataCsv)));
             
         });
         services.AddScoped<IAuthorizationHandler, ManageModelHandler>();
