@@ -1,0 +1,387 @@
+@using Internals.Models.Enum
+@model Internals.ViewModels.ShopPage
+@{
+    ViewData["Title"] = "Shop Page";
+}
+
+@section _Header
+{
+    <link rel="stylesheet" href="~/css/nice-select.css">
+    <link rel="stylesheet" href="~/css/price_rangs.css">
+}
+
+<!--================Home Banner Area =================-->
+<!-- breadcrumb start-->
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <h2>Shop Phone</h2>
+                        <p>Home <span>-</span> Shop Phone</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- breadcrumb start-->
+
+<!--================Category Product Area =================-->
+<section class="cat_product_area section_padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="left_sidebar_area">
+                    <aside class="left_widgets p_filter_widgets">
+                        <div class="l_w_title">
+                            <h3>Browse Categories</h3>
+                        </div>
+                        <div class="widgets_inner">
+                            <ul class="list">
+                                @foreach (var category in Model.Categories)
+                                {
+                                    <li>
+                                        <label for="@category.Id">
+                                            <a>@category.Name</a>
+                                        </label>
+                                        <span>
+                                            <input id="@category.Id" value="@category.Id" name="CategoryFilter[]" class="filter" type="checkbox"/>
+                                        </span>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </aside>
+
+                    <aside class="left_widgets p_filter_widgets">
+                        <div class="l_w_title">
+                            <h3>Brand filters</h3>
+                        </div>
+                        <div class="widgets_inner">
+                            <ul class="list">
+                                @foreach (BrandPhone brand in Enum.GetValues(typeof(BrandPhone)))
+                                {
+                                    <li>
+                                        <label for="@brand">
+                                            <a>@brand</a>
+                                        </label>
+                                        <span>
+                                            <input id="@brand" name="BrandFilter[]" class="filter" type="checkbox" value="@brand"/>
+                                        </span>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </aside>
+                    <aside class="left_widgets p_filter_widgets">
+                        <div class="l_w_title">
+                            <h3>RAM Filter</h3>
+                        </div>
+                        <div class="widgets_inner">
+                            <ul class="list">
+                                @foreach (RAM ram in Enum.GetValues(typeof(RAM)))
+                                {
+                                    var format = ram.ToString().Replace("_", " ").Trim();
+                                    <li>
+                                        <label for="@ram">
+
+                                            <a>@format</a>
+                                        </label>
+                                        <span>
+                                            <input id="@ram" name="RamFilter[]" class="filter" type="checkbox" value="@ram"/>
+                                        </span>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </aside>
+                    <aside class="left_widgets p_filter_widgets">
+                        <div class="l_w_title">
+                            <h3>Storage Filter</h3>
+                        </div>
+                        <div class="widgets_inner">
+                            <ul class="list">
+                                @foreach (Storage storage in Enum.GetValues(typeof(Storage)))
+                                {
+                                    var format = storage.ToString().Replace("_", " ").Trim();
+                                    <li>
+                                        <label for="@storage">
+
+                                            <a>@format</a>
+                                        </label>
+                                        <span>
+                                            <input id="@storage" name="StorageFilter[]" class="filter" type="checkbox" value="@storage"/>
+                                        </span>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </aside>
+
+                    <aside class="left_widgets p_filter_widgets">
+                        <div class="l_w_title">
+                            <h3>Color Filter</h3>
+                        </div>
+                        <div class="widgets_inner">
+                            <ul class="list">
+                                <ul class="list">
+                                    @foreach (Color color in Enum.GetValues(typeof(Color)))
+                                    {
+                                        var format = color.ToString().Replace("_", " ").Trim();
+                                        <li>
+                                            <label for="@color">
+
+                                                <a>@format</a>
+                                            </label>
+                                            <span>
+                                                <input id="@color" name="ColorFilter[]" class="filter" type="checkbox" value="@color"/>
+                                            </span>
+                                        </li>
+                                    }
+                                </ul>
+                            </ul>
+                        </div>
+                    </aside>
+
+                    <aside class="left_widgets p_filter_widgets price_rangs_aside">
+                        <div class="l_w_title">
+                            <h3>Price Filter</h3>
+                        </div>
+                        <div class="widgets_inner">
+                            <div class="range_item">
+                                <!-- <div id="slider-range"></div> -->
+                                <input type="text" class="js-range-slider" value=""/>
+                                <div class="d-flex">
+                                    <div class="price_text">
+                                        <p>Price:</p>
+                                    </div>
+                                    <div class="price_value d-flex justify-content-center">
+                                        <input type="text" name="MinRangePrice" class="js-input-from filter" id="MinRangePrice" readonly/>
+                                        <span>to</span>
+                                        <input type="text" name="MaxRangePrice" class="js-input-to filter" id="MaxRangePrice" readonly/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="product_top_bar d-flex justify-content-between align-items-center">
+                            <div class="single_product_menu">
+                                <p><span id="totalPhone">@Model.TotalPhone </span> Phones Found</p>
+                            </div>
+                            <div class="single_product_menu d-flex">
+                                <h5>short by : </h5>
+                                <select>
+                                    <option data-display="Select">select option</option>
+                                    <option value="1">price</option>
+                                    <option value="2">product</option>
+                                </select>
+                            </div>
+                            <div class="single_product_menu d-flex">
+                                <div class="input-group">
+                                    <input type="text" id="search" class="form-control pe-5 ps-5 filter" placeholder="search"
+                                           aria-describedby="inputGroupPrepend">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend">
+                                            <i
+                                                class="ti-search">
+                                            </i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row align-items-center latest_product_inner" id="displayPhone">
+                  
+                </div>
+                <div class="col-lg-12">
+                    <div class="pageination">
+                        <nav aria-label="Page navigation example">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item">
+                                    <a class="page-link" aria-label="Previous">
+                                        <i class="ti-angle-double-left"></i>
+                                    </a>
+                                </li>
+                                @for (var i = 1; i < (Model.TotalPhone / Model.QuantityDisplay)+1; i++)
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link btn btn-link breakPage" id="@i">@i</a>
+                                    </li>
+                                }
+                                <li class="page-item">
+                                    <a class="page-link" aria-label="Next">
+                                        <i class="ti-angle-double-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Category Product Area =================-->
+
+<!-- product_list part start-->
+<section class="product_list best_seller">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
+                <div class="section_tittle text-center">
+                    <h2>Best Sellers <span>shop</span></h2>
+                </div>
+            </div>
+        </div>
+        <div class="row align-items-center justify-content-between">
+            <div class="col-lg-12">
+                <div class="best_product_slider owl-carousel">
+                    <div class="single_product_item">
+                        <img src="img/product/product_1.png" alt="">
+                        <div class="single_product_text">
+                            <h4>Quartz Belt Watch</h4>
+                            <h3>$150.00</h3>
+                        </div>
+                    </div>
+                    <div class="single_product_item">
+                        <img src="img/product/product_2.png" alt="">
+                        <div class="single_product_text">
+                            <h4>Quartz Belt Watch</h4>
+                            <h3>$150.00</h3>
+                        </div>
+                    </div>
+                    <div class="single_product_item">
+                        <img src="img/product/product_3.png" alt="">
+                        <div class="single_product_text">
+                            <h4>Quartz Belt Watch</h4>
+                            <h3>$150.00</h3>
+                        </div>
+                    </div>
+                    <div class="single_product_item">
+                        <img src="img/product/product_4.png" alt="">
+                        <div class="single_product_text">
+                            <h4>Quartz Belt Watch</h4>
+                            <h3>$150.00</h3>
+                        </div>
+                    </div>
+                    <div class="single_product_item">
+                        <img src="img/product/product_5.png" alt="">
+                        <div class="single_product_text">
+                            <h4>Quartz Belt Watch</h4>
+                            <h3>$150.00</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- product_list part end-->
+
+@section _Footer
+{
+    <script src="~/js/stellar.js"></script>
+    <script src="~/js/price_rangs.js"></script>
+    <script>
+    $(document).ready(function () {
+        function getBreakPage(pageNum) {
+            const ColorFilter = $('input[name="ColorFilter[]"]:checked').map(function() {
+              return this.value;
+            }).get();
+            const StorageFilter = $('input[name="StorageFilter[]"]:checked').map(function() {
+              return this.value;
+            }).get();
+            const RamFilter = $('input[name="RamFilter[]"]:checked').map(function() {
+               return this.value;
+             }).get();
+            const CategoryFilter = $('input[name="CategoryFilter[]"]:checked').map(function() {
+               return this.value;
+             }).get();
+            const BrandFilter = $('input[name="BrandFilter[]"]:checked').map(function() {
+               return this.value;
+             }).get();
+            $.ajax({
+                url: '@Url.Action("BreakPage", "ShopPage")',
+                type: "POST",
+                contentType: 'application/json',
+                data:JSON.stringify({ 
+                    PageNum: pageNum,
+                    Quantity:@Model.QuantityDisplay,
+                    ColorFilter:ColorFilter,
+                    StorageFilter:StorageFilter,
+                    BrandFilter:BrandFilter,
+                    RamFilter:RamFilter,
+                    CategoryFilter:CategoryFilter,
+                    MinRangePrice:$("#MinRangePrice").val(),
+                    MaxRangePrice:$("#MaxRangePrice").val(),
+                    KeySearch:$("#search").val()
+                 }) ,
+                success: function (data) {
+                    $("#displayPhone").html(data);
+                },
+                error: function (data) {
+                    alert("something went wrong.");
+                }
+            });
+        }
+        getBreakPage(1);
+        $(".breakPage").click(function () {
+            const num = $(this).attr("id")
+            getBreakPage(num);
+        })
+        
+        $(".filter").change(function (){
+            const ColorFilter = $('input[name="ColorFilter[]"]:checked').map(function() {
+              return this.value;
+            }).get();
+            const StorageFilter = $('input[name="StorageFilter[]"]:checked').map(function() {
+              return this.value;
+            }).get();
+            const RamFilter = $('input[name="RamFilter[]"]:checked').map(function() {
+               return this.value;
+             }).get();
+            const CategoryFilter = $('input[name="CategoryFilter[]"]:checked').map(function() {
+               return this.value;
+             }).get();
+            const BrandFilter = $('input[name="BrandFilter[]"]:checked').map(function() {
+               return this.value;
+             }).get();
+            $.ajax({
+                url: '@Url.Action("BreakPage", "ShopPage")',
+                type: "POST",
+                contentType: 'application/json',
+                data:JSON.stringify({ 
+                    PageNum: 1,
+                    Quantity:@Model.QuantityDisplay,
+                    ColorFilter:ColorFilter,
+                    StorageFilter:StorageFilter,
+                    BrandFilter:BrandFilter,
+                    RamFilter:RamFilter,
+                    CategoryFilter:CategoryFilter,
+                    MinRangePrice:$("#MinRangePrice").val(),
+                    MaxRangePrice:$("#MaxRangePrice").val(),
+                    KeySearch:$("#search").val()
+                 }) ,
+                success: function (data) {
+                    $("#displayPhone").html(data);
+                    var count = $('.countProduct').length;
+                    $('#totalPhone').text(count);
+                },
+                error: function (data) {
+                    alert("something went wrong.");
+                }
+            });
+        })
+    });
+</script>
+}

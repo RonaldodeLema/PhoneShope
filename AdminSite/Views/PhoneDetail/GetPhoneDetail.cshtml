@@ -8,6 +8,10 @@
                 STT
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            
+            <th>
                 @Html.DisplayNameFor(model => model.Size)
             </th>
             <th>
@@ -47,6 +51,10 @@
             <th>
                 STT
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+            
             <th>
                 @Html.DisplayNameFor(model => model.Size)
             </th>
@@ -93,6 +101,10 @@
                 <td>
                     @count
                 </td>
+                <td>
+                    <img src="@item.Image" alt="image smartphone" height="100px"/>
+                </td>
+                
                 <td>
                     @{
                         var size = item.Size.ToString().Replace("_", " ").Replace("p", ".").Trim();
@@ -141,7 +153,7 @@
 
                 <td class="d-flex justify-content-center">
                     <a class="m-1 edit btn btn-danger text-white" asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                    <a class="m-1 delete btn btn-dark text-white" data-item="@item.ToJson()">Delete</a>
+                    <a class="m-1 delete btn btn-dark text-white" data-item="@item.Id">Delete</a>
                     <a class="m-1 detail btn btn-success text-white" asp-action="Details" asp-route-id="@item.Id">Details</a>
                 </td>
             </tr>

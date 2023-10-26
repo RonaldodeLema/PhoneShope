@@ -1,0 +1,109 @@
+@{
+    ViewData["Title"] = "Cart Page";
+}
+@section _Header
+{
+    <link rel="stylesheet" href="~/css/nice-select.css">
+    <link rel="stylesheet" href="~/css/price_rangs.css">
+}
+    <!--================Home Banner Area =================-->
+    <!-- breadcrumb start-->
+    <section class="breadcrumb breadcrumb_bg">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8">
+            <div class="breadcrumb_iner">
+              <div class="breadcrumb_iner_item">
+                <h2>Cart Phones</h2>
+                <p>Home <span>-</span>Cart Phones</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- breadcrumb start-->
+  
+    <!--================Cart Area =================-->
+    <section class="cart_area padding_top">
+      <div class="container">
+      <div class="cart_inner">
+        <div class="table">
+          <table class="table">
+            <thead>
+            <tr>
+              <th scope="col">Phone</th>
+              <th scope="col">Price</th>
+              <th scope="col">Quantity</th>
+              <th scope="col">Total</th>
+              <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody id="myBody">
+            
+            </tbody>
+          </table>
+          <div class="checkout_btn_inner float-right">
+            <a class="btn_1" href="/ShopPage">Continue Shopping</a>
+            <a class="btn_1 checkout_btn_1" href="#">Proceed to checkout</a>
+          </div>
+        </div>
+      </div>
+      </div>
+    </section>
+    <!--================End Cart Area =================-->
+@section _Footer
+{
+    <script src="~/js/stellar.js"></script>
+    <script src="~/js/price_rangs.js"></script>
+    <script>
+   $(document).ready(function () {
+          function getCarts() {
+              $.ajax({
+                  url: '@Url.Action("GetCarts", "CartPage")',
+                  type: "GET",
+                  success: function (data) {
+                      $("#myBody").html(data);
+                      $(".delete").click(function (){
+                          const id = $(this).attr("id");
+                          $.ajax({
+                                url: '@Url.Action("DeleteById", "CartPage")',
+                                type: "GET",
+                                data:{id:id},
+                                success: function (data) {
+                                    console.log(data)
+                                    getCarts();
+                                },
+                                error: function (data) {
+                                    console.log(data)
+                                }
+                            });
+                          });
+                    $(".update").click(function (){
+                    const id = $(this).attr("id");
+                    const quantity = $(this).val();
+                    $.ajax({
+                          url: '@Url.Action("UpdateById", "CartPage")',
+                          type: "GET",
+                          data:{id:id,quantity:quantity},
+                          success: function (data) {
+                              console.log(data)
+                              getCarts();
+                          },
+                          error: function (data) {
+                              console.log(data)
+                          }
+                      });
+                    });
+                  },
+                  error: function (data) {
+                      console.log(data)
+                      alert("something went wrong.");
+                  }
+              });
+          }
+          getCarts();
+          
+      });
+  </script>
+}

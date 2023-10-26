@@ -47,7 +47,8 @@ namespace Internals.Database
                 new Phone
                 {
                     CategoryId = 1, Name = "iPhone 14 Pro Max",
-                    Description = "The latest and greatest iPhone from Apple.", Image = "http://res.cloudinary.com/drabm29xb/image/upload/v1697284330/wslxavkrhbiigshaxjk1.png",
+                    Description = "The latest and greatest iPhone from Apple.",
+                    Image = "http://res.cloudinary.com/drabm29xb/image/upload/v1697284330/wslxavkrhbiigshaxjk1.png",
                     Brand = BrandPhone.Apple, CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
                     CreatedBy = "vanthao",
@@ -57,7 +58,8 @@ namespace Internals.Database
                 {
                     CategoryId = 1, Name = "iPhone 13 Pro Max",
                     Description = "The latest and greatest Android phone from Samsung.",
-                    Image = "http://res.cloudinary.com/drabm29xb/image/upload/v1697284330/wslxavkrhbiigshaxjk1.png", Brand = BrandPhone.Apple, CreatedAt = DateTime.Now,
+                    Image = "http://res.cloudinary.com/drabm29xb/image/upload/v1697284330/wslxavkrhbiigshaxjk1.png",
+                    Brand = BrandPhone.Apple, CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
                     CreatedBy = "vanthao",
                     UpdatedBy = "vanthao"
@@ -65,7 +67,8 @@ namespace Internals.Database
                 new Phone
                 {
                     CategoryId = 2, Name = "SamSung Z Fold 4",
-                    Description = "The latest and greatest Pixel phone from Google.", Image = "http://res.cloudinary.com/drabm29xb/image/upload/v1697284330/wslxavkrhbiigshaxjk1.png",
+                    Description = "The latest and greatest Pixel phone from Google.",
+                    Image = "http://res.cloudinary.com/drabm29xb/image/upload/v1697284330/wslxavkrhbiigshaxjk1.png",
                     Brand = BrandPhone.Samsung, CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
                     CreatedBy = "vanthao",
@@ -77,6 +80,7 @@ namespace Internals.Database
 
             var phoneDetails = new PhoneDetails()
             {
+                Image = "http://res.cloudinary.com/drabm29xb/image/upload/v1697284330/wslxavkrhbiigshaxjk1.png",
                 Size = Size._6p5_inch,
                 Color = Color.Red,
                 RAM = RAM._6_GB,
@@ -91,6 +95,7 @@ namespace Internals.Database
             };
             var phoneDetails2 = new PhoneDetails()
             {
+                Image = "http://res.cloudinary.com/drabm29xb/image/upload/v1697284330/wslxavkrhbiigshaxjk1.png",
                 Size = Size._5p42_inch,
                 Color = Color.Black,
                 RAM = RAM._8_GB,
@@ -105,6 +110,7 @@ namespace Internals.Database
             };
             var phoneDetails1 = new PhoneDetails()
             {
+                Image = "http://res.cloudinary.com/drabm29xb/image/upload/v1697284330/wslxavkrhbiigshaxjk1.png",
                 Size = Size._6p7_inch,
                 Color = Color.White,
                 RAM = RAM._6_GB,
@@ -117,13 +123,46 @@ namespace Internals.Database
                 CreatedBy = "vanthao",
                 UpdatedBy = "vanthao"
             };
-
+            var phoneDetails3 = new PhoneDetails()
+            {
+                Image = "http://res.cloudinary.com/drabm29xb/image/upload/v1697284330/wslxavkrhbiigshaxjk1.png",
+                Size = Size._6p7_inch,
+                Color = Color.Blue,
+                RAM = RAM._6_GB,
+                Storage = Storage._512_GB,
+                Quantity = 100,
+                Price = 45000000,
+                PhoneId = 2,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                CreatedBy = "vanthao",
+                UpdatedBy = "vanthao"
+            };
             context.PhoneDetails.Add(phoneDetails);
             context.PhoneDetails.Add(phoneDetails1);
             context.PhoneDetails.Add(phoneDetails2);
+            context.PhoneDetails.Add(phoneDetails3);
             context.SaveChanges();
-            
-            var role = new Role()
+            for (int i = 0; i <= 40; i++)
+            {
+                context.PhoneDetails.Add(new PhoneDetails()
+                {
+                    Image = "http://res.cloudinary.com/drabm29xb/image/upload/v1697284330/wslxavkrhbiigshaxjk1.png",
+                    Size = (Size)(i%10),
+                    Color = (Color)(i%15),
+                    RAM = (RAM)(i%7),
+                    Storage = (Storage)(i%7),
+                    Quantity = 100,
+                    Price = 30000000+i*200000,
+                    PhoneId = i%3+1,
+                    CreatedAt = DateTime.Now,
+                    UpdatedAt = DateTime.Now,
+                    CreatedBy = "vanthao",
+                    UpdatedBy = "vanthao"
+                });
+            }
+            context.SaveChanges();
+        var role = new Role()
             {
                 Name = "Root Admin"
             };
@@ -159,7 +198,7 @@ namespace Internals.Database
                 RoleId = 1,
                 ManageModel = ManageModel.Manage_Promotion
             };
-            
+
             var roleClaim7 = new RoleClaim()
             {
                 RoleId = 1,
@@ -200,15 +239,18 @@ namespace Internals.Database
             admin.HashPassword();
             context.Admins.Add(admin);
             context.SaveChanges();
-            
+
             var user = new User()
             {
                 Name = "tran van thao",
+                PhoneNumber = "0911452692",
+                Address = "19 duong 85 tan quy quan 7",
                 Email = "user@gmail.com",
                 Avatar = "avatar.png",
                 Username = "user",
                 Password = "123456",
-                DeviceToken = "eh5de4GSo67fIneQoHF62Y:APA91bGIFAvHrfZa6oANuZzZR6Vfty2B7z0ATxn4YFndcFi4auEdR-WlPb6IEjWq5zj_3Dd7iFQuxzHdfp1MtuQvfgKGkDai-NvorIOevJup-oNcfOx2zXG3xdMKbe0tND3P0ZI3iPTN",
+                DeviceToken =
+                    "eh5de4GSo67fIneQoHF62Y:APA91bGIFAvHrfZa6oANuZzZR6Vfty2B7z0ATxn4YFndcFi4auEdR-WlPb6IEjWq5zj_3Dd7iFQuxzHdfp1MtuQvfgKGkDai-NvorIOevJup-oNcfOx2zXG3xdMKbe0tND3P0ZI3iPTN",
                 IsBlocked = false,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now
@@ -219,12 +261,15 @@ namespace Internals.Database
             user = new User()
             {
                 Name = "tran van",
+                PhoneNumber = "0911452692",
+                Address = "19 duong 85 tan quy quan 7",
                 Email = "user1@gmail.com",
                 Avatar = "avatar.png",
                 Username = "user1",
                 Password = "123456",
                 IsBlocked = false,
-                DeviceToken = "fzyRM6Y6OClBQYCA3MzwjM:APA91bFwNg89lbklDByO_t7DgLCsr18UzPIEisfTTIcKqtdm0gSDyy45RsKlTngfi0tMGPTpGeBZS5mtqsHxHwmtXqK3TW7k8aikmjAjGtOC1wnPj5ueEYc5gEYPPZA7NhJm3AXP_2r9",
+                DeviceToken =
+                    "fzyRM6Y6OClBQYCA3MzwjM:APA91bFwNg89lbklDByO_t7DgLCsr18UzPIEisfTTIcKqtdm0gSDyy45RsKlTngfi0tMGPTpGeBZS5mtqsHxHwmtXqK3TW7k8aikmjAjGtOC1wnPj5ueEYc5gEYPPZA7NhJm3AXP_2r9",
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now
             };
@@ -243,20 +288,32 @@ namespace Internals.Database
             context.Orders.Add(order3);
             context.SaveChanges();
             var orderItem1 = new OrderItem()
-                { OrderId = 1, PhoneDetailsId = 1, Quantity = 2, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            {
+                OrderId = 1, PhoneDetailsId = 1, Price = phoneDetails.Price, Quantity = 2, CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
+            };
             var orderItem2 = new OrderItem()
-                { OrderId = 1, PhoneDetailsId = 2, Quantity = 1, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            {
+                OrderId = 1, PhoneDetailsId = 2, Price = phoneDetails1.Price, Quantity = 1, CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
+            };
             var orderItem3 = new OrderItem()
-                { OrderId = 2, PhoneDetailsId = 1, Quantity = 2, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            {
+                OrderId = 2, PhoneDetailsId = 1, Price = phoneDetails2.Price, Quantity = 2, CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
+            };
             var orderItem4 = new OrderItem()
-                { OrderId = 3, PhoneDetailsId = 3, Quantity = 2, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+            {
+                OrderId = 3, PhoneDetailsId = 3, Price = phoneDetails2.Price, Quantity = 2, CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now
+            };
 
             context.OrderItems.Add(orderItem1);
             context.OrderItems.Add(orderItem2);
             context.OrderItems.Add(orderItem3);
             context.OrderItems.Add(orderItem4);
             context.SaveChanges();
-            
+
             var payment = new Payment()
             {
                 Owner = "TRAN VAN THAO",
@@ -288,7 +345,7 @@ namespace Internals.Database
             context.Promotions.Add(promotion);
             context.SaveChanges();
             var dict = new Dictionary<string, string>();
-            dict.Add("Say","Hello bruh");
+            dict.Add("Say", "Hello bruh");
             var notify = new Notify
             {
                 Title = "Say hello all member in store",

@@ -7,6 +7,7 @@ public class PhoneDetails
     public int Id { get; set; }
     
     public int PhoneId { get; set; }
+    public string Image { get; set; }
     public Size Size { get; set; }
     public Color Color { get; set; }
     public RAM RAM { get; set; }

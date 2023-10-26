@@ -1,0 +1,62 @@
+@{
+    string Format(string name,string s)
+    {
+        return name+s.Replace("_", " ").Trim();;
+    }
+
+  var subtotal = 0.0;
+}
+@foreach (var phone in Model)
+{
+    subtotal += phone.CalPrice(phone.Quantity);
+    <tr>
+        <td>
+            <div class="media">
+                <div class="d-flex">
+                    <img src="@phone.Image" width="150px" alt=""/>
+                </div>
+                <div class="media-body">
+                    <p>Name: @phone.Phone.Name<br>
+                        @Format("RAM: ",phone.RAM.ToString()), 
+                        @Format("Storage: ",phone.Storage.ToString())<br>
+                        @Format("Size: ",phone.Size.ToString()),
+                        @Format("Color: ",phone.Color.ToString())
+                    </p>
+                </div>
+            </div>
+        </td>
+        <td>
+            <h5>@phone.Price vnd</h5>
+        </td>
+        <td>
+            <div class="product_count">
+                <input class="input-number update" id="@phone.Id" type="number" value="@phone.Quantity" min="1" max="10">
+            </div>
+        </td>
+        <td>
+            <h5 class="calTotal">@phone.CalPrice(phone.Quantity) vnd</h5>
+        </td>
+        <td>
+            <button id="@phone.Id" class="btn btn-secondary delete">X</button>
+        </td>
+                
+    </tr>
+}
+<tr class="bottom_button">
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+</tr>
+<tr>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>
+        <h5>Subtotal</h5>
+    </td>
+    <td>
+        <h5>@subtotal vnd</h5>
+    </td>
+</tr>

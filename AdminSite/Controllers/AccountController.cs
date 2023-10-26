@@ -18,7 +18,7 @@ public class AccountController : Controller
     {
         if (User.Identity?.Name != null)
         {
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "HomePage");
         }
         return View();
     }
@@ -27,7 +27,7 @@ public class AccountController : Controller
     {
         if (User.Identity?.Name != null)
         {
-            RedirectToAction("Index", "Home");
+            RedirectToAction("Index", "HomePage");
         }
         return View("Index");
     }
@@ -59,7 +59,7 @@ public class AccountController : Controller
   
         HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);  
   
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("Index", "HomePage");
     }
     public IActionResult AccessDenied()
     {

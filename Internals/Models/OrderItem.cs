@@ -6,6 +6,7 @@ public class OrderItem
     public int OrderId { get; set; }
     public int PhoneDetailsId { get; set; }
     public int Quantity { get; set; }
+    public double Price { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
 
@@ -14,7 +15,7 @@ public class OrderItem
 
     public double TotalItems()
     {
-        return PhoneDetails.CalPrice(Quantity);
+        return Quantity*Price;
     }
     public void SetDateTime()
     {
