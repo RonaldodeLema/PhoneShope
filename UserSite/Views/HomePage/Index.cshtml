@@ -122,9 +122,10 @@
                                             <form action="/CartPage/AddToCart" method="post">
                                                 <input name="Quantity" value="1" hidden="hidden"/>
                                                 <input name="PhoneDetailId" value="@phoneDetail.Id" hidden="hidden"/>
-                                                <button type="submit" class="btn add_cart">+ add to cart</button>
-                                            </form>
-                                            @* <a href="#" class="add_cart">+ add to cart<i class="ti-heart"></i></a> *@
+                                                <button type="submit" class="btn btn_3">Add to cart</button>
+                                                <a asp-action="Index" asp-controller="DetailsPage" asp-route-id="@phoneDetail.Id" class="genric-btn info circle">See details</a>
+
+                                                </form>
                                         </div>
                                     </div>
                                 </div>
@@ -149,9 +150,9 @@
                                             <form action="/CartPage/AddToCart" method="post">
                                                 <input name="Quantity" value="1" hidden="hidden"/>
                                                 <input name="PhoneDetailId" value="@phoneDetail.Id" hidden="hidden"/>
-                                                <button type="submit" class="btn add_cart">+ add to cart</button>
+                                                <button type="submit" class="btn btn_3">Add to cart</button>
+                                                <a asp-action="Index" asp-controller="DetailsPage" asp-route-id="@phoneDetail.Id" class="genric-btn info circle">See details</a>
                                             </form>
-                                            @* <a href="#" class="add_cart">+ add to cart<i class="ti-heart"></i></a> *@
                                         </div>
                                     </div>
                                 </div>
@@ -232,9 +233,9 @@
                                 <form action="/CartPage/AddToCart" method="post">
                                     <input name="Quantity" value="1" hidden="hidden"/>
                                     <input name="PhoneDetailId" value="@phoneDetail.Id" hidden="hidden"/>
-                                    <button type="submit" class="btn add_cart">+ add to cart</button>
+                                    <button type="submit" class="btn btn_3">Add to cart</button>
+                                    <a asp-action="Index" asp-controller="DetailsPage" asp-route-id="@phoneDetail.Id" class="genric-btn info circle">See details</a>
                                 </form>
-                                @* <a href="#" class="add_cart">+ add to cart<i class="ti-heart"></i></a> *@
                             </div>
                         </div>
                     }

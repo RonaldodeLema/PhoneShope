@@ -50,7 +50,7 @@ public class CartPageController : Controller
         var currentModelCarts = JsonConvert.DeserializeObject<List<CartModel>>(listItemsString);
         foreach (var models in currentModelCarts!.Where(models => models.PhoneDetailId == cartModel.PhoneDetailId))
         {
-            models.Quantity += 1;
+            models.Quantity += cartModel.Quantity;
             flag = false;
             break;
         }
