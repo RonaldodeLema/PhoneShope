@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Security.Cryptography;
+using System.Text;
 
 namespace Internals.Models
 {
@@ -27,18 +28,15 @@ namespace Internals.Models
         {
             UpdatedAt = DateTime.Now;
         }
-        [Obsolete("Obsolete")]
         public void HashPassword()
         {
-            using var hasher = new System.Security.Cryptography.SHA256Managed();
-            var hashedBytes = hasher.ComputeHash(Encoding.UTF8.GetBytes(Password));
+            using var hasher = SHA256.Create();            var hashedBytes = hasher.ComputeHash(Encoding.UTF8.GetBytes(Password));
             Password = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
         }
-
-        [Obsolete("Obsolete")]
+        
         public bool ComparePasswords(string password)
         {
-            using var hasher = new System.Security.Cryptography.SHA256Managed();
+            using var hasher = SHA256.Create();
             var hashedBytes = hasher.ComputeHash(Encoding.UTF8.GetBytes(password));
             var hashedPassword = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
             return Password.Equals(hashedPassword);

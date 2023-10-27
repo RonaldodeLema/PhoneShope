@@ -134,7 +134,7 @@
                     </div>
                     <div class="single_product_list_slider">
                         <div class="row align-items-center justify-content-between">
-                            @foreach (var phoneDetail in Model.SplitNewPhones(1))
+                            @foreach (var phoneDetail in Model.SplitNewPhones(2))
                             {
                                 <div class="col-lg-3 col-sm-6">
                                     <div class="single_product_item">
@@ -245,3 +245,10 @@
     </div>
 </section>
 <!-- product_list part end-->
+@section _Footer
+{
+    <script type="module" src="~/messaging_get_token.js"></script>
+    <script src="~/js/firebase-app-sw.js"></script>
+    <script src="~/js/firebase-messaging-sw.js"></script>
+    <script type="module" src="~/messaging_receive_message.js"></script>
+}

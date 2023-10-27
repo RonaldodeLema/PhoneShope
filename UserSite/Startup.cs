@@ -1,8 +1,12 @@
-﻿using Internals.Database;
+﻿using System.Security.Cryptography;
+using System.Text;
+using Internals.Database;
 using Internals.Models;
 using Internals.Repository;
 using Internals.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using StackExchange.Redis;
 using UserSite.Services;
 using Order = Internals.Models.Order;
@@ -24,13 +28,11 @@ public class Startup
         services.AddDbContext<DbPhoneStoreContext>(options =>
             options.UseMySQL(Configuration.GetConnectionString("MySQLConnection") ?? string.Empty));
         services.AddControllersWithViews();
+        services.AddHttpContextAccessor();
+        // config jwt with JwtBearer
+        SiteKeys.Configure(Configuration.GetSection("AppSettings"));
+        var key = Encoding.ASCII.GetBytes(SiteKeys.Token);
         
-        // connect redis db 
-        var redisConfigurationOptions = ConfigurationOptions.Parse(Configuration["Redis:Configuration"]);
-        services.AddStackExchangeRedisCache(redisCacheConfig =>
-        {
-            redisCacheConfig.ConfigurationOptions = redisConfigurationOptions;
-        });
         // Add the session.
         var cookieName = Configuration["Session:CookieName"];
         var idleTimeout = TimeSpan.FromMinutes(int.Parse(Configuration["Session:IdleTimeout"]));
@@ -38,6 +40,34 @@ public class Startup
         {
             options.Cookie.Name = cookieName;
             options.IdleTimeout = idleTimeout;
+        });
+        services.AddAuthentication(auth =>
+            {
+                auth.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                auth.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(token =>
+            {
+                token.RequireHttpsMetadata = false;
+                token.SaveToken = true;
+                token.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = true,
+                    ValidIssuer = SiteKeys.WebSiteDomain,
+                    ValidateAudience = true,
+                    ValidAudience = SiteKeys.WebSiteDomain,
+                    RequireExpirationTime = true,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+        // connect redis db 
+        var redisConfigurationOptions = ConfigurationOptions.Parse(Configuration["Redis:Configuration"]);
+        services.AddStackExchangeRedisCache(redisCacheConfig =>
+        {
+            redisCacheConfig.ConfigurationOptions = redisConfigurationOptions;
         });
         // Add DI
         
@@ -48,6 +78,7 @@ public class Startup
         
         services.AddScoped<IRepository<User, int>, UserRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<UserRepository>();
         
         services.AddScoped<IRepository<PhoneDetails, int>, PhoneDetailRepository>();
         services.AddScoped<IPhoneDetailRepository, PhoneDetailRepository>();
@@ -62,6 +93,7 @@ public class Startup
         
         // Service DI
         services.AddScoped<IPhoneDetailService, PhoneDetailService>();
+        services.AddScoped<IUserService, UserService>();
         services.AddScoped<RedisService>();
     }
 
@@ -77,6 +109,7 @@ public class Startup
             app.UseExceptionHandler("/Error");
             app.UseHsts();
         }
+        
         // app.Use(async (context, next) =>
         // {
         //     await next();
@@ -91,12 +124,22 @@ public class Startup
         //         await next();
         //     }
         // });
+        app.UseCors();
         app.UseHttpsRedirection();
         app.UseStaticFiles();
-        app.UseAuthentication();
         app.UseCookiePolicy();
         app.UseRouting();
         app.UseSession();
+        app.Use(async (context, next) =>
+        {
+            var jwToken = context.Session.GetString("JWToken");
+            if (!string.IsNullOrEmpty(jwToken))
+            {
+                context.Request.Headers.Add("Authorization", "Bearer " + jwToken);
+            }
+            await next();
+        });
+        app.UseAuthentication();
         app.UseAuthorization();
         app.UseEndpoints(endpoints =>
         {
