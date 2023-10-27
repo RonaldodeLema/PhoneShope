@@ -19,10 +19,13 @@ public class ShopPageController : Controller
     // GET
     public async Task<IActionResult> Index()
     {
+        var phones = await _phoneDetailService.GetAll();
+        var smallestQuantityPhones = phones.OrderBy(phone => phone.Quantity).Take(5);
         var shopPage = new ShopPage()
         {
             TotalPhone = _phoneDetailService.GetAll().Result.Count,
             Categories = await _phoneDetailService.GetAllCategory(),
+            BestSellers = smallestQuantityPhones.ToList(),
             QuantityDisplay = 9
         };
         return View(shopPage);

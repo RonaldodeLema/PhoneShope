@@ -5,6 +5,7 @@ namespace Internals.ViewModels;
 public class ShopPage
 {
     public List<Category> Categories { get; set; }
+    public List<PhoneDetails> BestSellers { get; set; }
     
     public int QuantityDisplay { get; set; }
     
