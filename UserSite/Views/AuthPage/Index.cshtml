@@ -1,0 +1,107 @@
+@model Internals.ViewModels.UserLogin
+@{
+    ViewData["Title"] = "Login Page";
+} 
+ <!-- breadcrumb start-->
+    <section class="breadcrumb breadcrumb_bg">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="breadcrumb_iner">
+                        <div class="breadcrumb_iner_item">
+                            <h2>Login</h2>
+                            <p>Home <span>-</span> Login</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- breadcrumb start-->
+
+    <!--================login_part Area =================-->
+<section class="login_part padding_top">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6 col-md-6">
+                <div class="login_part_text text-center">
+                    <div class="login_part_text_iner">
+                        <h2>New to our Shop?</h2>
+                        <p>There are advances being made in science and technology
+                            everyday, and a good example of this is the</p>
+                        <a href="/AuthPage/SignUp" class="btn_3">Create an Account</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-6">
+                <div class="login_part_form">
+                    <div class="login_part_form_iner">
+                        <h3>Welcome Back ! <br>
+                            Please Sign in now</h3>
+                        <form class="row contact_form" asp-action="Login" method="post" novalidate="novalidate">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="col-md-12 form-group p_star">
+                                <input type="text" class="form-control" id="name" asp-for="Username" 
+                                       placeholder="Username">
+                            </div>
+                            <div class="col-md-12 form-group p_star">
+                                <input type="password" class="form-control" id="password" asp-for="Password"
+                                       placeholder="Password">
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <div class="creat_account d-flex align-items-center">
+                                    <input type="checkbox"  asp-for="RememberMe" id="f-option">
+                                    <label for="f-option">Remember me</label>
+                                </div>
+                                <button type="submit" value="submit" class="btn_3">
+                                    log in
+                                </button>
+                                <a class="lost_pass" href="#">forget password?</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@section _Footer
+{
+    <script src="~/js/crypto-js.min.js"></script>
+    <script>
+    const keyB64 = "bDT2WXsSoU8HVddBXNtDAhaGFguEl+VKrmOuLKEw3Qc=";
+    const ivB64 = "8j3xDjyAuOVG4Gh7MKvy9Q==";
+    
+    const keyWA = CryptoJS.enc.Base64.parse(keyB64);
+    const ivWA = CryptoJS.enc.Base64.parse(ivB64);
+    
+    function decrypt(ciphertextB64) {
+        const ciphertextWA = CryptoJS.enc.Base64.parse(ciphertextB64);
+        const decrypted = CryptoJS.AES.decrypt(
+            { ciphertext: ciphertextWA },
+            keyWA,
+            { iv: ivWA }
+        );
+        return decrypted.toString(CryptoJS.enc.Utf8);
+    }
+    $("#f-option").change(function() {
+        if(this.checked) {
+            $.ajax({
+                url: '@Url.Action("RememberMe", "AuthPage")',
+                type: "GET",
+                success: function (data) {
+                    console.log(data)
+                    const user = JSON.parse(data);
+                    if(user.Username!=null){
+                         $("#name").val(user.Username)
+                         $("#password").val(decrypt(user.Password))
+                    }
+                },
+                error: function (data) {
+                    console.log(data)
+                }
+            });
+        }
+    });
+    </script>
+}

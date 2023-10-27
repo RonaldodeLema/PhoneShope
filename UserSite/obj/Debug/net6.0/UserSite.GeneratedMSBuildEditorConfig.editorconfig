@@ -16,6 +16,14 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = /home/vanthao/RiderProjects/PhoneStoreShop/UserSite
 build_property._RazorSourceGeneratorDebug = 
 
+[/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/Views/AuthPage/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXV0aFBhZ2UvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/Views/AuthPage/SignUp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXV0aFBhZ2UvU2lnblVwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/Views/CartPage/GetCarts.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2FydFBhZ2UvR2V0Q2FydHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

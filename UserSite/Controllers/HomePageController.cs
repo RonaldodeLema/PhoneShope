@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace UserSite.Controllers;
 
-public class HomePageController : Controller
+public class HomePageController : BaseController
 {
     private readonly ILogger<HomePageController> _logger;
     private readonly IPhoneDetailService _phoneDetailService;

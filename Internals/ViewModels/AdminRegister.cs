@@ -1,5 +1,4 @@
 using Internals.Models;
-using Internals.Models.Enum;
 
 namespace Internals.ViewModels;
 

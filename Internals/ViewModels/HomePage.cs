@@ -12,6 +12,6 @@ public class HomePage
     public List<PhoneDetails> SplitNewPhones(int num)
     {
         return num == 1 ? NewPhones.GetRange(0, NewPhones.Count / 2) : 
-            NewPhones.GetRange(NewPhones.Count / 2,NewPhones.Count);
+            NewPhones.GetRange(NewPhones.Count / 2,NewPhones.Count / 2);
     }
 }

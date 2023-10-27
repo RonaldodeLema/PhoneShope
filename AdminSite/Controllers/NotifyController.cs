@@ -30,7 +30,7 @@ public class NotifyController : Controller
 
             Tokens = new[]
             {
-                "eh5de4GSo67fIneQoHF62Y:APA91bGIFAvHrfZa6oANuZzZR6Vfty2B7z0ATxn4YFndcFi4auEdR-WlPb6IEjWq5zj_3Dd7iFQuxzHdfp1MtuQvfgKGkDai-NvorIOevJup-oNcfOx2zXG3xdMKbe0tND3P0ZI3iPTN"
+                "cDiq3qHMrL9SGBejfXeE64:APA91bFCtaXqqutifrMVhushFJ89qUMI1K2udeuyilb42xJ-cUpPyo2QfqslAEc81k8HSgFwYPcI--57OVnBluBDj6ybqACXhsoqefWbQCjkXyFZTRPBAxjX_yU367DPJ5UHmfvOdS9U"
             },
         };
         var result = await _fcmService.FirebaseMessaging.SendMulticastAsync(message);

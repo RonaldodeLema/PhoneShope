@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace UserSite.Controllers;
 
-public class DetailsPageController : Controller
+public class DetailsPageController : BaseController
 {
     private readonly IPhoneDetailService _phoneDetailService;
 

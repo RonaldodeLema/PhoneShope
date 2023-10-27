@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var isLogin = HttpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
+
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -46,16 +52,38 @@
                                     <a class="nav-link" href="/ShopPage">Phones</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link" href="/Order/Tracking">Tracking</a>
+                                </li>
+                                
+                                <li class="nav-item">
                                     <a class="nav-link" href="/Contact">Contact</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="/Auth/Login">Login</a>
-                                </li>
+                                @if (isLogin)
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/Order">Check out</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/AuthPage/Logout">Logout</a>
+                                    </li>
+                                }
+                                @if (!isLogin)
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/AuthPage">Login</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/AuthPage/SignUp">Register</a>
+                                    </li>
+                                }
                             </ul>
                         </div>
                         <div class="hearer_icon d-flex">
                             <a id="search_1" href="javascript:void(0)"><i class="ti-search"></i></a>
-                            <a href="/WishListPage"><i class="ti-heart"></i></a>
+                             @if (isLogin)
+                             {
+                                 <a href="/Auth/Profile"><i class="ti-user"></i></a>
+                             }
                             <div class="dropdown cart">
                                 <a href="/CartPage">
                                     <i class="fas fa-cart-plus"></i>

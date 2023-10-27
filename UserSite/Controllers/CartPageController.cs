@@ -7,7 +7,7 @@ using UserSite.Services;
 
 namespace UserSite.Controllers;
 
-public class CartPageController : Controller
+public class CartPageController : BaseController
 {
 
     private readonly RedisService _redisService;

@@ -1,13 +1,12 @@
-using Internals.Models;
-using Internals.Models.Enum;
-using Internals.Repository;
 using Internals.Services;
 using Internals.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using UserSite.Security;
 
 namespace UserSite.Controllers;
 
-public class ShopPageController : Controller
+[Authorize("user")]
+public class ShopPageController : BaseController
 {
     private readonly IPhoneDetailService _phoneDetailService;
 
