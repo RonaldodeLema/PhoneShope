@@ -22,9 +22,17 @@ public class AuthPageController : BaseController
     [HttpPost]
     public async Task<IActionResult> Login(UserLogin userLogin)
     {
+        if (!ModelState.IsValid)
+        {
+            return View("Index");
+        }
         var pwd = userLogin.Password;
         var user = await _userService.Login(userLogin);
-        if (user == null) return View("Index", userLogin);
+        if (user == null)
+        {
+            TempData["error"] = "Username or password is invalid";
+            return View("Index", userLogin);
+        }
         if (userLogin.RememberMe)
         {
             userLogin.Password = pwd;
@@ -49,6 +57,29 @@ public class AuthPageController : BaseController
     // GET
     public IActionResult SignUp()
     {
+        return View();
+    }
+    [HttpPost]
+    public async Task<IActionResult> SignUp(UserRegister userRegister)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View();
+        }
+        if (!userRegister.ComparePassword())
+        {
+            TempData["error"] = "Password again not equal password";
+            return View(userRegister);
+        }
+
+        var checkUsername = await _userService.FindByUsername(userRegister.Username!);
+        if (checkUsername != null)
+        {
+            TempData["error"] = "Username was exist";
+            return View(userRegister);
+        }
+        await _userService.Register(userRegister);
+        TempData["success"] = "Register account success";
         return View();
     }
 
