@@ -32,6 +32,39 @@ public class CartPageController : BaseController
     [HttpPost]
     public async Task<IActionResult> AddToCart(CartModel cartModel)
     {
+        var flag = true;
+        List<CartModel>? currentModelCarts;
+        string currentListJson;
+        // Authenticated
+        if (HttpContext.User.Identity is { IsAuthenticated: true, Name: not null })
+        {
+            var username = HttpContext.User.Identity.Name;
+            var listItemOfUser = await _redisService.GetValue(username);
+            if(string.IsNullOrEmpty(listItemOfUser))
+            {
+                var listModelCart = new List<CartModel> { cartModel };
+                var listJson = JsonConvert.SerializeObject(listModelCart);
+                await _redisService.SetValue(username, listJson, 14);
+                return RedirectToAction("Index");
+            }
+            currentModelCarts = JsonConvert.DeserializeObject<List<CartModel>>(listItemOfUser);
+            foreach (var models in currentModelCarts!.Where(models => models.PhoneDetailId == cartModel.PhoneDetailId))
+            {
+                models.Quantity += cartModel.Quantity;
+                flag = false;
+                break;
+            }
+
+            if (flag)
+            {
+                currentModelCarts?.Add(cartModel);
+            }
+            currentListJson = JsonConvert.SerializeObject(currentModelCarts);
+            await _redisService.SetValue(username, currentListJson, 14);
+            return RedirectToAction("Index");
+        }
+        
+        // Anonymous
         if (string.IsNullOrEmpty(HttpContext.Session.GetString("Anonymous")))
         {
             HttpContext.Session.SetString("Anonymous", Guid.NewGuid().ToString());
@@ -42,12 +75,12 @@ public class CartPageController : BaseController
         {
             var listModelCart = new List<CartModel> { cartModel };
             var listJson = JsonConvert.SerializeObject(listModelCart);
-            await _redisService.SetValue(_key!, listJson, 30);
+            await _redisService.SetValue(_key!, listJson, 1);
             return RedirectToAction("Index");
         }
 
-        var flag = true;
-        var currentModelCarts = JsonConvert.DeserializeObject<List<CartModel>>(listItemsString);
+        flag = true;
+        currentModelCarts = JsonConvert.DeserializeObject<List<CartModel>>(listItemsString);
         foreach (var models in currentModelCarts!.Where(models => models.PhoneDetailId == cartModel.PhoneDetailId))
         {
             models.Quantity += cartModel.Quantity;
@@ -59,25 +92,47 @@ public class CartPageController : BaseController
         {
             currentModelCarts?.Add(cartModel);
         }
-        var currentListJson = JsonConvert.SerializeObject(currentModelCarts);
-        await _redisService.SetValue(_key!, currentListJson, 30);
+        currentListJson = JsonConvert.SerializeObject(currentModelCarts);
+        await _redisService.SetValue(_key!, currentListJson, 1);
         return RedirectToAction("Index");
     }
     public async Task<IActionResult> GetCarts()
     {
+        var listPhoneDetails = new List<PhoneDetails>();
+        string? listItemsString;
+        List<CartModel>? currentModelCarts;
+        //Authenticated
+        if (HttpContext.User.Identity is { IsAuthenticated: true, Name: not null })
+        {
+            listItemsString = await _redisService.GetValue(HttpContext.User.Identity.Name);
+            if(string.IsNullOrEmpty(listItemsString))
+            {
+                return PartialView(new List<PhoneDetails>());
+            }
+            currentModelCarts = JsonConvert.DeserializeObject<List<CartModel>>(listItemsString);
+            foreach (var cartModels in currentModelCarts!)
+            {
+                var phoneDetails = await _phoneDetailService.GetById(cartModels.PhoneDetailId);
+                phoneDetails.Quantity = cartModels.Quantity;
+                listPhoneDetails.Add(phoneDetails);
+            }
+            return PartialView(listPhoneDetails);
+        }
+        
+        //Anonymous
         if (string.IsNullOrEmpty(HttpContext.Session.GetString("Anonymous")))
         {
             HttpContext.Session.SetString("Anonymous", Guid.NewGuid().ToString());
         }
         _key = HttpContext.Session.GetString("Anonymous");
         
-        var listPhoneDetails = new List<PhoneDetails>();
-        var listItemsString = await _redisService.GetValue(_key!);
+        listPhoneDetails = new List<PhoneDetails>();
+        listItemsString = await _redisService.GetValue(_key!);
         if(string.IsNullOrEmpty(listItemsString))
         {
             return PartialView(new List<PhoneDetails>());
         }
-        var currentModelCarts = JsonConvert.DeserializeObject<List<CartModel>>(listItemsString);
+        currentModelCarts = JsonConvert.DeserializeObject<List<CartModel>>(listItemsString);
         foreach (var cartModels in currentModelCarts!)
         {
             var phoneDetails = await _phoneDetailService.GetById(cartModels.PhoneDetailId);
@@ -89,15 +144,45 @@ public class CartPageController : BaseController
 
     public async Task<IActionResult> DeleteById(int id)
     {
+        string currentListJson;
+        List<CartModel>? currentModelCarts;
+        string? listItemsString;
+        CartModel deleteCart;
+        bool flag;
+        //Authenticated
+        if (HttpContext.User.Identity is { IsAuthenticated: true, Name: not null })
+        {
+            listItemsString = await _redisService.GetValue(HttpContext.User.Identity.Name);
+            if(string.IsNullOrEmpty(listItemsString))
+            {
+                return await (Task<JsonResult>)Task.FromException(new Exception("Error"));
+            }
+            currentModelCarts = JsonConvert.DeserializeObject<List<CartModel>>(listItemsString);
+            deleteCart = null;
+            flag = false;
+            foreach (var cartModels in currentModelCarts!.Where(cartModels => cartModels.PhoneDetailId == id))
+            {
+                deleteCart = cartModels;
+                flag = true;
+                break;
+            }
+
+            if (!flag) return await (Task<JsonResult>)Task.FromException(new Exception("Error"));
+            if (deleteCart != null) currentModelCarts?.Remove(deleteCart);
+            currentListJson = JsonConvert.SerializeObject(currentModelCarts);
+            await _redisService.SetValue(HttpContext.User.Identity.Name, currentListJson, 14);
+            return await Task.FromResult(new JsonResult(currentListJson));
+        }
+        //Anonymous
         _key = HttpContext.Session.GetString("Anonymous");
-        var listItemsString = await _redisService.GetValue(_key!);
+         listItemsString = await _redisService.GetValue(_key!);
         if(string.IsNullOrEmpty(listItemsString))
         {
             return await (Task<JsonResult>)Task.FromException(new Exception("Error"));
         }
-        var currentModelCarts = JsonConvert.DeserializeObject<List<CartModel>>(listItemsString);
-        CartModel deleteCart = null;
-        var flag = false;
+        currentModelCarts = JsonConvert.DeserializeObject<List<CartModel>>(listItemsString);
+        deleteCart = null;
+        flag = false;
         foreach (var cartModels in currentModelCarts!.Where(cartModels => cartModels.PhoneDetailId == id))
         {
             deleteCart = cartModels;
@@ -107,28 +192,52 @@ public class CartPageController : BaseController
 
         if (!flag) return await (Task<JsonResult>)Task.FromException(new Exception("Error"));
         if (deleteCart != null) currentModelCarts?.Remove(deleteCart);
-        var currentListJson = JsonConvert.SerializeObject(currentModelCarts);
-        await _redisService.SetValue(_key!, currentListJson, 30);
+        currentListJson = JsonConvert.SerializeObject(currentModelCarts);
+        await _redisService.SetValue(_key!, currentListJson, 1);
         return await Task.FromResult(new JsonResult(currentListJson));
     }
 
     public async Task<IActionResult> UpdateById(int id, int quantity)
     {
-        _key = HttpContext.Session.GetString("Anonymous");
+        string? listItemsString;
+        string currentListJson;
+        List<CartModel>? currentModelCarts;
         
-        var listItemsString = await _redisService.GetValue(_key!);
+        //Authenticated
+        if (HttpContext.User.Identity is { IsAuthenticated: true, Name: not null })
+        {
+            listItemsString = await _redisService.GetValue(HttpContext.User.Identity.Name);
+
+            if(string.IsNullOrEmpty(listItemsString))
+            {
+                return await (Task<JsonResult>)Task.FromException(new Exception("Error"));
+            }
+            currentModelCarts = JsonConvert.DeserializeObject<List<CartModel>>(listItemsString);
+            foreach (var cartModels in currentModelCarts!.Where(cartModels => cartModels.PhoneDetailId == id))
+            {
+                cartModels.Quantity = quantity;
+                break;
+            }
+            currentListJson = JsonConvert.SerializeObject(currentModelCarts);
+            await _redisService.SetValue(HttpContext.User.Identity.Name, currentListJson, 14);
+            return await Task.FromResult(new JsonResult(currentListJson));
+        }
+
+        //Anonymous
+        _key = HttpContext.Session.GetString("Anonymous");
+        listItemsString = await _redisService.GetValue(_key!);
         if(string.IsNullOrEmpty(listItemsString))
         {
             return await (Task<JsonResult>)Task.FromException(new Exception("Error"));
         }
-        var currentModelCarts = JsonConvert.DeserializeObject<List<CartModel>>(listItemsString);
+        currentModelCarts = JsonConvert.DeserializeObject<List<CartModel>>(listItemsString);
         foreach (var cartModels in currentModelCarts!.Where(cartModels => cartModels.PhoneDetailId == id))
         {
             cartModels.Quantity = quantity;
             break;
         }
-        var currentListJson = JsonConvert.SerializeObject(currentModelCarts);
-        await _redisService.SetValue(_key!, currentListJson, 30);
+        currentListJson = JsonConvert.SerializeObject(currentModelCarts);
+        await _redisService.SetValue(_key!, currentListJson, 1);
         return await Task.FromResult(new JsonResult(currentListJson));
     }
 }

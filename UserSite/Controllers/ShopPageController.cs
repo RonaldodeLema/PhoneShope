@@ -5,7 +5,6 @@ using UserSite.Security;
 
 namespace UserSite.Controllers;
 
-[Authorize("user")]
 public class ShopPageController : BaseController
 {
     private readonly IPhoneDetailService _phoneDetailService;

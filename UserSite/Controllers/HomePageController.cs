@@ -3,6 +3,8 @@ using Internals.Models;
 using Internals.Services;
 using Internals.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using UserSite.Services;
 
 namespace UserSite.Controllers;
 
@@ -10,9 +12,11 @@ public class HomePageController : BaseController
 {
     private readonly ILogger<HomePageController> _logger;
     private readonly IPhoneDetailService _phoneDetailService;
+    private readonly RedisService _redisService;
     
-    public HomePageController(ILogger<HomePageController> logger, IPhoneDetailService phoneDetailService)
+    public HomePageController(ILogger<HomePageController> logger,RedisService redisService, IPhoneDetailService phoneDetailService)
     {
+        _redisService = redisService;
         _logger = logger;
         _phoneDetailService = phoneDetailService;
 
@@ -20,6 +24,24 @@ public class HomePageController : BaseController
 
     public async Task<IActionResult> Index()
     {
+        if (!string.IsNullOrEmpty(HttpContext.Session.GetString("Anonymous")))
+        {
+            if (HttpContext.User.Identity is { IsAuthenticated: true, Name: not null })
+            {
+                var checkCartOfUser = await _redisService.GetValue(HttpContext.User.Identity.Name);
+                if (string.IsNullOrEmpty(checkCartOfUser)|| checkCartOfUser.Equals("[]"))
+                {
+                    var key = HttpContext.Session.GetString("Anonymous");
+                    var listItemsString = await _redisService.GetValue(key);
+                    if (!string.IsNullOrEmpty(listItemsString))
+                    {
+                        var currentModelCarts = JsonConvert.DeserializeObject<List<CartModel>>(listItemsString);
+                        var currentListJson = JsonConvert.SerializeObject(currentModelCarts);
+                        await _redisService.SetValue(HttpContext.User.Identity.Name,currentListJson, 30);
+                    }
+                }
+            }
+        }
         var random = new Random();
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         var code = new string(Enumerable.Repeat(chars, 8)

@@ -17,7 +17,7 @@ public class RedisService
         await _distributedCache.SetStringAsync(key, value, options);
     }
 
-    public async Task<string?> GetValue(string key)
+    public async Task<string?> GetValue(string? key)
     {
         return await _distributedCache.GetStringAsync(key);
     }
