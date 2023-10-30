@@ -1,5 +1,6 @@
 using Internals.Models;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace Internals.Database;
 
@@ -34,7 +35,12 @@ public class DbPhoneStoreContext: DbContext
         modelBuilder.Entity<Order>().ToTable("Order");
         modelBuilder.Entity<OrderItem>().ToTable("OrderItem");
         modelBuilder.Entity<Promotion>().ToTable("Promotion");
-        modelBuilder.Entity<Notify>().ToTable("Notification");
+        modelBuilder.Entity<Notify>().ToTable("Notification")
+            .Property(e => e.Data)
+            .HasConversion(
+                v => JsonConvert.SerializeObject(v),
+                v => JsonConvert.DeserializeObject<Dictionary<string, string>>(v)!
+            );
         modelBuilder.Entity<Image>().ToTable("Image");
         modelBuilder.Entity<Role>().ToTable("Role");
         modelBuilder.Entity<RoleClaim>().ToTable("RoleClaim");

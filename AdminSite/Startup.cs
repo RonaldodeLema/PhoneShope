@@ -56,6 +56,8 @@ public class Startup
         
         services.AddScoped<IRepository<Promotion, int>, PromotionRepository>();
         
+        services.AddScoped<IRepository<Notify, int>, NotifyRepository>();
+        
         services.AddScoped<ImageService>();
         services.AddScoped<IImageRepository,ImageRepository>();
         services.AddSingleton<FcmService>();

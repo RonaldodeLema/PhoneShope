@@ -19,9 +19,14 @@ messaging.onBackgroundMessage((payload) => {
         payload
     );
     // Customize notification here
-    const notificationTitle = 'You have a new message from '+payload.from;
+    let data;
+    for (let key in payload.data) {
+        data = key+": "+payload.data[key];
+    }
+    const notificationTitle = payload.notification.title;
     const notificationOptions = {
-        body: payload.data.FirstName+" "+payload.data.LastName +", Hello my bro",
+        body: payload.notification.body,
+        data:data,
         icon: 'img/logo.png'
     };
     self.registration.showNotification(notificationTitle, notificationOptions);
