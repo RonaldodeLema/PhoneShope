@@ -25,6 +25,7 @@ public class NotifyController : Controller
 
     public async Task<IActionResult> Index()
     {
+        ViewData["Users"] = await _userRepository.GetAllAsync();
         return View(await _repository.GetAllAsync());
     }
 
@@ -34,7 +35,8 @@ public class NotifyController : Controller
         var listUsers = await _userRepository.GetAllAsync();
         var listTokens = listUsers.Select(c => c.DeviceToken);
         listTokens = listTokens.Where(l=>l!=null).Distinct();
-        
+        // set userid=0 is send for all
+        notifyModel.UserId = 0;
         var notify = notifyModel.ConvertToNotify(HttpContext.User.Identity?.Name);
         var message = new MulticastMessage()
         {

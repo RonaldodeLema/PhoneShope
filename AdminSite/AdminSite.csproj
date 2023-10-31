@@ -19,8 +19,4 @@
       <PackageReference Include="NuGet.Protocol" Version="6.7.0" />
     </ItemGroup>
 
-    <ItemGroup>
-      <None Include="wwwroot\firebase-messaging-sw.js" />
-    </ItemGroup>
-
 </Project>

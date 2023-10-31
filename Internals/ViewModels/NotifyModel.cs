@@ -4,7 +4,7 @@ namespace Internals.ViewModels;
 
 public class NotifyModel
 {
-    public int? UserId { get; set; }
+    public int UserId { get; set; }
     public string Title { get; set; }
     public string Body { get; set; }
     public string Key { get; set; }
@@ -17,7 +17,8 @@ public class NotifyModel
         {
             Title = Title,
             Body = Body,
-            Data = dict
+            Data = dict,
+            UserId = UserId
         };
         notify.SetActionBy(username);
         notify.SetDateTime();

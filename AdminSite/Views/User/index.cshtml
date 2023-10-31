@@ -97,7 +97,7 @@
                                 @Html.DisplayFor(model => item.UpdatedAt)
                             </td>
                             <td class="d-flex justify-content-center">
-                                <a class="m-1 detail btn btn-success text-white" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                                <a class="m-1 sendMessage btn btn-success text-white" id="@item.Id">Send message</a>
                                 @if (item.IsBlocked)
                                 {
                                     <a class=" m-1 enable btn btn-dark text-white" data-item="@item.ToJson()">Enable Block</a>
@@ -115,14 +115,47 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="createNotify" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form method="post" action="/Notify/GetAll">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createAllTitle">Send notification for user</h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" class="form-control" id="id" name="Id" hidden="hidden"/>
+                        <label for="Title">Title:</label>
+                        <input type="text" class="form-control" name="Title" id="Title"/>
+                        <label for="Body">Body:</label>
+                        <input type="text" class="form-control" name="Body" id="Body"/>
+                        <label for="Key">Key:</label>
+                        <input type="text" class="form-control" name="Key" id="Key"/>
+                        <label for="Value">Value:</label>
+                        <input type="text" class="form-control" name="Value" id="Value"/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" id="btnCreate" class="btn btn-primary save">Create</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 @section _Footer {
-    <script src="~/js/jquery_admin.js"></script>
     <!-- Page level plugins -->
     <script src="~/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
     <script src="~/js/demo/datatables-demo.js"></script>
+    <script>
+    $(".sendMessage").click(function() {
+      const id = $(this).attr("id");
+      $("#id").val(id);
+        $("#createNotify").modal("show");
+    })
+    </script>
 }
