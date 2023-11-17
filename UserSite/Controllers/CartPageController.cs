@@ -39,12 +39,12 @@ public class CartPageController : BaseController
         if (HttpContext.User.Identity is { IsAuthenticated: true, Name: not null })
         {
             var username = HttpContext.User.Identity.Name;
-            var listItemOfUser = await _redisService.GetValue(username);
+            var listItemOfUser = await _redisService.GetValue(CartUser+username);
             if(string.IsNullOrEmpty(listItemOfUser))
             {
                 var listModelCart = new List<CartModel> { cartModel };
                 var listJson = JsonConvert.SerializeObject(listModelCart);
-                await _redisService.SetValue(username, listJson, 14);
+                await _redisService.SetValue(CartUser+username, listJson, 14);
                 return RedirectToAction("Index");
             }
             currentModelCarts = JsonConvert.DeserializeObject<List<CartModel>>(listItemOfUser);
@@ -60,16 +60,16 @@ public class CartPageController : BaseController
                 currentModelCarts?.Add(cartModel);
             }
             currentListJson = JsonConvert.SerializeObject(currentModelCarts);
-            await _redisService.SetValue(username, currentListJson, 14);
+            await _redisService.SetValue(CartUser+username, currentListJson, 14);
             return RedirectToAction("Index");
         }
         
         // Anonymous
-        if (string.IsNullOrEmpty(HttpContext.Session.GetString("Anonymous")))
+        if (string.IsNullOrEmpty(HttpContext.Session.GetString(CartAnonymous)))
         {
-            HttpContext.Session.SetString("Anonymous", Guid.NewGuid().ToString());
+            HttpContext.Session.SetString(CartAnonymous, CartAnonymous+Guid.NewGuid());
         }
-        _key = HttpContext.Session.GetString("Anonymous");
+        _key = HttpContext.Session.GetString(CartAnonymous);
         var listItemsString = await _redisService.GetValue(_key!);
         if(string.IsNullOrEmpty(listItemsString))
         {
@@ -104,7 +104,7 @@ public class CartPageController : BaseController
         //Authenticated
         if (HttpContext.User.Identity is { IsAuthenticated: true, Name: not null })
         {
-            listItemsString = await _redisService.GetValue(HttpContext.User.Identity.Name);
+            listItemsString = await _redisService.GetValue(CartUser+HttpContext.User.Identity.Name);
             if(string.IsNullOrEmpty(listItemsString))
             {
                 return PartialView(new List<PhoneDetails>());
@@ -120,11 +120,11 @@ public class CartPageController : BaseController
         }
         
         //Anonymous
-        if (string.IsNullOrEmpty(HttpContext.Session.GetString("Anonymous")))
+        if (string.IsNullOrEmpty(HttpContext.Session.GetString(CartAnonymous)))
         {
-            HttpContext.Session.SetString("Anonymous", Guid.NewGuid().ToString());
+            HttpContext.Session.SetString(CartAnonymous, CartAnonymous+Guid.NewGuid());
         }
-        _key = HttpContext.Session.GetString("Anonymous");
+        _key = HttpContext.Session.GetString(CartAnonymous);
         
         listPhoneDetails = new List<PhoneDetails>();
         listItemsString = await _redisService.GetValue(_key!);
@@ -152,7 +152,7 @@ public class CartPageController : BaseController
         //Authenticated
         if (HttpContext.User.Identity is { IsAuthenticated: true, Name: not null })
         {
-            listItemsString = await _redisService.GetValue(HttpContext.User.Identity.Name);
+            listItemsString = await _redisService.GetValue(CartUser+HttpContext.User.Identity.Name);
             if(string.IsNullOrEmpty(listItemsString))
             {
                 return await (Task<JsonResult>)Task.FromException(new Exception("Error"));
@@ -170,11 +170,11 @@ public class CartPageController : BaseController
             if (!flag) return await (Task<JsonResult>)Task.FromException(new Exception("Error"));
             if (deleteCart != null) currentModelCarts?.Remove(deleteCart);
             currentListJson = JsonConvert.SerializeObject(currentModelCarts);
-            await _redisService.SetValue(HttpContext.User.Identity.Name, currentListJson, 14);
+            await _redisService.SetValue(CartUser+HttpContext.User.Identity.Name, currentListJson, 14);
             return await Task.FromResult(new JsonResult(currentListJson));
         }
         //Anonymous
-        _key = HttpContext.Session.GetString("Anonymous");
+        _key = HttpContext.Session.GetString(CartAnonymous);
          listItemsString = await _redisService.GetValue(_key!);
         if(string.IsNullOrEmpty(listItemsString))
         {
@@ -206,7 +206,7 @@ public class CartPageController : BaseController
         //Authenticated
         if (HttpContext.User.Identity is { IsAuthenticated: true, Name: not null })
         {
-            listItemsString = await _redisService.GetValue(HttpContext.User.Identity.Name);
+            listItemsString = await _redisService.GetValue(CartUser+HttpContext.User.Identity.Name);
 
             if(string.IsNullOrEmpty(listItemsString))
             {
@@ -219,12 +219,12 @@ public class CartPageController : BaseController
                 break;
             }
             currentListJson = JsonConvert.SerializeObject(currentModelCarts);
-            await _redisService.SetValue(HttpContext.User.Identity.Name, currentListJson, 14);
+            await _redisService.SetValue(CartUser+HttpContext.User.Identity.Name, currentListJson, 14);
             return await Task.FromResult(new JsonResult(currentListJson));
         }
 
         //Anonymous
-        _key = HttpContext.Session.GetString("Anonymous");
+        _key = HttpContext.Session.GetString(CartAnonymous);
         listItemsString = await _redisService.GetValue(_key!);
         if(string.IsNullOrEmpty(listItemsString))
         {

@@ -90,11 +90,17 @@ public class Startup
         
         services.AddScoped<IRepository<Promotion, int>, PromotionRepository>();
         
+        services.AddScoped<IRepository<Payment, int>, PaymentRepository>();
+        
+        services.AddScoped<PromotionRepository>();
+        
         
         // Service DI
         services.AddScoped<IPhoneDetailService, PhoneDetailService>();
         services.AddScoped<IUserService, UserService>();
         services.AddScoped<RedisService>();
+        services.AddScoped<IPaymentService, PaymentService>();
+        services.AddScoped<IPromotionService, PromotionService>();
     }
 
 

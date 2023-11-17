@@ -24,20 +24,20 @@ public class HomePageController : BaseController
 
     public async Task<IActionResult> Index()
     {
-        if (!string.IsNullOrEmpty(HttpContext.Session.GetString("Anonymous")))
+        if (!string.IsNullOrEmpty(HttpContext.Session.GetString(CartAnonymous)))
         {
             if (HttpContext.User.Identity is { IsAuthenticated: true, Name: not null })
             {
-                var checkCartOfUser = await _redisService.GetValue(HttpContext.User.Identity.Name);
+                var checkCartOfUser = await _redisService.GetValue(CartUser+HttpContext.User.Identity.Name);
                 if (string.IsNullOrEmpty(checkCartOfUser)|| checkCartOfUser.Equals("[]"))
                 {
-                    var key = HttpContext.Session.GetString("Anonymous");
+                    var key = HttpContext.Session.GetString(CartAnonymous);
                     var listItemsString = await _redisService.GetValue(key);
                     if (!string.IsNullOrEmpty(listItemsString))
                     {
                         var currentModelCarts = JsonConvert.DeserializeObject<List<CartModel>>(listItemsString);
                         var currentListJson = JsonConvert.SerializeObject(currentModelCarts);
-                        await _redisService.SetValue(HttpContext.User.Identity.Name,currentListJson, 30);
+                        await _redisService.SetValue(CartUser+HttpContext.User.Identity.Name,currentListJson, 30);
                     }
                 }
             }

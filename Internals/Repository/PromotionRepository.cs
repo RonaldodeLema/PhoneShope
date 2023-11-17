@@ -46,4 +46,9 @@ public class PromotionRepository: IRepository<Promotion,int>
             await _context.SaveChangesAsync();
         }
     }
+    public async Task<List<Promotion>> GetAllByUserId(int id)
+    {
+        return await _context.Promotions.Include(p=>p.User)
+            .Where(p=>p.User.Id==id && p.IsUsed==false).ToListAsync();
+    }
 }

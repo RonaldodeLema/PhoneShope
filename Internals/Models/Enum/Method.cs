@@ -11,5 +11,6 @@ public enum Method
     SCB,
     AGB,
     VCB,
-    BIDV
+    BIDV,
+    COD
 }

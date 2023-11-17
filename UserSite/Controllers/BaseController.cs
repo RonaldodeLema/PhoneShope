@@ -9,6 +9,8 @@ namespace UserSite.Controllers;
 
 public class BaseController : Controller
 {
+    public const string CartUser = "Cart_User_";
+    public const string CartAnonymous = "Cart_Anonymous_";
     public void CreateAuthenticationTicket(User user)
     {
         var key = Encoding.ASCII.GetBytes(SiteKeys.Token);

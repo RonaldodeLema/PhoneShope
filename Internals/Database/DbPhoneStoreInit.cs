@@ -276,12 +276,72 @@ namespace Internals.Database
             user.HashPassword();
             context.Users.Add(user);
             context.SaveChanges();
+            var promotion = new Promotion
+            {
+                CategoryId = 1,
+                UserId = 1,
+                Name = "Sale off 20/10/2023",
+                Code = "AJSHASDAK",
+                IsUsed = false,
+                Description = "sale of 20/10 have many promotion and deep sale",
+                StartDate = new DateTime(2023, 10, 20),
+                EndDate = new DateTime(2023, 10, 25),
+                MinTotal = 30000000,
+                MaxReduce = 2000000,
+                Percentage = 0.1,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                CreatedBy = "vanthao",
+                UpdatedBy = "vanthao"
+            };
+            context.Promotions.Add(promotion);
+            promotion = new Promotion
+            {
+                CategoryId = 1,
+                UserId = 1,
+                Name = "Sale off 20/10/2023",
+                Code = "AJSHABBAK",
+                IsUsed = false,
+                Description = "sale off 20/10 have many promotion and deep sale",
+                StartDate = new DateTime(2023, 10, 20),
+                EndDate = new DateTime(2023, 10, 25),
+                MinTotal = 30000000,
+                MaxReduce = 2000000,
+                Percentage = 0.1,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                CreatedBy = "vanthao",
+                UpdatedBy = "vanthao"
+            };
+            context.Promotions.Add(promotion);
+            
+            promotion = new Promotion
+            {
+                CategoryId = 1,
+                UserId = 2,
+                Name = "Sale off 20/10/2023",
+                Code = "AJKKHABAK",
+                IsUsed = false,
+                Description = "sale off 20/10 have many promotion and deep sale",
+                StartDate = new DateTime(2023, 10, 20),
+                EndDate = new DateTime(2023, 10, 25),
+                MinTotal = 30000000,
+                MaxReduce = 2000000,
+                Percentage = 0.1,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                CreatedBy = "vanthao",
+                UpdatedBy = "vanthao"
+            };
+            context.Promotions.Add(promotion);
+            context.SaveChanges();
+            
             var order1 = new Order()
-                { UserId = 1, Status = Status.Success, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+                { UserId = 1, Status = Status.Success,PayCode = "ADADJADIEAC", Note = "Nice phone 1",PromotionId = 1, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
             var order2 = new Order()
-                { UserId = 1, Status = Status.Depending, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+                { UserId = 1, Status = Status.Depending,PayCode = "ASJADAOADC", Note = "Nice phone 2",PromotionId = 2, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
             var order3 = new Order()
-                { UserId = 2, Status = Status.Success, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
+                { UserId = 2, Status = Status.Success, Note = "Nice phone 3",PromotionId = 3, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now };
 
             context.Orders.Add(order1);
             context.Orders.Add(order2);
@@ -319,31 +379,21 @@ namespace Internals.Database
                 Owner = "TRAN VAN THAO",
                 NumberCard = "0911452692",
                 Method = Method.Momo,
-                QRCode = "http://res.cloudinary.com/drabm29xb/image/upload/v1697284330/wslxavkrhbiigshaxjk1.png"
+                QRCode = "https://upload.wikimedia.org/wikipedia/commons/2/2f/Rickrolling_QR_code.png?20200615212723"
+            };
+            context.Payments.Add(payment);
+            
+            payment = new Payment()
+            {
+                Owner = "TRAN VAN THAO",
+                NumberCard = "6110616932",
+                Method = Method.BIDV,
+                QRCode = "https://upload.wikimedia.org/wikipedia/commons/2/2f/Rickrolling_QR_code.png?20200615212723"
             };
             context.Payments.Add(payment);
             context.SaveChanges();
 
-            var promotion = new Promotion
-            {
-                CategoryId = 1,
-                UserId = 1,
-                Name = "Sale off 20/10/2023",
-                Code = "AJSHASDAK",
-                IsUsed = false,
-                Description = "sale of 20/10 have many promotion and deep sale",
-                StartDate = new DateTime(2023, 10, 20),
-                EndDate = new DateTime(2023, 10, 25),
-                MinTotal = 30000000,
-                MaxReduce = 2000000,
-                Percentage = 0.1,
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now,
-                CreatedBy = "vanthao",
-                UpdatedBy = "vanthao"
-            };
-            context.Promotions.Add(promotion);
-            context.SaveChanges();
+            
             var dict = new Dictionary<string, string>();
             dict.Add("Say", "Hello bruh");
             var notify = new Notify
