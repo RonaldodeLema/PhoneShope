@@ -32,5 +32,13 @@ public class Order
     {
         UpdatedAt = DateTime.Now;
     }
-    
+
+    public double SubTotal()
+    {
+        return OrderItems?.Sum(s => s.Price * s.Quantity) ?? 0.0;
+    }
+    public double TotalPrice()
+    {
+        return SubTotal()-Promotion.CalPromotion(SubTotal());
+    }
 }

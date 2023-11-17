@@ -9,5 +9,6 @@ public interface IPhoneDetailService
     Task<List<Category>> GetAllCategory();
     Task<List<PhoneDetails>> GetByFilter(FilterModel filterModel);
     Task<PhoneDetails> GetById(int id);
+    Task<PhoneDetails> UpdateAsync(PhoneDetails phoneDetails);
 
 }

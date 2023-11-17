@@ -1,0 +1,108 @@
+@model Internals.Models.Order
+
+@{
+    ViewData["Title"] = "Details Order";
+}
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <h2>Detail Orders</h2>
+                        <p>Home <span>-</span> Details</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="checkout_area padding_top">
+    <div class="container">
+        <div>
+            <dl class="row">
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.User)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.User.Name)
+                </dd>
+                <dt class="col-sm-2">
+                    Order Details
+                </dt>
+                <dd class="col-sm-10">
+                    @foreach (var item in Model.OrderItems!)
+                    {
+                        <div class="card m-3 card-body col-sm-6">
+                            <dl class="row">
+                                <dt class="col-sm-4">
+                                    Phone Name
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @item.PhoneDetails.Phone.Name
+                                </dd>
+                                <dt class="col-sm-4">
+                                    Price
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @item.PhoneDetails.Price
+                                </dd>
+                                <dt class="col-sm-4">
+                                    Information
+                                </dt>
+                                <dd class="col-sm-8">
+                                    <ul>
+                                        <li>Size: @item.PhoneDetails.Size.ToString().Replace("_", " ").Replace("p", ".").Trim()</li>
+                                        <li>RAM: @item.PhoneDetails.RAM.ToString().Replace("_", " ").Trim()</li>
+                                        <li>Storage: @item.PhoneDetails.Storage.ToString().Replace("_", " ").Trim()</li>
+                                        <li>Color: @item.PhoneDetails.Color.ToString().Replace("_", " ").Trim()</li>
+                                    </ul>
+                                </dd>
+                                <dt class="col-sm-4">
+                                    Image
+                                </dt>
+                                <dd class="col-sm-8">
+                                    <img alt="" height="100px" src="@item.PhoneDetails.Phone.Image"/>
+                                </dd>
+                                <dt class="col-sm-4">
+                                    Quantity
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @item.Quantity
+                                </dd>
+                                <dt class="col-sm-4">
+                                    Total
+                                </dt>
+                                <dd class="col-sm-8">
+                                    @item.TotalItems()
+                                </dd>
+        
+                            </dl>
+                        </div>
+                    }
+                </dd>
+                <dt class="col-sm-2">
+                    Total Order
+                </dt>
+                <dd class="col-sm-10">
+                    @if (Model.OrderItems != null)
+                    {
+                        var totalOrder = Model.OrderItems.Sum(orderItem => orderItem.TotalItems());
+        
+                        @totalOrder
+                    }
+                </dd>
+                <dt class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.CreatedAt)
+                </dt>
+                <dd class="col-sm-10">
+                    @Html.DisplayFor(model => model.CreatedAt)
+                </dd>
+            </dl>
+        </div>
+        <div>
+            <a asp-action="Index">Back to Profile</a>
+        </div>
+    </div>
+</section>
+

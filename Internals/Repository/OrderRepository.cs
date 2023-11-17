@@ -30,6 +30,14 @@ public class OrderRepository: IRepository<Order,int>, IOrderRepository
             .ThenInclude(a=>a.Phone)
             .FirstOrDefaultAsync(a=>a.Id==id))!;
     }
+    public async Task<List<Order>> GetOrderByUserId(int userId)
+    {
+        return await _context.Orders.Where(o => o.UserId == userId)
+            .Include(o=>o.Promotion)
+            .Include(a => a.OrderItems)!
+            .ThenInclude(a => a.PhoneDetails)
+            .ThenInclude(a => a.Phone).ToListAsync();
+    }
 
     public async Task<Order> AddAsync(Order obj)
     {

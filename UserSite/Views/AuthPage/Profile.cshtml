@@ -1,0 +1,135 @@
+@model Internals.ViewModels.ProfilePage
+
+@{
+    ViewData["Title"] = "Profile Page";
+}
+<section class="breadcrumb breadcrumb_bg">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="breadcrumb_iner">
+                    <div class="breadcrumb_iner_item">
+                        <h2>Profile</h2>
+                        <p>Home <span>-</span> Profile</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="checkout_area padding_top">
+    <div class="container">
+        <div class="billing_details">
+            <div class="row">
+                <div class="col-lg-6">
+                    <form asp-action="UpdateProfile" method="post">
+                        <h2>Profile Details</h2>
+                        <div class="col-md-12 form-group p_star">
+                            <label class="col-form-label" for="first">Full name</label>
+                            <input type="text" asp-for="@Model.UserUpdate.Name" class="form-control" id="first"/>
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <label class="col-form-label" for="number">Phone number</label>
+                            <input type="text" asp-for="@Model.UserUpdate.PhoneNumber" class="form-control" id="number"/>
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <label class="col-form-label" for="email">Email</label>
+                            <input type="text" asp-for="@Model.UserUpdate.Email" class="form-control" id="email"/>
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <label class="col-form-label" for="add2">Address</label>
+                            <input type="text" asp-for="@Model.UserUpdate.Address" class="form-control" id="add2"/>
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            @if (TempData["error-profile"] != null)
+                            {
+                                <div class="alert alert-danger">
+                                    @TempData["error-profile"]
+                                </div>
+                            }
+                            @if (TempData["success-profile"] != null)
+                            {
+                                <div class="alert alert-success">
+                                    @TempData["success-profile"]
+                                </div>
+                            }
+                        </div>
+                        <button class="btn_3" type="submit">Change Profile</button>
+                    </form>
+
+                </div>
+                <div class="col-lg-6">
+                    <form asp-action="ChangePassword" method="post">
+                        <h2>Change Password</h2>
+                        <div class="col-md-12 form-group p_star">
+                            <label class="col-form-label" for="email">Old Password</label>
+                            <input type="password" asp-for="@Model.ChangePassword.OldPassword" class="form-control"/>
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <label class="col-form-label" for="email">New Password</label>
+                            <input type="password" asp-for="@Model.ChangePassword.NewPassword" class="form-control"/>
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            <label class="col-form-label" for="email">Again New Password</label>
+                            <input type="password" asp-for="@Model.ChangePassword.ReNewPassword" class="form-control"/>
+                        </div>
+                        <div class="col-md-12 form-group p_star">
+                            @if (TempData["error"] != null)
+                            {
+                                <div class="alert alert-danger">
+                                    @TempData["error"]
+                                </div>
+                            }
+                            @if (TempData["success"] != null)
+                            {
+                                <div class="alert alert-success">
+                                    @TempData["success"]
+                                </div>
+                            }
+                        </div>
+                        <button class="btn_3" type="submit">Change Password</button>
+                    </form>
+                </div>
+                <div class="col-lg-12">
+                    <h2>Your List Order</h2>
+                    <div class="section-top-border">
+                        <div class="progress-table-wrap">
+                            <div class="progress-table">
+                                <div class="table-head">
+                                    <div class="serial">No.</div>
+                                    <div class="country">PayCode</div>
+                                    <div class="country">Method</div>
+                                    <div class="percentage">promotion</div>
+                                    <div class="percentage">Subtotal</div>
+                                    <div class="percentage">Total</div>
+                                    <div class="percentage">Date Order</div>
+                                    <div class="percentage"></div>
+                                </div>
+                                @{
+                                    var i = 0;
+                                }
+                                @foreach (var order in Model.Orders)
+                                {
+                                    i = i + 1;
+
+                                    <div class="table-row">
+                                        <div class="serial">@i</div>
+                                        <div class="country">@order.PayCode</div>
+                                        <div class="country">@order.Method</div>
+                                        <div class="percentage">@order.Promotion.CalPromotion(order.SubTotal()) vnd</div>
+                                        <div class="percentage">@order.SubTotal() vnd</div>
+                                        <div class="percentage">@order.TotalPrice() vnd</div>
+                                        <div class="percentage">@order.CreatedAt</div>
+                                        <div class="country">
+                                            <a class="btn btn_1" asp-action="DetailOrders" asp-route-id="@order.Id">Details</a>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

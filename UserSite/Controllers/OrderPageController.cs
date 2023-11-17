@@ -122,7 +122,6 @@ public class OrderPageController : BaseController
             foreach (var cartModels in currentModelCarts!)
             {
                 var phoneDetails = await _phoneDetailService.GetById(cartModels.PhoneDetailId);
-                phoneDetails.Quantity = cartModels.Quantity;
                 var orderItem = new OrderItem()
                 {
                     OrderId = order.Id,
@@ -131,6 +130,8 @@ public class OrderPageController : BaseController
                     Price = phoneDetails.Price
                 };
                 await _orderService.AddOrderItemsAsync(orderItem);
+                phoneDetails.Quantity -= cartModels.Quantity;
+                await _phoneDetailService.UpdateAsync(phoneDetails);
             }
             await _redisService.Remove(CartUser + username);
         }

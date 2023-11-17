@@ -39,4 +39,9 @@ public class PhoneDetailService:IPhoneDetailService
     {
         return await _phoneDetailsRepository.GetByIdAsync(id);
     }
+
+    public async Task<PhoneDetails> UpdateAsync(PhoneDetails phoneDetails)
+    {
+        return await _phoneDetailsRepository.UpdateAsync(phoneDetails);
+    }
 }
