@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/UserSite.csproj": {}
+    "/Volumes/Workspace/TDTU/(2023-2024) HK1/NET/PhoneStore/UserSite/UserSite.csproj": {}
   },
   "projects": {
-    "/home/vanthao/RiderProjects/PhoneStoreShop/AdminSite/AdminSite.csproj": {
+    "/Volumes/Workspace/TDTU/(2023-2024) HK1/NET/PhoneStore/AdminSite/AdminSite.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/vanthao/RiderProjects/PhoneStoreShop/AdminSite/AdminSite.csproj",
+        "projectUniqueName": "/Volumes/Workspace/TDTU/(2023-2024) HK1/NET/PhoneStore/AdminSite/AdminSite.csproj",
         "projectName": "AdminSite",
-        "projectPath": "/home/vanthao/RiderProjects/PhoneStoreShop/AdminSite/AdminSite.csproj",
-        "packagesPath": "/home/vanthao/.nuget/packages/",
-        "outputPath": "/home/vanthao/RiderProjects/PhoneStoreShop/AdminSite/obj/",
+        "projectPath": "/Volumes/Workspace/TDTU/(2023-2024) HK1/NET/PhoneStore/AdminSite/AdminSite.csproj",
+        "packagesPath": "/Users/nghiahuynhlenhat/.nuget/packages/",
+        "outputPath": "/Volumes/Workspace/TDTU/(2023-2024) HK1/NET/PhoneStore/AdminSite/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/vanthao/.nuget/NuGet/NuGet.Config"
+          "/Users/nghiahuynhlenhat/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -26,8 +26,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "/home/vanthao/RiderProjects/PhoneStoreShop/Internals/Internals.csproj": {
-                "projectPath": "/home/vanthao/RiderProjects/PhoneStoreShop/Internals/Internals.csproj"
+              "/Volumes/Workspace/TDTU/(2023-2024) HK1/NET/PhoneStore/Internals/Internals.csproj": {
+                "projectPath": "/Volumes/Workspace/TDTU/(2023-2024) HK1/NET/PhoneStore/Internals/Internals.csproj"
               }
             }
           }
@@ -86,21 +86,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.401/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.414/RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/vanthao/RiderProjects/PhoneStoreShop/Internals/Internals.csproj": {
+    "/Volumes/Workspace/TDTU/(2023-2024) HK1/NET/PhoneStore/Internals/Internals.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/vanthao/RiderProjects/PhoneStoreShop/Internals/Internals.csproj",
+        "projectUniqueName": "/Volumes/Workspace/TDTU/(2023-2024) HK1/NET/PhoneStore/Internals/Internals.csproj",
         "projectName": "Internals",
-        "projectPath": "/home/vanthao/RiderProjects/PhoneStoreShop/Internals/Internals.csproj",
-        "packagesPath": "/home/vanthao/.nuget/packages/",
-        "outputPath": "/home/vanthao/RiderProjects/PhoneStoreShop/Internals/obj/",
+        "projectPath": "/Volumes/Workspace/TDTU/(2023-2024) HK1/NET/PhoneStore/Internals/Internals.csproj",
+        "packagesPath": "/Users/nghiahuynhlenhat/.nuget/packages/",
+        "outputPath": "/Volumes/Workspace/TDTU/(2023-2024) HK1/NET/PhoneStore/Internals/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/vanthao/.nuget/NuGet/NuGet.Config"
+          "/Users/nghiahuynhlenhat/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -131,6 +131,10 @@
             "MySql.EntityFrameworkCore": {
               "target": "Package",
               "version": "[7.0.5, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
             }
           },
           "imports": [
@@ -149,21 +153,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.401/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.414/RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/UserSite.csproj": {
+    "/Volumes/Workspace/TDTU/(2023-2024) HK1/NET/PhoneStore/UserSite/UserSite.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/UserSite.csproj",
+        "projectUniqueName": "/Volumes/Workspace/TDTU/(2023-2024) HK1/NET/PhoneStore/UserSite/UserSite.csproj",
         "projectName": "UserSite",
-        "projectPath": "/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/UserSite.csproj",
-        "packagesPath": "/home/vanthao/.nuget/packages/",
-        "outputPath": "/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/obj/",
+        "projectPath": "/Volumes/Workspace/TDTU/(2023-2024) HK1/NET/PhoneStore/UserSite/UserSite.csproj",
+        "packagesPath": "/Users/nghiahuynhlenhat/.nuget/packages/",
+        "outputPath": "/Volumes/Workspace/TDTU/(2023-2024) HK1/NET/PhoneStore/UserSite/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/vanthao/.nuget/NuGet/NuGet.Config"
+          "/Users/nghiahuynhlenhat/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -175,8 +179,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "/home/vanthao/RiderProjects/PhoneStoreShop/AdminSite/AdminSite.csproj": {
-                "projectPath": "/home/vanthao/RiderProjects/PhoneStoreShop/AdminSite/AdminSite.csproj"
+              "/Volumes/Workspace/TDTU/(2023-2024) HK1/NET/PhoneStore/AdminSite/AdminSite.csproj": {
+                "projectPath": "/Volumes/Workspace/TDTU/(2023-2024) HK1/NET/PhoneStore/AdminSite/AdminSite.csproj"
               }
             }
           }
@@ -223,7 +227,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.401/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.414/RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -2012,7 +2012,8 @@
         "framework": ".NETCoreApp,Version=v6.0",
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "7.0.12",
-          "MySql.EntityFrameworkCore": "7.0.5"
+          "MySql.EntityFrameworkCore": "7.0.5",
+          "Newtonsoft.Json": "13.0.3"
         },
         "compile": {
           "bin/placeholder/Internals.dll": {}
@@ -5964,19 +5965,19 @@
     ]
   },
   "packageFolders": {
-    "/home/vanthao/.nuget/packages/": {}
+    "/Users/nghiahuynhlenhat/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/UserSite.csproj",
+      "projectUniqueName": "/Volumes/Workspace/TDTU/(2023-2024) HK1/NET/PhoneStore/UserSite/UserSite.csproj",
       "projectName": "UserSite",
-      "projectPath": "/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/UserSite.csproj",
-      "packagesPath": "/home/vanthao/.nuget/packages/",
-      "outputPath": "/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/obj/",
+      "projectPath": "/Volumes/Workspace/TDTU/(2023-2024) HK1/NET/PhoneStore/UserSite/UserSite.csproj",
+      "packagesPath": "/Users/nghiahuynhlenhat/.nuget/packages/",
+      "outputPath": "/Volumes/Workspace/TDTU/(2023-2024) HK1/NET/PhoneStore/UserSite/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/vanthao/.nuget/NuGet/NuGet.Config"
+        "/Users/nghiahuynhlenhat/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0"
@@ -5988,8 +5989,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "/home/vanthao/RiderProjects/PhoneStoreShop/AdminSite/AdminSite.csproj": {
-              "projectPath": "/home/vanthao/RiderProjects/PhoneStoreShop/AdminSite/AdminSite.csproj"
+            "/Volumes/Workspace/TDTU/(2023-2024) HK1/NET/PhoneStore/AdminSite/AdminSite.csproj": {
+              "projectPath": "/Volumes/Workspace/TDTU/(2023-2024) HK1/NET/PhoneStore/AdminSite/AdminSite.csproj"
             }
           }
         }
@@ -6036,7 +6037,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/7.0.401/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.414/RuntimeIdentifierGraph.json"
       }
     }
   }
