@@ -18,7 +18,7 @@ public class AccountController : Controller
     {
         if (User.Identity?.Name != null)
         {
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "HomePage");
         }
         return View();
     }
@@ -27,7 +27,7 @@ public class AccountController : Controller
     {
         if (User.Identity?.Name != null)
         {
-            RedirectToAction("Index", "Home");
+            RedirectToAction("Index", "HomePage");
         }
         return View("Index");
     }
@@ -49,7 +49,7 @@ public class AccountController : Controller
         }
         var identity = new ClaimsIdentity(new[] {  
             new Claim(ClaimTypes.Name, taskUser.Result.Username),  
-            new Claim(ClaimTypes.Role, taskUser.Result.Role.ToString())  
+            new Claim(ClaimTypes.Role, taskUser.Result.Role.Name)  
         }, CookieAuthenticationDefaults.AuthenticationScheme);  
   
         var isAuthenticated = true;
@@ -59,9 +59,13 @@ public class AccountController : Controller
   
         HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);  
   
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("Index", "HomePage");
     }
-    [Authorize(Roles = "RootAdmin, Admin")]
+    public IActionResult AccessDenied()
+    {
+        return View();
+    }
+    [Authorize]
     public IActionResult Logout()
     {
         HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

@@ -1,8 +1,6 @@
 $(".delete").click(function () {
     const itemData = $(this).attr("data-item");
-    const phone = JSON.parse(itemData);
-    $("#deleteId").val(phone?.Id)
-    $("#deleteName").val(phone?.Name)
+    $("#deleteId").val(itemData)
     $("#deletePhone").modal("show");
     $('#btnDelete').on('click', function () {
         $.ajax({

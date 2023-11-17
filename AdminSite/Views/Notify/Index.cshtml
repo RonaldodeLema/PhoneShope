@@ -1,0 +1,170 @@
+@{
+    ViewData["Title"] = "Notification Page";
+}
+@model IEnumerable<Notify>
+
+@section _Header {
+    <link href="~/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+}
+
+<h1>Management Notification</h1>
+<div class="alert alert-info" id="inform"> @Html.ValidationSummary()</div>
+<div id="mainTable" class="table-responsive">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <div class="row d-flex justify-content-lg-between">
+                <h6 class="m-0 col-6 font-weight-bold text-primary">Table Notification</h6>
+                <a class="btn btn-primary col-2 text-white p-2" id="createAll">Send notification for all user</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable">
+                    <thead>
+                    <tr>
+                        <th>
+                            STT
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Title)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Body)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Data)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.CreatedAt)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.UpdatedAt)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CreatedBy)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.UpdatedBy)
+                        </th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>
+                            STT
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Title)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Body)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Data)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.CreatedAt)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.UpdatedAt)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CreatedBy)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.UpdatedBy)
+                        </th>
+
+                        <th></th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    @{
+                        var count = 1;
+                    }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @count
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Body)
+                            </td>
+                            <td>
+                                @foreach (var dictValue in item.Data)
+                                {
+                                    ViewData["key"] = dictValue.Key;
+                                    ViewData["value"] = item.Data.TryGetValue(dictValue.Key, out var value) ? value : string.Empty;
+                                }
+                                @ViewData["key"] : @ViewData["value"]
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreatedAt)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UpdatedAt)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CreatedBy)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UpdatedBy)
+                            </td>
+                            <td class="d-flex justify-content-center">
+                            </td>
+                        </tr>
+                        count++;
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="createAllNotify" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <form method="post" action="/Notify/GetAll">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createAllTitle">Send notification for all user</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label for="Title">Title:</label>
+                    <input type="text" class="form-control" name="Title" id="Title"/>
+                    <label for="Body">Body:</label>
+                    <input type="text" class="form-control" name="Body" id="Body"/>
+                    <label for="Key">Key:</label>
+                    <input type="text" class="form-control" name="Key" id="Key"/>
+                    <label for="Value">Value:</label>
+                    <input type="text" class="form-control" name="Value" id="Value"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" id="btnCreate" class="btn btn-primary save">Create</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section _Footer {
+    <!-- Page level plugins -->
+    <script src="~/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="~/js/demo/datatables-demo.js"></script>
+    <script>
+    $("#createAll").click(function() {
+        $("#createAllNotify").modal("show");
+    });
+    </script>
+}

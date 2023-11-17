@@ -7,7 +7,7 @@ using NuGet.Protocol;
 namespace AdminSite.Controllers;
 
 
-[Authorize(Roles = "RootAdmin, Admin")]
+[Authorize("Manage_Category")]
 public class CategoryController : Controller
 {
     private readonly IRepository<Category,int> _repository;

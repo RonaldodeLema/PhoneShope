@@ -16,20 +16,64 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = /home/vanthao/RiderProjects/PhoneStoreShop/UserSite
 build_property._RazorSourceGeneratorDebug = 
 
-[/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/Views/Home/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9JbmRleC5jc2h0bWw=
+[/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/Views/AuthPage/DetailOrders.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXV0aFBhZ2UvRGV0YWlsT3JkZXJzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/Views/Home/Privacy.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZS9Qcml2YWN5LmNzaHRtbA==
+[/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/Views/AuthPage/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXV0aFBhZ2UvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/Views/AuthPage/Profile.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXV0aFBhZ2UvUHJvZmlsZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/Views/AuthPage/SignUp.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXV0aFBhZ2UvU2lnblVwLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/Views/CartPage/GetCarts.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2FydFBhZ2UvR2V0Q2FydHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/Views/CartPage/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQ2FydFBhZ2UvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/Views/DetailsPage/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvRGV0YWlsc1BhZ2UvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/Views/HomePage/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZVBhZ2UvSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/Views/HomePage/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvSG9tZVBhZ2UvUHJpdmFjeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/Views/OrderPage/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvT3JkZXJQYWdlL0luZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL0Vycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/Views/Shared/_MyLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19NeUxheW91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hhcmVkL19WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/Views/ShopPage/BreakPage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hvcFBhZ2UvQnJlYWtQYWdlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/Views/ShopPage/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvU2hvcFBhZ2UvSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/Views/_ViewImports.cshtml]

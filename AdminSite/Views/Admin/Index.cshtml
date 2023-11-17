@@ -35,6 +35,7 @@
                         <th>
                             @Html.DisplayNameFor(model => model.Role)
                         </th>
+
                         <th>
                             @Html.DisplayNameFor(model => model.CreatedAt)
                         </th>
@@ -57,6 +58,7 @@
                         <th>
                             @Html.DisplayNameFor(model => model.Role)
                         </th>
+
                         <th>
                             @Html.DisplayNameFor(model => model.CreatedAt)
                         </th>
@@ -80,7 +82,7 @@
                                 @Html.DisplayFor(model => item.Username)
                             </td>
                             <td>
-                                @Html.DisplayFor(model => item.Role)
+                                @Html.DisplayFor(model => item.Role.Name)
                             </td>
                             <td>
                                 @Html.DisplayFor(model => item.CreatedAt)
@@ -89,7 +91,7 @@
                                 @Html.DisplayFor(model => item.UpdatedAt)
                             </td>
                             <td class="d-flex justify-content-center">
-                                <a class="delete btn btn-dark text-white" data-item="@item.ToJson()">Delete</a>
+                                <a class="delete btn btn-dark text-white" data-item="@item.Id">Delete</a>
                             </td>
                         </tr>
                         count++;
@@ -111,7 +113,7 @@
                         <label for="createUsername">Username:</label>
                         <input type="text" class="form-control" name="Username" id="createUsername" required="required" placeholder="Username">
                         <label for="createRole">Role:</label> <br/>
-                        <select id="createRole" class="custom-select" name="Role" asp-items="@Html.GetEnumSelectList<Role>()">Select role</select> <br/>
+                        <select class="custom-select" name="RoleId" asp-items="ViewBag.Roles">Select brand phone</select> <br/>
                         <label for="createPassword">Password:</label>
                         <input type="password" class="form-control" name="Password" id="createPassword" required="required" placeholder="Password">
                         <label for="createRePassword">RePassword:</label>
@@ -154,4 +156,5 @@
 
     <!-- Page level custom scripts -->
     <script src="~/js/demo/datatables-demo.js"></script>
+
 }

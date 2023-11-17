@@ -1,0 +1,154 @@
+@using Internals.Models.Enum
+@model IEnumerable<Order>
+@{
+    ViewData["Title"] = "Management order";
+}
+
+@section _Header {
+    <link href="~/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+}
+
+<h1>Management order</h1>
+<div class="alert alert-info"> @Html.ValidationSummary()</div>
+<div id="mainTable" class="table-responsive">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <div class="row d-flex justify-content-lg-between">
+                <h6 class="m-0 col-6 font-weight-bold text-primary">Table Order</h6>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable">
+                    <thead>
+                    <tr>
+                        <th>
+                            STT
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.User)
+                        </th>
+
+                        <th>
+                            Total Price
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CreatedAt)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.UpdatedAt)
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.Status)
+                        </th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>
+                            STT
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.User.Name)
+                        </th>
+
+                        <th>
+                            Total Price
+                        </th>
+
+                        <th>
+                            @Html.DisplayNameFor(model => model.CreatedAt)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.UpdatedAt)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Status)
+                        </th>
+                        <th></th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    @{
+                        var count = 1;
+                    }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @count
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.User.Name)
+                            </td>
+
+                            <td>
+
+                                @if (item.OrderItems != null)
+                                {
+                                    var totalOrder = item.OrderItems.Sum(orderItem => orderItem.TotalItems());
+
+                                    @totalOrder
+                                }
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(model => item.CreatedAt)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.UpdatedAt)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => item.Status)
+                            </td>
+                            <td class="d-flex justify-content-center">
+                                <a class=" m-1 edit btn btn-danger text-white" id="@item.Id" data-item="@item.Status">Edit</a>
+                                <a class=" m-1 detail btn btn-success text-white" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                            </td>
+                        </tr>
+                        count++;
+                    }
+                    </tbody>
+                </table>
+                <form method="post" asp-action="Edit">
+                    <div class="modal fade" id="editOrder" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="delTitle">Are you sure update status this order ?</h5>
+                                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <label for="editStatus">Status:</label> <br/>
+                                    <select  class="custom-select" name="Status" asp-items="@Html.GetEnumSelectList<Status>()">
+                                        <option id="editStatus" selected="selected">Select Option</option>
+                                    </select> <br/>
+                                    <input type="text" hidden="hidden" class="form-control" name="Id" id="editId" placeholder="Id">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary save">Edit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section _Footer {
+    <script src="~/js/jquery_order.js"></script>
+    <!-- Page level plugins -->
+    <script src="~/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="~/js/demo/datatables-demo.js"></script>
+}

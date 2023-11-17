@@ -27,24 +27,19 @@ public class ImageRepository:IImageRepository
         _context.SaveChanges();
     }
 
-    public Image FindByImageUrl(string url)
+    public Image? FindByImageUrl(string url)
     {
         if (_context == null)
         {
-            throw new InvalidOperationException("The context is null.");
+            return null;
         }
 
         if (_context.Images == null)
         {
-            throw new InvalidOperationException("The Images property of the context is null.");
+            return null;
         }
 
         var image = _context.Images.FirstOrDefault(i => i.Url == url);
-        if (image == null)
-        {
-            throw new InvalidOperationException("No image was found with the specified URL.");
-        }
-
-        return image;
+        return image ?? null;
     }
 }

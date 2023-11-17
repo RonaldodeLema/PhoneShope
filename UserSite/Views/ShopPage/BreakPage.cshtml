@@ -1,0 +1,29 @@
+@model IEnumerable<Internals.Models.PhoneDetails>
+@{
+    string Format(string name,string s)
+    {
+        return name+s.Replace("_", " ").Trim();;
+    }
+}
+@foreach (var phoneDetail in Model)
+{
+    <div class="col-lg-4 col-sm-6 countProduct">
+        <div class="single_product_item">
+            <img src="@phoneDetail.Image" alt="">
+            <div class="single_product_text">
+                <h4>Name: @phoneDetail.Phone.Name, 
+                    @Format("RAM: ",phoneDetail.RAM.ToString()), 
+                    @Format("Storage: ",phoneDetail.Storage.ToString())
+                    </h4>
+                <h3>Price: @phoneDetail.Price vnd</h3>
+                <h3>Color: @Format("",phoneDetail.Color.ToString())</h3>
+                <form action="/CartPage/AddToCart" method="post">
+                    <input name="Quantity" value="1" hidden="hidden"/>
+                    <input name="PhoneDetailId" value="@phoneDetail.Id" hidden="hidden"/>
+                    <button type="submit" class="btn btn_3">Add to cart</button>
+                    <a asp-action="Index" asp-controller="DetailsPage" asp-route-id="@phoneDetail.Id" class="genric-btn info circle">See details</a>
+                </form>
+            </div>
+        </div>
+    </div>
+}

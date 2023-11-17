@@ -1,5 +1,6 @@
 using Internals.Models;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace Internals.Database;
 
@@ -9,7 +10,7 @@ public class DbPhoneStoreContext: DbContext
     public DbPhoneStoreContext(DbContextOptions<DbPhoneStoreContext> options) : base(options)
     {
     }
-    public DbSet<Admin?> Admins { get; set; }
+    public DbSet<Admin> Admins { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Category> Categories { get; set; }
     public DbSet<Phone> Phones { get; set; }
@@ -17,8 +18,11 @@ public class DbPhoneStoreContext: DbContext
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }
     public DbSet<Promotion> Promotions { get; set; }
-    public DbSet<Notification> Notifications { get; set; }
+    public DbSet<Notify> Notifications { get; set; }
     public DbSet<Image> Images { get; set; }
+    public DbSet<Role> Roles { get; set; }
+    public DbSet<RoleClaim> RoleClaims { get; set; }
+    public DbSet<Payment> Payments { get; set; }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -31,7 +35,15 @@ public class DbPhoneStoreContext: DbContext
         modelBuilder.Entity<Order>().ToTable("Order");
         modelBuilder.Entity<OrderItem>().ToTable("OrderItem");
         modelBuilder.Entity<Promotion>().ToTable("Promotion");
-        modelBuilder.Entity<Notification>().ToTable("Notification");
+        modelBuilder.Entity<Notify>().ToTable("Notification")
+            .Property(e => e.Data)
+            .HasConversion(
+                v => JsonConvert.SerializeObject(v),
+                v => JsonConvert.DeserializeObject<Dictionary<string, string>>(v)!
+            );
         modelBuilder.Entity<Image>().ToTable("Image");
+        modelBuilder.Entity<Role>().ToTable("Role");
+        modelBuilder.Entity<RoleClaim>().ToTable("RoleClaim");
+        modelBuilder.Entity<Payment>().ToTable("Payment");
     }
 }

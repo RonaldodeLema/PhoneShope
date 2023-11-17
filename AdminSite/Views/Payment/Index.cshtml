@@ -1,0 +1,171 @@
+﻿@using NuGet.Protocol
+@model IEnumerable<Payment>
+@{
+    ViewData["Title"] = "Management Payment";
+}
+
+@section _Header {
+    <link href="~/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+}
+
+<h1>Management Payment</h1>
+<div class="alert alert-info" id="inform"> @Html.ValidationSummary()</div>
+<div id="mainTable" class="table-responsive">
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <div class="row d-flex justify-content-lg-between">
+                <h6 class="m-0 col-6 font-weight-bold text-primary">Table Payment</h6>
+                <a class="btn btn-primary col-2 text-white p-2" id="create">Create new payment</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable">
+                    <thead>
+                    <tr>
+                        <th>
+                            STT
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Owner)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Method)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.NumberCard)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.QRCode)
+                        </th>
+
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>
+                            STT
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Owner)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Method)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.NumberCard)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.QRCode)
+                        </th>
+
+                        <th></th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    @{
+                        var count = 1;
+                    }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @count
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Owner)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Method)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NumberCard)
+                            </td>
+                            <td>
+                                <img alt="" src="@item.QRCode" height="100px"/>
+                            </td>
+
+                            <td class="d-flex justify-content-center">
+                                <a class="m-1 edit btn btn-danger text-white" data-item="@item.ToJson()">Edit</a> 
+                                <a class="m-1 delete btn btn-dark text-white" data-item="@item.ToJson()">Delete</a>
+                            </td>
+                        </tr>
+                        count++;
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="createPayment" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createTitle">Create new payment</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <label for="createName">Name payment:</label>
+                    <input type="text" class="form-control" name="Name" required="required" id="createName" placeholder="Name">
+                    <label for="createName">Description:</label>
+                    <textarea class="form-control" name="Description" required="required" id="createDescription" placeholder="Description"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="btnCreate" data-item="@count" class="btn btn-primary save" data-dismiss="modal">Create</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="editPayment" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="myModalLabel">Are you sure update this payment ?</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" hidden="hidden" class="form-control" name="Id" id="editId" placeholder="Id">
+                    <label for="editName">Name payment:</label>
+                    <input type="text" class="form-control" name="Name" id="editName" placeholder="Name">
+                    <label for="createName">Description:</label>
+                    <textarea class="form-control" name="Description" id="editDescription" placeholder="Description"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="btnEdit" class="btn btn-primary save" data-dismiss="modal">Edit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="deletePayment" tabindex="-1" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="delTitle">Are you sure delete this payment ?</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" hidden="hidden" class="form-control" name="id" id="deleteId" placeholder="Id">
+                    <label for="deleteName">Name payment:</label>
+                    <input type="text" disabled="disabled" class="form-control" id="deleteName" placeholder="Name">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" id="btnDelete" class="btn btn-primary save" data-dismiss="modal">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section _Footer {
+    <script src="~/js/jquery_payment.js"></script>
+    <!-- Page level plugins -->
+    <script src="~/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="~/js/demo/datatables-demo.js"></script>
+}

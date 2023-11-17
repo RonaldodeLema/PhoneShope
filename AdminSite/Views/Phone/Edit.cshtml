@@ -24,9 +24,11 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label class="control-label">Image</label>
-                <img src="@Model.Image" alt="iphone image "/>
-                <input id="image" name="image" allowedExtensions=".jpg,.png,.gif" type="file" class="form-control"/>
+                <label class="control-label">Old Image</label>
+                <img src="@Model.Image" height="100px" alt="iphone image "/>
+                <label class="control-label">New Image</label>
+                <img id="preview" src="#" height="100px" alt="Image Preview" style="display: none;"/>
+                <input id="image" name="image" accept="image/*" type="file" class="m-1 form-control"/>
             </div>
             <div class="form-group">
                 <label asp-for="CategoryId" class="control-label">Category</label>
@@ -46,3 +48,17 @@
 <div>
     <a asp-action="Details" asp-route-id="@Model?.Id">Back to Details</a>
 </div>
+@section _Footer
+{
+    <script>
+    $(document).ready(function() {
+        $('#image').change(function(e) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                $('#preview').attr('src', reader.result).show();
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        });
+    });
+    </script>
+}

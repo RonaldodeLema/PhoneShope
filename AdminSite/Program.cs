@@ -1,5 +1,3 @@
-using FirebaseAdmin;
-using Google.Apis.Auth.OAuth2;
 using Internals.Database;
 
 namespace AdminSite;
@@ -26,10 +24,6 @@ public class Program
                 logger.LogError(ex, "An error occurred while seeding the database.");
             }
         }
-        FirebaseApp.Create(new AppOptions()
-        {
-            Credential = GoogleCredential.FromFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "push-notify-87a05-firebase-adminsdk.json")),
-        });
         host.Run();
     }
 

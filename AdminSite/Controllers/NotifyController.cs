@@ -1,42 +1,59 @@
+using AdminSite.Services;
 using FirebaseAdmin.Messaging;
 using Internals.Models;
+using Internals.Repository;
+using Internals.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AdminSite.Controllers;
 
+[Authorize("Manage_Notify")]
 public class NotifyController : Controller
 {
+    private readonly FcmService _fcmService;
+    private readonly IRepository<User, int> _userRepository;
+    private readonly IRepository<Notify, int> _repository;
+
+    public NotifyController(FcmService fcmService,  IRepository<Notify,int> repository,
+        IRepository<User, int> userRepository)
+    {
+        _fcmService = fcmService;
+        _repository = repository;
+        _userRepository = userRepository;
+    }
+
+    public async Task<IActionResult> Index()
+    {
+        ViewData["Users"] = await _userRepository.GetAllAsync();
+        return View(await _repository.GetAllAsync());
+    }
 
     [HttpPost]
-    public async Task<IActionResult> SendMessageAsync([FromBody] Notify notify) 
+    public async Task<IActionResult> GetAll(NotifyModel notifyModel)
     {
-        var message = new Message()
+        var listUsers = await _userRepository.GetAllAsync();
+        var listTokens = listUsers.Select(c => c.DeviceToken);
+        listTokens = listTokens.Where(l=>l!=null).Distinct();
+        // set userid=0 is send for all
+        notifyModel.UserId = 0;
+        var notify = notifyModel.ConvertToNotify(HttpContext.User.Identity?.Name);
+        var message = new MulticastMessage()
         {
-            Notification = new FirebaseAdmin.Messaging.Notification()
+            Webpush = new WebpushConfig()
             {
-                Title = notify.Title,
-                Body = notify.Body,
+                Notification = new WebpushNotification()
+                {
+                    Title = notify.Title,
+                    Body = notify.Body
+                },
+                Data = notify.Data
             },
-            Data = new Dictionary<string, string>()
-            {
-                ["FirstName"] = "John",
-                ["LastName"] = "Doe"
-            },
-            Token = notify.DeviceToken
+        
+            Tokens =  listTokens.ToArray()
         };
-
-        var messaging = FirebaseMessaging.DefaultInstance;
-        var result = await messaging.SendAsync(message);
-
-        if (!string.IsNullOrEmpty(result))
-        {
-            // Message was sent successfully
-            return Ok("Message sent successfully!");
-        }
-        else
-        {
-            // There was an error sending the message
-            throw new Exception("Error sending the message.");
-        }
+        await _repository.AddAsync(notify);
+        await _fcmService.FirebaseMessaging.SendMulticastAsync(message);
+        return RedirectToAction(nameof(Index));
     }
 }

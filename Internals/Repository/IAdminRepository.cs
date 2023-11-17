@@ -7,5 +7,4 @@ public interface IAdminRepository
 {
     Task<Admin?>? Login(UserLogin userLogin);
     Task<Admin?>? FindByUsername(string userName);
-
 }

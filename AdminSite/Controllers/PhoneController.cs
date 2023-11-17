@@ -1,6 +1,4 @@
-using AdminSite.Manager;
-using CloudinaryDotNet;
-using CloudinaryDotNet.Actions;
+using AdminSite.Services;
 using Internals.Models;
 using Internals.Repository;
 using Internals.ViewModels;
@@ -11,7 +9,7 @@ using NuGet.Protocol;
 
 namespace AdminSite.Controllers;
 
-[Authorize(Roles = "RootAdmin, Admin")]
+[Authorize("Manage_Phone")]
 public class PhoneController : Controller
 {
     private readonly IRepository<Phone, int> _repository;
@@ -58,7 +56,7 @@ public class PhoneController : Controller
         if (!ModelState.IsValid) return View(createPhone);
         var imagePhone = _imageService.UploadImage(image);
         var phone = createPhone.ConvertToPhone();
-        phone.Image = imagePhone.Url;
+        if (imagePhone != null) phone.Image = imagePhone.Url;
         phone.SetDateTime();
         phone.SetActionBy(User.Identity.Name);
         await _repository.AddAsync(phone);
@@ -91,7 +89,10 @@ public class PhoneController : Controller
         {
             // remove old image
             var oldImage = _imageService.FindImageByUrl(currentPhone.Image);
-            _imageService.DeleteImage(oldImage.PublicId);
+            if (oldImage != null)
+            {
+                _imageService.DeleteImage(oldImage.PublicId);
+            }
             // Add new image
             var newImage = _imageService.UploadImage(image);
             currentPhone.Image = newImage.Url;
