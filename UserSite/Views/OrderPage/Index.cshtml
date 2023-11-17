@@ -34,7 +34,7 @@
                 {
                     <div class="card card-group m-3">
                         <div class="radion_btn m-3">
-                            <input class="form-control" type="radio" id="@item.Id'promo'" value="@item.Id" asp-for="ReqOrderModel!.Promotion.Id"/>
+                            <input class="form-control" checked="checked" type="radio" id="@item.Id'promo'" value="@item.Id" asp-for="ReqOrderModel!.Promotion.Id"/>
                             <label class="form-check-label" for="@item.Id'promo'">@item.Description</label>
                             <label class="form-check-label" for="@item.Id'promo'">Max Reduce: @item.MaxReduce vnd</label>
                             <label class="form-check-label" for="@item.Id'promo'">Min Total: @item.MinTotal vnd</label>
@@ -143,6 +143,18 @@
                                 </h5>
                                 <input type="text" hidden="hidden" asp-for="ReqOrderModel.PayCode" value="@Model.OrderCode"/>
                             </div>
+                                @if (TempData["error"] != null)
+                                {
+                                    <div class="alert alert-danger">
+                                        @TempData["error"]
+                                    </div>
+                                }
+                                @if (TempData["success"] != null)
+                                {
+                                    <div class="alert alert-success">
+                                        @TempData["success"]
+                                    </div>
+                                }
                             <button class="btn_3" type="submit">Proceed to Checkout</button>
                         </div>
                     </div>

@@ -21,4 +21,8 @@ public class RedisService
     {
         return await _distributedCache.GetStringAsync(key);
     }
+    public async Task Remove(string? key)
+    {
+        await _distributedCache.RemoveAsync(key);
+    }
 }

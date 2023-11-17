@@ -15,4 +15,13 @@ public class PromotionService: IPromotionService
     {
         return await _repository.GetAllByUserId(id);
     }
+
+    public async Task<Promotion> UpdatePromotion(Promotion promotion)
+    {
+        return await _repository.UpdateAsync(promotion);
+    }
+    public async Task<Promotion> FindById(int id)
+    {
+        return await _repository.GetByIdAsync(id);
+    }
 }

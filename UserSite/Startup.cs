@@ -85,7 +85,8 @@ public class Startup
         
         services.AddScoped<IRepository<Order, int>, OrderRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();
-        
+        services.AddScoped<OrderRepository>();
+
         services.AddScoped<IRepository<Payment, int>, PaymentRepository>();
         
         services.AddScoped<IRepository<Promotion, int>, PromotionRepository>();
@@ -101,6 +102,7 @@ public class Startup
         services.AddScoped<RedisService>();
         services.AddScoped<IPaymentService, PaymentService>();
         services.AddScoped<IPromotionService, PromotionService>();
+        services.AddScoped<IOrderService,OrderService>();
     }
 
 
