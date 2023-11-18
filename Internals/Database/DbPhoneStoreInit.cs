@@ -23,8 +23,8 @@ namespace Internals.Database
                     "A mobile device that can be used to make calls, send text messages, and access the internet.",
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
-                CreatedBy = "vanthao",
-                UpdatedBy = "vanthao"
+                CreatedBy = "admin",
+                UpdatedBy = "admin"
             };
             var category1 = new Category
             {
@@ -33,8 +33,8 @@ namespace Internals.Database
                     "A mobile device that can be used to make calls, send text messages, and access the internet.",
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
-                CreatedBy = "vanthao",
-                UpdatedBy = "vanthao"
+                CreatedBy = "admin",
+                UpdatedBy = "admin"
             };
 
             context.Categories.Add(category);
@@ -51,8 +51,8 @@ namespace Internals.Database
                     Image = "http://res.cloudinary.com/drabm29xb/image/upload/v1697284330/wslxavkrhbiigshaxjk1.png",
                     Brand = BrandPhone.Apple, CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
-                    CreatedBy = "vanthao",
-                    UpdatedBy = "vanthao"
+                    CreatedBy = "admin",
+                    UpdatedBy = "admin"
                 },
                 new Phone
                 {
@@ -61,8 +61,8 @@ namespace Internals.Database
                     Image = "http://res.cloudinary.com/drabm29xb/image/upload/v1697284330/wslxavkrhbiigshaxjk1.png",
                     Brand = BrandPhone.Apple, CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
-                    CreatedBy = "vanthao",
-                    UpdatedBy = "vanthao"
+                    CreatedBy = "admin",
+                    UpdatedBy = "admin"
                 },
                 new Phone
                 {
@@ -71,8 +71,8 @@ namespace Internals.Database
                     Image = "http://res.cloudinary.com/drabm29xb/image/upload/v1697284330/wslxavkrhbiigshaxjk1.png",
                     Brand = BrandPhone.Samsung, CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
-                    CreatedBy = "vanthao",
-                    UpdatedBy = "vanthao"
+                    CreatedBy = "admin",
+                    UpdatedBy = "admin"
                 },
             };
             phones.ForEach(phone => context.Phones.Add(phone));
@@ -90,8 +90,8 @@ namespace Internals.Database
                 PhoneId = 1,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
-                CreatedBy = "vanthao",
-                UpdatedBy = "vanthao"
+                CreatedBy = "admin",
+                UpdatedBy = "admin"
             };
             var phoneDetails2 = new PhoneDetails()
             {
@@ -105,8 +105,8 @@ namespace Internals.Database
                 PhoneId = 3,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
-                CreatedBy = "vanthao",
-                UpdatedBy = "vanthao"
+                CreatedBy = "admin",
+                UpdatedBy = "admin"
             };
             var phoneDetails1 = new PhoneDetails()
             {
@@ -120,8 +120,8 @@ namespace Internals.Database
                 PhoneId = 2,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
-                CreatedBy = "vanthao",
-                UpdatedBy = "vanthao"
+                CreatedBy = "admin",
+                UpdatedBy = "admin"
             };
             var phoneDetails3 = new PhoneDetails()
             {
@@ -135,8 +135,8 @@ namespace Internals.Database
                 PhoneId = 2,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
-                CreatedBy = "vanthao",
-                UpdatedBy = "vanthao"
+                CreatedBy = "admin",
+                UpdatedBy = "admin"
             };
             context.PhoneDetails.Add(phoneDetails);
             context.PhoneDetails.Add(phoneDetails1);
@@ -157,8 +157,8 @@ namespace Internals.Database
                     PhoneId = i%3+1,
                     CreatedAt = DateTime.Now,
                     UpdatedAt = DateTime.Now,
-                    CreatedBy = "vanthao",
-                    UpdatedBy = "vanthao"
+                    CreatedBy = "admin",
+                    UpdatedBy = "admin"
                 });
             }
             context.SaveChanges();
@@ -232,7 +232,7 @@ namespace Internals.Database
             context.SaveChanges();
             var admin = new Admin()
             {
-                Username = "vanthao",
+                Username = "admin",
                 Password = "123456",
                 RoleId = 1
             };
@@ -280,6 +280,25 @@ namespace Internals.Database
             {
                 CategoryId = 1,
                 UserId = 1,
+                Name = "No of content",
+                Code = "AFAFAFAGAWA",
+                IsUsed = false,
+                Description = "No of content",
+                StartDate = new DateTime(2023, 10, 20),
+                EndDate = new DateTime(2023, 10, 25),
+                MinTotal = 0,
+                MaxReduce = 0,
+                Percentage = 0,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                CreatedBy = "admin",
+                UpdatedBy = "admin"
+            };
+            context.Promotions.Add(promotion);
+            promotion = new Promotion
+            {
+                CategoryId = 1,
+                UserId = 1,
                 Name = "Sale off 20/10/2023",
                 Code = "AJSHASDAK",
                 IsUsed = false,
@@ -291,8 +310,8 @@ namespace Internals.Database
                 Percentage = 0.1,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
-                CreatedBy = "vanthao",
-                UpdatedBy = "vanthao"
+                CreatedBy = "admin",
+                UpdatedBy = "admin"
             };
             context.Promotions.Add(promotion);
             promotion = new Promotion
@@ -310,8 +329,8 @@ namespace Internals.Database
                 Percentage = 0.1,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
-                CreatedBy = "vanthao",
-                UpdatedBy = "vanthao"
+                CreatedBy = "admin",
+                UpdatedBy = "admin"
             };
             context.Promotions.Add(promotion);
             
@@ -330,8 +349,8 @@ namespace Internals.Database
                 Percentage = 0.1,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
-                CreatedBy = "vanthao",
-                UpdatedBy = "vanthao"
+                CreatedBy = "admin",
+                UpdatedBy = "admin"
             };
             context.Promotions.Add(promotion);
             context.SaveChanges();
@@ -403,8 +422,8 @@ namespace Internals.Database
                 Data = dict,
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now,
-                CreatedBy = "vanthao",
-                UpdatedBy = "vanthao"
+                CreatedBy = "admin",
+                UpdatedBy = "admin"
             };
             context.Notifications.Add(notify);
             context.SaveChanges();

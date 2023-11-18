@@ -30,6 +30,7 @@
                         Have a coupon? Apply Coupon
                     </h2>
                 </div>
+                <input class="form-control" checked="checked" type="radio" value="1" hidden="hidden" asp-for="ReqOrderModel!.Promotion.Id"/>
                 @foreach (var item in Model.Promotions)
                 {
                     <div class="card card-group m-3">
