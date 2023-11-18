@@ -14,6 +14,7 @@
         <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
     </PropertyGroup>
     <ItemGroup>
+      <PackageReference Include="MailKit" Version="4.3.0" />
       <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.24" />
       <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.0-rc.2.23480.2" />
       <PackageReference Include="StackExchange.Redis" Version="2.6.122" />
@@ -23,6 +24,25 @@
       <Content Include="..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
+      <Content Include="obj\Debug\net6.0\UserSite.AssemblyInfoInputs.cache" />
+      <Content Include="obj\Debug\net6.0\UserSite.assets.cache" />
+      <Content Include="obj\Debug\net6.0\UserSite.GeneratedMSBuildEditorConfig.editorconfig" />
+      <Content Include="obj\Debug\net6.0\UserSite.RazorAssemblyInfo.cache" />
+      <Content Include="obj\project.assets.json" />
+      <Content Include="obj\project.nuget.cache" />
+      <Content Include="obj\project.packagespec.json" />
+      <Content Include="obj\rider.project.model.nuget.info" />
+      <Content Include="obj\rider.project.restore.info" />
+      <Content Include="obj\UserSite.csproj.nuget.dgspec.json" />
+      <Content Include="obj\UserSite.csproj.nuget.g.props" />
+      <Content Include="obj\UserSite.csproj.nuget.g.targets" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Include="obj\Debug\net6.0\.NETCoreApp,Version=v6.0.AssemblyAttributes.cs" />
+      <Compile Include="obj\Debug\net6.0\UserSite.AssemblyInfo.cs" />
+      <Compile Include="obj\Debug\net6.0\UserSite.GlobalUsings.g.cs" />
+      <Compile Include="obj\Debug\net6.0\UserSite.RazorAssemblyInfo.cs" />
     </ItemGroup>
 
 </Project>

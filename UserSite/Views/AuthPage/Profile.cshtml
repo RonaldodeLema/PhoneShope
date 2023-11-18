@@ -107,18 +107,23 @@
                                 </div>
                                 @{
                                     var i = 0;
+                                    var promotion = 0.0;
+                                    var subtotal = 0.0;
+                                    var total = 0.0;
                                 }
                                 @foreach (var order in Model.Orders)
                                 {
                                     i = i + 1;
-
+                                    promotion = order.SubTotal()-order.Promotion.CalPromotion(order.SubTotal());
+                                    subtotal = order.SubTotal();
+                                    total = order.Promotion.CalPromotion(order.SubTotal());
                                     <div class="table-row">
                                         <div class="serial">@i</div>
                                         <div class="country">@order.PayCode</div>
                                         <div class="country">@order.Method</div>
-                                        <div class="percentage">@order.Promotion.CalPromotion(order.SubTotal()) vnd</div>
-                                        <div class="percentage">@order.SubTotal() vnd</div>
-                                        <div class="percentage">@order.TotalPrice() vnd</div>
+                                        <div class="percentage">@promotion vnd</div>
+                                        <div class="percentage">@subtotal vnd</div>
+                                        <div class="percentage">@total vnd</div>
                                         <div class="percentage">@order.CreatedAt</div>
                                         <div class="country">
                                             <a class="btn btn_1" asp-action="DetailOrders" asp-route-id="@order.Id">Details</a>
