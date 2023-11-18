@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Internals.Models;
 using Internals.Models.Enum;
 using Internals.Services;
@@ -30,6 +34,7 @@ public class OrderPageController : BaseController
         _promotionService = promotionService;
         _orderService = orderService;
     }
+
     [NonAction]
     private async Task<OrderPageModel> GetOrderPage()
     {
@@ -89,6 +94,7 @@ public class OrderPageController : BaseController
     {
         return RedirectToAction("Index");
     }
+
     [HttpPost]
     public async Task<IActionResult> Checkout(ReqOrderModel reqOrderModel)
     {
@@ -102,6 +108,8 @@ public class OrderPageController : BaseController
                 TempData["error"] = "Your Cart Is Empty";
                 return View("Index", await GetOrderPage());
             }
+
+
             var order = await _orderService.AddAsync(new Order()
             {
                 UserId = user!.Id,
@@ -113,11 +121,9 @@ public class OrderPageController : BaseController
                 CreatedAt = DateTime.Now,
                 UpdatedAt = DateTime.Now
             });
-            
             var promotion = await _promotionService.FindById(reqOrderModel.Promotion.Id);
             promotion.IsUsed = true;
             await _promotionService.UpdatePromotion(promotion);
-            
             var currentModelCarts = JsonConvert.DeserializeObject<List<CartModel>>(listItemsString);
             foreach (var cartModels in currentModelCarts!)
             {
@@ -133,9 +139,11 @@ public class OrderPageController : BaseController
                 phoneDetails.Quantity -= cartModels.Quantity;
                 await _phoneDetailService.UpdateAsync(phoneDetails);
             }
+
             await _redisService.Remove(CartUser + username);
         }
+
         TempData["success"] = "Your Order Successfully";
-        return View("Index",await GetOrderPage());
+        return View("Index", await GetOrderPage());
     }
 }
