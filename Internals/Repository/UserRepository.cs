@@ -73,4 +73,10 @@ public class UserRepository:IRepository<User,int>, IUserRepository
             u.Username == username);
         return user;
     }
+    public async Task<User?> FindByEmail(string email)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u =>
+            u.Email == email);
+        return user;
+    }
 }

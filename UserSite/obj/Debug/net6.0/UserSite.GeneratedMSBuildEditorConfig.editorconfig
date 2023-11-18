@@ -28,6 +28,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXV0aFBhZ2UvUHJvZmlsZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/Views/AuthPage/ResetPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXV0aFBhZ2UvUmVzZXRQYXNzd29yZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/Views/AuthPage/SendResetEmail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXV0aFBhZ2UvU2VuZFJlc2V0RW1haWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [/home/vanthao/RiderProjects/PhoneStoreShop/UserSite/Views/AuthPage/SignUp.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3MvQXV0aFBhZ2UvU2lnblVwLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 

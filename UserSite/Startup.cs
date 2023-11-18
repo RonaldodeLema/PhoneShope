@@ -5,6 +5,7 @@ using Internals.Models;
 using Internals.Repository;
 using Internals.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using StackExchange.Redis;
@@ -69,8 +70,6 @@ public class Startup
         {
             redisCacheConfig.ConfigurationOptions = redisConfigurationOptions;
         });
-        // Add DI
-        
         services.AddScoped<IRepository<Category, int>, CategoryRepository>();
         
         services.AddScoped<IRepository<Phone, int>, PhoneRepository>();
@@ -94,8 +93,9 @@ public class Startup
         services.AddScoped<IRepository<Payment, int>, PaymentRepository>();
         
         services.AddScoped<PromotionRepository>();
-        
-        
+        services.AddSingleton(Configuration);
+
+
         // Service DI
         services.AddScoped<IPhoneDetailService, PhoneDetailService>();
         services.AddScoped<IUserService, UserService>();
@@ -103,6 +103,8 @@ public class Startup
         services.AddScoped<IPaymentService, PaymentService>();
         services.AddScoped<IPromotionService, PromotionService>();
         services.AddScoped<IOrderService,OrderService>();
+        services.AddScoped<IEmailService, EmailService>();
+
     }
 
 

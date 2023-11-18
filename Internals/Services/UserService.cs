@@ -28,6 +28,12 @@ public class UserService :IUserService
         return await _repository.FindByUsername(username);
     }
 
+    public async Task<User?> FindByEmail(string email)
+    {
+        return await _repository.FindByEmail(email);
+
+    }
+
     public async Task<User> Update(User user)
     {
         return await _repository.UpdateAsync(user);

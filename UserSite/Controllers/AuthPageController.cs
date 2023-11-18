@@ -2,9 +2,11 @@ using System.Security.Cryptography;
 using Internals.Models;
 using Internals.Services;
 using Internals.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using UserSite.Security;
+using UserSite.Services;
 
 namespace UserSite.Controllers;
 
@@ -12,11 +14,13 @@ public class AuthPageController : BaseController
 {
     private readonly IUserService _userService;
     private readonly IOrderService _orderService;
+    private readonly IEmailService _emailService;
 
-    public AuthPageController(IUserService userService, IOrderService orderService)
+    public AuthPageController(IUserService userService, IOrderService orderService,IEmailService emailService)
     {
         _userService = userService;
         _orderService = orderService;
+        _emailService = emailService;
     }
     // GET
     public IActionResult Index()
@@ -91,6 +95,66 @@ public class AuthPageController : BaseController
         return View();
     }
 
+    public  IActionResult ResetPassword(string? email, string? token)
+    {
+        if (email == null || token == null)
+        {
+            return RedirectToAction("SendResetEmail");
+        }
+        return View(new ResetPasswordModel
+        {
+            NewPassword = "",
+            ReNewPassword = "",
+            ResetToken = token,
+            Email = email
+        });
+    }
+    [HttpPost]
+    [Obsolete("Obsolete")]
+    public async Task<IActionResult> ResetPassword(ResetPasswordModel resetPasswordModel)
+    {
+        var user = await _userService.FindByEmail(resetPasswordModel.Email);
+        if (resetPasswordModel.NewPassword == resetPasswordModel.ReNewPassword)
+        {
+            resetPasswordModel.HashPassword();
+        }
+        else
+        {
+            TempData["info"] = "Enter renew password not equal new password";
+            return View("ResetPassword", resetPasswordModel);
+        }
+        if (user.ResetToken == resetPasswordModel.ResetToken)
+        {
+            user.Password = resetPasswordModel.NewPassword;
+            await _userService.Update(user);
+            TempData["info"] = "Reset password success";
+            resetPasswordModel.ResetToken = "";
+            return RedirectToAction("Index");
+        }
+        TempData["info"] = "You don't verify email";
+        return View("ResetPassword",resetPasswordModel);
+    }
+    public  IActionResult SendResetEmail()
+    {
+        return View();
+    }
+    [HttpPost]
+    public async Task<IActionResult> SendResetEmail(string email)
+    {
+        var user = await _userService.FindByEmail(email);
+        if (user != null)
+        {
+            var resetToken = Guid.NewGuid().ToString();
+            user.ResetToken = resetToken;
+            await _userService.Update(user);
+            var callbackUrl = $"/AuthPage/ResetPassword?email={email}&token={resetToken}";
+            await _emailService.SendPasswordResetEmailAsync(email, resetToken, callbackUrl);
+            TempData["info"] = "Please check mail for reset password";
+            return View("SendResetEmail");
+        }
+        TempData["info"] = "Email not valid";
+        return View("SendResetEmail");
+    }
     public async Task<IActionResult> CollectDeviceToken(string deviceToken)
     {
         if (!HttpContext.User.Identity!.IsAuthenticated)
