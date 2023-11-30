@@ -32,6 +32,17 @@ public class AuthPageController : BaseController
         }
         return View();
     }
+
+    public IActionResult Login()
+    {
+        if (User.Identity.IsAuthenticated)
+        {
+            return RedirectToAction("Index","HomePage");
+        }
+        return View("Index");
+    }
+    
+
     [HttpPost]
     public async Task<IActionResult> Login(UserLogin userLogin)
     {
@@ -84,6 +95,11 @@ public class AuthPageController : BaseController
             TempData["error"] = "Password again not equal password";
             return View(userRegister);
         }
+        if (userRegister.Email != null && await _userService.FindByEmail(userRegister.Email)!=null)
+        {
+            TempData["error"] = "Your email have been registered";
+            return View(userRegister);
+        }
 
         var checkUsername = await _userService.FindByUsername(userRegister.Username!);
         if (checkUsername != null)
@@ -91,11 +107,27 @@ public class AuthPageController : BaseController
             TempData["error"] = "Username was exist";
             return View(userRegister);
         }
-        await _userService.Register(userRegister);
-        TempData["success"] = "Register account success";
+        var user = await _userService.Register(userRegister);
+        TempData["success"] = "Register account success, please check your email to active account";
+        var resetToken = Guid.NewGuid().ToString();
+        user.ResetToken = resetToken;
+        await _userService.Update(user);
+        var callbackUrl = $"/AuthPage/ActiveAccount?email={userRegister.Email}&token={resetToken}";
+        await _emailService.SendActiveEmailAsync(userRegister.Email, resetToken, callbackUrl);
         return View();
     }
 
+    public async Task<IActionResult> ActiveAccount(string email, string token)
+    {
+        var user = await _userService.FindByEmail(email);
+        if (user==null||user.ResetToken!=token)
+        {
+            return RedirectToAction("Index");
+        }
+        user.IsBlocked = false;
+        await _userService.Update(user);
+        return View();
+    }
     public  IActionResult ResetPassword(string? email, string? token)
     {
         if (email == null || token == null)

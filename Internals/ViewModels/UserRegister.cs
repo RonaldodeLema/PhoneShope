@@ -37,7 +37,7 @@ public class UserRegister
             PhoneNumber = PhoneNumber,
             Email = Email,
             Username = Username,
-            IsBlocked = false,
+            IsBlocked = true,
             Password = Password
         };
         user.SetDateTime();
